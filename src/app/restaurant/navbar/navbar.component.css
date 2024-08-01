@@ -1,0 +1,37 @@
+/* 
+    IDS
+*/
+#logo-empresa{
+    width: 350px;
+    height: 100px;
+}
+
+/* 
+    CLASSES
+*/
+.fas{
+    font-size: 35px;
+}
+
+.fa-bars,
+.fa-cog{
+    cursor: pointer;
+}
+
+/* 
+    MEDIA QUERYS
+*/
+@media (max-width: 400px){
+    #logo-empresa {
+        width: 150px;
+        height: 40px;
+    }
+
+    #operation {
+        width: 20%;
+    }
+
+    #info {
+        width: 60%;
+    }
+}

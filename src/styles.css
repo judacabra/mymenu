@@ -1,1 +1,53 @@
-/* You can add global styles to this file, and also import other style files */
+/* 
+    HTML
+*/
+h1, h2, h3, p {
+    margin: 0 !important;
+}
+
+/* 
+    CLASSES
+*/
+.bg-brown {
+    background: #9c807b !important;
+    color: #ffffff !important;
+}
+
+.bg-brown:hover {
+    background: #6d5b5b !important;
+}
+
+.br-none {
+    border: none !important;
+}
+
+.pb-0 {
+    padding-bottom: 0;
+}
+
+.cl-brown {
+    color: #9c807b !important;
+}
+
+.d-flex-center{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.h100 {
+    height: 100px;
+}
+.w-10 {
+    width: 10%;
+}
+.w-80 {
+    width: 80%;
+}
+
+/* 
+    FONTS
+*/
+@font-face {
+    font-family: "Lemmon shake";
+    src: url("../public/fonts/Lemon_Shake.otf");
+}

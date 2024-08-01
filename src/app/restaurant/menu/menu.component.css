@@ -1,0 +1,9 @@
+/* 
+    MEDIA QUERYS
+*/
+@media (max-width: 400px){
+    #logo-empresa{
+        width: 200px;
+        height: 60px;
+    }
+}

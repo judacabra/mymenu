@@ -1,0 +1,15 @@
+<div id="contenedor" class="container">
+    <div class="logo-empresa d-flex-center mt-5 mb-5">
+        <img src="img/logo-empresa.png" alt="Logo empresa" id="logo-empresa" title="{{ empresa.name }}">   
+    </div>
+    <div class="container mb-5">
+        @for (type of types; track $index){
+            <div class="type px-3 py-3 d-flex-center mb-3 br-brown" (click)="location(type.url);" title="Ir a {{type.name}}">
+                <h3> {{ type.name }} </h3>
+            </div>
+        }
+    </div>
+    <div class="container info-empresa d-flex-center">
+        <p class="text-center" id="description"> {{ empresa.description }} </p>
+    </div>
+</div>

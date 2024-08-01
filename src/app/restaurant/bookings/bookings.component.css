@@ -1,0 +1,30 @@
+/* 
+    HTML
+*/
+h1 {
+    font-family: 'Lemmon shake';
+}
+
+/* 
+    IDS
+*/
+/* Quitar spinners en Chrome, Safari, y Edge */
+#document::-webkit-inner-spin-button,
+#document::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  -moz-appearance: textfield;
+  margin: 0;
+}
+
+/* 
+    MEDIA QUERYS
+*/
+@media (max-width: 400px){
+    .fila {
+        flex-direction: column;
+    }
+    
+    .column {
+        width: 100% !important;
+    }
+}

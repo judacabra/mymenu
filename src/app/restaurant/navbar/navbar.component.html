@@ -1,0 +1,13 @@
+<div id="navegator" class="d-flex container">
+    <div id="operation" class="dropdown h100 w-10 d-flex-center">
+        <i class="fas fa-bars cl-brown" data-bs-toggle="dropdown" aria-expanded="false"></i>
+        <ul class="dropdown-menu">
+            @for (type of types ; track $index){
+                <li> <a class="dropdown-item cl-brown" href="{{ type.url }}"> {{ type.name }} </a> </li>
+            }
+        </ul>
+    </div>
+    <div id="info" class="h100 w-80 d-flex-center ">
+        <img src="img/logo-empresa.png" alt="Logo empresa" id="logo-empresa">
+    </div>
+</div>

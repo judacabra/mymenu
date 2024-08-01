@@ -1,0 +1,76 @@
+/* 
+    HTML
+*/
+*{
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode';
+}
+
+a {
+    text-decoration: none;
+}
+
+h1, h2, h3 {
+    margin: 0 !important;
+}
+
+/* 
+    CLASSES
+*/
+.cards {
+    width: 100%;
+}
+
+.card {
+    cursor: pointer;
+}
+
+.card-img-top {
+    height: 140px;
+}
+
+.img-on-popup {
+    width: 100%;
+}
+
+.type h1 {
+    font-family: 'Lemmon shake';
+}
+
+@media (min-width: 1000px){
+    .cards {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr); 
+        gap: 10px;
+    }
+}
+
+@media (max-width: 400px){
+    .card{
+        width: 120px;
+        margin-bottom: 10%;
+    }
+
+    .card-img-top {
+        height: 80px;
+    }
+
+    .card-body {
+        padding: 7px;
+    }
+
+    .card-title {
+        height: 40px;
+        font-size: 16px;
+        display: flex; 
+        align-items: center;
+        justify-content: center;
+    }
+
+    .card-text {
+        font-size: 13px;
+    }
+
+    .price {
+        font-size: 15px;
+    }
+}

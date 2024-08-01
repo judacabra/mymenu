@@ -1,0 +1,65 @@
+/* 
+    HTML
+*/
+*{
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode';
+}
+
+html, body {
+    height: 100%;
+    margin: 0;
+}
+
+/* 
+    IDS
+*/
+#contenedor {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+#logo-empresa{
+    width: 350px;
+    height: 100px;
+}
+
+/* 
+    CLASSES
+*/
+.br-brown {
+    border: #9c807b solid;
+    border-radius: 15px;
+}
+
+.type{
+    cursor: pointer;
+    color: #9c807b;
+}
+
+.type h3{
+    font-family: 'Lemmon shake';
+}
+
+.type:hover{
+    background: #9c807b;
+    color: #ffffff;
+}
+
+/* 
+    FONTS
+*/
+@font-face {
+    font-family: "Lemmon shake";
+    src: url("/public/fonts/Lemon_Shake.otf");
+}
+
+/* 
+    MEDIA QUERYS
+*/
+@media (max-width: 400px){
+    #logo-empresa{
+        width: 250px;
+        height: 80px;
+    }
+}
