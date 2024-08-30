@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { TypeFood } from '../../core/interfaces/type-food';
 import { TypeUrl } from '../../core/interfaces/type-url';
 
 @Component({

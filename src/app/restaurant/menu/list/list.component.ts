@@ -1,10 +1,14 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
-import { TypeFood } from '../../../core/interfaces/type-food';
-import { Product } from '../../../core/interfaces/product';
+import { ListService } from '@services/list/list.service';
+
+import { TypeUrl } from '@core/interfaces/type-url';
+import { Product } from '@core/interfaces/product';
 
 import { NavbarComponent } from '../../navbar/navbar.component';
 import { FooterComponent } from '../../footer/footer.component';
+import { MenuService } from '@services/menu/menu.service';
 
 @Component({
     selector: 'app-list',
@@ -14,137 +18,80 @@ import { FooterComponent } from '../../footer/footer.component';
         FooterComponent,
     ],
     templateUrl: './list.component.html',
-    styleUrl: './list.component.css'
+    styleUrl: './list.component.css',
+    providers: [
+        ListService
+    ],
 })
 
-export default class ListComponent {
-    public types: Array<TypeFood> = [
-        {
-            id: 1,
-            name: 'Entradas',
-            url: 'entradas',
-            products: [
-                {
-                    id: 1,
-                    name: 'Tostaditas',
-                    description: '6 tostaditas con hogao para compartir.',
-                    type: 1,
-                    img: 'img/product.jpg',
-                    price: 15000,
-                },
-                {
-                    id: 2,
-                    name: 'Nachos',
-                    description: 'Nachos con pico de gallo.',
-                    type: 1,
-                    img: 'img/product2.jpg',
-                    price: 20000,
-                },
-                {
-                    id: 3,
-                    name: 'Yuquitas',
-                    description: 'Palitos de yuca con queso apanados.',
-                    type: 1,
-                    img: 'img/product3.jpg',
-                    price: 10000,
-                },
-                {
-                    id: 4,
-                    name: 'Maices',
-                    description: 'Trozos de mazorca asada, cubiertos de mantequilla.',
-                    type: 1,
-                    img: 'img/product4.jpg',
-                    price: 15000,
-                },
-                {
-                    id: 5,
-                    name: 'Canastica valluna',
-                    description: 'Cositas del valle.',
-                    type: 1,
-                    img: 'img/product4.jpg',
-                    price: 15000,
-                },
-            ],
-        },
-        {
-            id: 2,
-            name: 'Fuertes',
-            url: 'fuertes',
-            products: [
-                {
-                    id: 5,
-                    name: 'Chuleta',
-                    description: 'Milanesa de pollo o cerdo, con papa francesa.',
-                    type: 1,
-                    img: 'img/product5.jpg',
-                    price: 25000,
-                },
-                {
-                    id: 6,
-                    name: 'Salchipapa',
-                    description: 'Salchicha ranchera, papa francesa o criolla.',
-                    type: 1,
-                    img: 'img/product6.jpg',
-                    price: 10000,
-                },
-                {
-                    id: 7,
-                    name: 'Pizza',
-                    description: 'Pan artesanal, peperoni y bordes de queso.',
-                    type: 1,
-                    img: 'img/product7.jpg',
-                    price: 20000,
-                },
-                {
-                    id: 8,
-                    name: 'Lasagna mixta',
-                    description: 'Carne molida, pollo desmechado, salsa bechamel.',
-                    type: 1,
-                    img: 'img/product8.jpg',
-                    price: 17000,
-                },
-            ],
-        },
-        {
-            id: 3,
-            name: 'Bebidas',
-            url: 'bebidas',
-            products: [
-                {
-                    id: 9,
-                    name: 'Limococo',
-                    description: 'Refrescante limonada de coco.',
-                    type: 1,
-                    img: 'img/product9.jpg',
-                    price: 25000,
-                },
-                {
-                    id: 10,
-                    name: 'Hit',
-                    description: 'Jugo hit de 400 ML.',
-                    type: 1,
-                    img: 'img/product10.jpg',
-                    price: 10000,
-                },
-                {
-                    id: 11,
-                    name: 'Cocacola',
-                    description: 'Gaseosa de 300 ML.',
-                    type: 1,
-                    img: 'img/product11.jpg',
-                    price: 20000,
-                },
-                {
-                    id: 12,
-                    name: 'Agua',
-                    description: 'Botella de agua sin gas de 300 ML.',
-                    type: 1,
-                    img: 'img/product12.jpg',
-                    price: 17000,
-                },
-            ],
-        },
-    ];
+export default class ListComponent implements OnInit {
+    public pathImg: string = '../../../../public/'; 
+    public types: TypeUrl[] = [];
+    public typeRecommended: TypeUrl[] = [];
+    public products: Product[] = [];
+
+    constructor(private route: ActivatedRoute, private listService: ListService, private menuService:MenuService){}
+
+    ngOnInit(): void {
+        this.getAllTypes();
+        this.getTypeRecommended();
+        this.getProducts();
+    }
+
+    ngAfterViewInit(): void {
+        setTimeout(() => {
+            this.route.fragment.subscribe(fragment => {
+                if (fragment) {
+                    const element = document.getElementById(fragment);
+                    
+                    if (element) {
+                        element.scrollIntoView({ behavior: 'smooth' });
+                    }
+                }
+            });
+        }, 200); 
+    }
+
+    public getAllTypes(): void {
+        this.menuService.consultTypes().subscribe({
+            next: (response) => {
+                this.types = response;
+            },
+            error: (error) => {
+                console.error("Error:", error);
+            }
+        });
+    }
+    
+    public getProducts(): void {
+        this.listService.consultProducts().subscribe({
+            next: (response) => {
+                this.products = response; 
+            },
+            error: (error) => {
+                console.error("Error:", error);
+            }
+        });
+    }
+
+    public productsByType(id: number): Product[] {
+        return this.products.filter(product => product.type === id);
+    }
+
+    public productsRecommended(): Product[] {
+        return this.products.filter(product => product.recommended === 'SI');
+    }
+
+    public getTypeRecommended(): void {
+        this.listService.typeRecommended().subscribe({
+            next: (response) => {
+                this.typeRecommended = response;
+            },
+            error: (error) => {
+                console.error("Error:", error);
+            }
+        });
+    }
 
     public truncateText(text: string): string {
         const maxLength: number = 17;

@@ -5,4 +5,5 @@ export interface Product {
     type: number,
     img: string,
     price: number,
+    recommended?: string,
 }

@@ -1,5 +1,5 @@
 export interface TypeUrl {
-    id?: number,
+    id: number,
     name: string,
     url: string,
 }

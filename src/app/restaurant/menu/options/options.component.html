@@ -1,6 +1,6 @@
 @for (type of types; track $index) {
-    <a href="{{type.url}}">
-        <div class="type px-3 py-3 d-flex-center mb-3 br-brown" title="Ir a {{type.name}}">
+    <a href="{{ pathUrl + type.url }}">
+        <div class="type px-3 py-3 d-flex-center mb-3 br-brown" title="Ir a {{ type.name }}">
             <h3> {{ type.name }} </h3>
         </div>
     </a>

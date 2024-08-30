@@ -1,33 +1,39 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
-import { TypeUrl } from '../../../core/interfaces/type-url';
+import { MenuService } from '@services/menu/menu.service';
+
+import { TypeUrl } from '@core/interfaces/type-url';
 
 @Component({
-  selector: 'app-options',
-  standalone: true,
-  imports: [],
-  templateUrl: './options.component.html',
-  styleUrl: './options.component.css'
+    selector: 'app-options',
+    standalone: true,
+    imports: [],
+    templateUrl: './options.component.html',
+    styleUrl: './options.component.css',
+    providers: [
+        MenuService
+    ],
 })
 
-export class OptionsComponent {
-  public defaultUrl: string = 'restaurant/menu/list';
+export class OptionsComponent implements OnInit {
+    public types: TypeUrl[] = [];
+    public pathUrl: string = '/restaurant/menu/list/#';
 
-  public types: Array<TypeUrl> = [
-    {
-      id: 1,
-      name: 'Entradas',
-      url: `${this.defaultUrl}#entradas`,
-    },
-    {
-      id: 2,
-      name: 'Fuertes',
-      url: `${this.defaultUrl}#fuertes`,
-    },
-    {
-      id: 3,
-      name: 'Bebidas',
-      url: `${this.defaultUrl}#bebidas`,
-    },
-  ];
+    constructor(private menuService: MenuService){}
+    
+    ngOnInit(): void {
+        this._getAllType();
+    }
+
+    public _getAllType(): void {
+        this.menuService.consultTypes().subscribe({
+            next: (response) => {
+                this.types = response;
+            },
+        
+            error: (error) => { 
+                console.error('Error:' + error);
+            }
+        })
+    }
 }
