@@ -67,6 +67,8 @@ export default class ListComponent implements OnInit {
         this.listService.consultProducts().subscribe({
             next: (response) => {
                 this.products = response; 
+
+                console.log(this.products)
             },
             error: (error) => {
                 console.error("Error:", error);
@@ -75,7 +77,7 @@ export default class ListComponent implements OnInit {
     }
 
     public productsByType(id: number): Product[] {
-        return this.products.filter(product => product.type === id);
+        return this.products.filter(product => product.id_type === id);
     }
 
     public productsRecommended(): Product[] {

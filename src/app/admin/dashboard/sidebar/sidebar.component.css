@@ -1,0 +1,32 @@
+/* 
+    HTML
+*/
+ul {
+    width: 100%;
+    padding: 0;
+}
+
+li {
+    list-style: none;
+    cursor: pointer;
+}
+
+li:hover {
+    background: var(--bg-2);
+    color: var(--white);
+}
+
+/* 
+    IDS
+*/
+#body{
+    background: var(--bg-1);
+    height: 100vh;
+}
+
+/* 
+    CLASSES
+*/
+.w-90 {
+    width: 90%;
+}

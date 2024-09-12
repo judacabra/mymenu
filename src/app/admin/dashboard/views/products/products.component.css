@@ -1,0 +1,110 @@
+/* 
+    HTML
+*/
+* {
+    font-family: 'Century Gothic', sans-serif;
+}
+
+th {
+    background: var(--bg-2);
+    color: var(--white);
+}
+
+td {
+    background: var(--bg-1);
+}
+
+table {
+    font-size: 15px;
+}
+
+nav {
+    position: absolute;
+    bottom: 30px;
+    right: 5px;
+}
+
+nav ul li a {
+    background: var(--bg-1);
+    color: #000;
+}
+
+nav ul li {
+    cursor: pointer;
+}
+
+nav ul li:hover {
+    background: var(--bg-2);
+}
+
+/* 
+    IDS
+*/
+#sidebar, #contenido {
+    height: 100vh;
+}
+
+#contenido {
+    width: 85%;
+}
+
+#content {
+    height: 85vh;
+    background: var(--bg-1);
+}
+
+#sidebar{
+    width: 15%;
+    border-right: 0.5px solid var(--bg-2);
+}
+
+/* 
+    CLASSES
+*/
+.w-5 {
+    width: 5%;
+}
+
+.w-20 {
+    width: 20%;
+}
+
+.w-30 {
+    width: 30%;
+}
+
+.w-40 {
+    width: 40%;
+}
+
+.w-87 {
+    width: 87%;
+}
+
+.fa-pen-to-square,
+.fa-trash-can,
+.img {
+    cursor: pointer;
+}
+
+.fa-pen-to-square,
+.fa-trash-can {
+    font-size: 20px;
+}
+
+.img-on-popup {
+    width: 100%;
+}
+
+.rnd-first-top {
+    border-radius: 10px 0 0 0;
+}
+
+.rnd-last-top {
+    border-radius: 0 10px 0 0;
+}
+
+.page-selected {
+    background: var(--bg-2) !important;
+    color: var(--white) !important;
+}

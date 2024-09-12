@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 
 import { HomeService } from '@services/home/home.service';
 
-import { TypeUrl } from '../../core/interfaces/type-url';
-import { Empresa } from '../../core/interfaces/empresa';
-import { Contacto } from '../../core/interfaces/contacto';
+import { TypeUrl } from '@core/interfaces/type-url';
+import { Company } from '@core/interfaces/company';
+import { Contact } from '@core/interfaces/contact';
 
 @Component({
     selector: 'app-inicio',
@@ -18,13 +18,14 @@ import { Contacto } from '../../core/interfaces/contacto';
 })
 
 export default class InicioComponent implements OnInit {
-    public contacto: Contacto = {
+    public contact: Contact = {
         numero: 3057506743,
         mensaje : 'Hola%2C%20quiero%20informaci%C3%B3n%20de%20',
     };
 
-    public empresa: Empresa = {
+    public company: Company = {
         name: 'Devsoftone',
+        nit: 0,
         description: 'Devsoftone es una empresa caleña de desarrollo de software.',
         active: true, 
     };

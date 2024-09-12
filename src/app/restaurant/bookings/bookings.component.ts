@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { Empresa } from '../../core/interfaces/empresa';
-import { BookingMotives } from '../../core/interfaces/booking-motives';
+import { Company } from '@core/interfaces/company';
+import { BookingMotives } from '@core/interfaces/booking-motives';
 
 @Component({
     selector: 'app-bookings',
@@ -19,13 +19,14 @@ export default class BookingsComponent {
 
     public isOther: boolean = false;
 
-    public empresa: Empresa = {
+    public company: Company = {
         name: 'Devsoftone',
+        nit: 0,
         description: 'Devsoftone es una empresa caleña de desarrollo de software.',
         active: true, 
     };
 
-    public motives: Array<BookingMotives> = [
+    public motives: BookingMotives[] = [
         {
             id: 1,
             name: 'Cumpleaños',

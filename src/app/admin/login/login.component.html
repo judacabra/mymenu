@@ -12,14 +12,18 @@
                     <label for="username" class="mb-2"> <small> Nombre de usuario </small> </label>
                     <div class="d-flex justify-content-between align-items-center">
                         <input id="username" name="username" class="form-control" placeholder="example: jperez" formControlName="username"
-                        (keyup.enter)="actionSet()" [ngClass]="{'input-valid': username, 'input-error': noUsername,}" (change)="onUsernameChange('username')">
+                            (keyup.enter)="actionSet()" [ngClass]="{'input-valid': username, 'input-error': noUsername,}" 
+                            (change)="onUsernameChange('username')">
                     </div>
                 </div>
                 <div class="input-group mb-2 dp-flex-L">
                     <label for="password" class="mb-2"> <small> Contraseña </small> </label>
                     <div class="input-oval bg-white d-flex justify-content-between align-items-center mb-3">
                         <div class="input-group mb-3">
-                            <input [type]="config.input" placeholder="* * * * * * *" id="password" class="form-control" formControlName="password" (keyup.enter)="actionSet()" [ngClass]="{'input-valid': password, 'input-error': noPassword,}" (change)="onPasswordChange('password')">
+                            <input [type]="config.input" placeholder="* * * * * * *" id="password" class="form-control" 
+                                formControlName="password" (keyup.enter)="actionSet()" 
+                                [ngClass]="{'input-valid': password, 'input-error': noPassword,}" (change)="onPasswordChange('password')"
+                            >
                             @if (validatePassword().length > 0) {
                                 <span class="input-group-text" (click)="previewPass()" title="{{ config.title }}">
                                     <i class="{{ config.icon }}"></i>
@@ -28,7 +32,15 @@
                         </div>
                     </div>
                 </div>
-                <input type="submit" id="button" [ngClass]="authForm.invalid ? 'btn-secondary' : 'btn-primary'" class="btn " value="Ingresar" [disabled]="authForm.invalid">
+                <input 
+                    type="submit" 
+                    id="button" 
+                    [ngClass]="authForm.invalid ? 'btn-secondary' : 'btn-primary'" 
+                    class="btn " value="Ingresar" 
+                    (click)="actionSet()"
+                    (keyup.enter)="actionSet()"
+                    [disabled]="authForm.invalid"
+                >
             </form>    
         </div>    
     </div>

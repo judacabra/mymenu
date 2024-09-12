@@ -1,0 +1,24 @@
+/* 
+    HTML
+*/
+a{
+    text-decoration: none;
+    color: #000000;
+    font-weight: bold;
+}
+
+/* 
+    IDS
+*/
+#body {
+    height: 35px;
+    background: var(--bg-1);
+}
+
+#copyright {
+    width: 60%;
+}
+
+#info {
+    width: 40%;
+}

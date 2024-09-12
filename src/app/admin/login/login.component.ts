@@ -1,8 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 import { ConfigView } from '@core/interfaces/configView';
+import { AuthService } from '@services/authService/auth.service';
+
 
 @Component({
     selector: 'app-login',
@@ -40,22 +43,23 @@ export default  class LoginComponent {
 
     private view: boolean = false;
     
-    constructor(private _formBuilder: FormBuilder) { }
+    constructor(private _formBuilder: FormBuilder, private _authService: AuthService, private router: Router) { }
 
     public actionSet(): void {
         if (this.authForm.valid) {
             const dataAuth = this.authForm.getRawValue();
+
+            console.log(dataAuth)
         
             if (dataAuth.username && dataAuth.password) {
                 this.setUser(dataAuth.username);
-                // this._authService.login(dataAuth.username, dataAuth.password).subscribe({
-                // next: (response) => {
-                //     this._authService.setCredentials(response?.access_token);
-                //     this.router.navigate(['/dashboard']);
-                // },
+                this._authService.login(dataAuth.username, dataAuth.password).subscribe({
+                next: () => {
+                    this.router.navigate(['/dashboard']);
+                },
         
-                // error: (error: Error) => { }
-                // })
+                error: (error) => { }
+                })
             }
         }
     }

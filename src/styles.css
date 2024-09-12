@@ -1,7 +1,14 @@
 /* 
     HTML
 */
-h1, h2, h3, p {
+:root{
+    --bg-1: #c6c4f0;
+    --bg-2: #234052;
+
+    --white: #ffffff;
+}
+
+h1, h2, h3, h4, p {
     margin: 0 !important;
 }
 

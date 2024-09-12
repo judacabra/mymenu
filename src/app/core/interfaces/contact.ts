@@ -1,4 +1,4 @@
-export interface Contacto {
+export interface Contact {
     numero: number,
     mensaje: string,
 }

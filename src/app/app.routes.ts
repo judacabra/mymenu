@@ -7,6 +7,26 @@ export const routes: Routes = [
     loadComponent: () => import('./admin/login/login.component'),
   },
   {
+    path: 'dashboard',
+    title: 'Dasboard',
+    loadComponent: () => import('./admin/dashboard/dashboard.component'),
+  },
+  {
+    path: 'products',
+    title: 'Productos',
+    loadComponent: () => import('./admin/dashboard/views/products/products.component'),
+  },
+  {
+    path: 'company',
+    title: 'Empresa',
+    loadComponent: () => import('./admin/dashboard/views/company/company.component'),
+  },
+  {
+    path: 'users',
+    title: 'Usuarios',
+    loadComponent: () => import('./admin/dashboard/views/users/users.component'),
+  },
+  {
     path: 'restaurant/home',
     title: 'Inicio',
     loadComponent: () => import('./restaurant/inicio/inicio.component'),

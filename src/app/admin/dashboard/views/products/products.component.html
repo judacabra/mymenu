@@ -1,0 +1,81 @@
+<div id="body" class="d-flex">
+    <div id="sidebar">
+        <app-dashboard-sidebar></app-dashboard-sidebar>
+    </div>
+    <div id="contenido">
+        <div id="navbar">
+            <app-dashboard-navbar [title]="'Productos'"></app-dashboard-navbar>
+        </div>
+        <div id="content" class="px-2 py-2">
+            <div id="options" class="d-flex pb-2">
+                <div id="filter" class="me-3 w-87">
+                    <input type="text" class="form-control" placeholder="Busca un producto..">
+                </div>
+                <div id="new">
+                    <input type="button" value="Nuevo Producto" class="btn btn-primary">
+                </div>
+            </div>
+            <div id="products">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th class="w-20 rnd-first-top">NOMBRE</th>
+                            <th class="w-30">DESCRIPCION</th>
+                            <th class="w-10 text-center">PRECIO</th>
+                            <th class="w-10 text-center">STOCK</th>
+                            <th class="w-10 text-center">IMG</th>
+                            <th class="w-10 rnd-last-top"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (product of paginatedProducts; track $index) {
+                        <tr>
+                            <td> {{ product.name }} </td>
+                            <td> {{ product.description }} </td>
+                            <td class="text-center"> {{ product.price }} </td>
+                            <td class="text-center"> {{ product.stock }} </td>
+                            <td class="text-center">
+                                <img src="{{ product.img }}" alt="img-product" class="img w-40 rounded"
+                                    data-bs-toggle="modal" [attr.data-bs-target]="'#'+product.id">
+                            </td>
+                            <td>
+                                <i class="fas fa-edit me-5 text-success-subtle" title="Editar"></i>
+                                <i class="fas fa-trash-alt text-danger" title="Eliminar"></i>
+                            </td>
+                        </tr>
+
+                        <!-- Product Modal -->
+                        <div class="modal fade" id="{{product.id }}" tabindex="-1" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <img src="{{ product.img }}" alt="product" class="img-on-popup">
+                            </div>
+                        </div>
+                        }
+                    </tbody>
+                </table>
+                <nav class="d-flex justify-content-end" aria-label="Page navigation">
+                    <ul class="pagination">
+                        <li class="page-item" [class.disabled]="currentPage === 1">
+                            <a class="page-link" (click)="changePage(currentPage - 1)" aria-label="Previous" title="Anterior">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                        @for (page of pages; track $index){
+                            <li class="page-item">
+                                <a class="page-link" [ngClass]="{'page-selected': page === currentPage}" (click)="changePage(page)">{{ page }}</a>
+                            </li>
+                        }
+                        <li class="page-item" [class.disabled]="currentPage === totalPages">
+                            <a class="page-link" (click)="changePage(currentPage + 1)" aria-label="Next" title="Siguiente">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+        <div id="footer">
+            <app-dashboard-footer></app-dashboard-footer>
+        </div>
+    </div>
+</div>

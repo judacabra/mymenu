@@ -2,8 +2,9 @@ export interface Product {
     id: number,
     name: string,
     description: string,
-    type: number,
+    id_type: number,
     img: string,
     price: number,
+    stock: number,
     recommended?: string,
 }
