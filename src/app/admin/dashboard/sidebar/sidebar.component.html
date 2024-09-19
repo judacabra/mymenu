@@ -1,11 +1,11 @@
 <div id="body">
     <div id="company-logo" class="pt-3 mb-3">
-        <img src="{{ path_img }}logo-empresa.png" alt="company-logo" id="company-logo" class="w-90 ms-2">
+        <img src="{{ path_img }}logo-empresa.png" alt="company-logo" id="company-logo" class="ps-3 w-80 ms-2">
     </div>
     <div id="options">
-        <ul id="views">
-            @for (view of views; track $index) {
-                <li title="Ir a {{ view.name }}" (click)="setURL(view.url)" class="px-3 py-2">
+        <ul id="views" class="px-3">
+            @for (view of viewsByPermissions(); track $index) {
+                <li title="Ir a {{ view.name }}" (click)="setURL(view.url)" class="px-3 py-2 rounded">
                     <i class="{{ view.icon }} me-3 w-10"></i> 
                     <span> {{ view.name }} </span>
                 </li>

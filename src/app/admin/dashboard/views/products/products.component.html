@@ -6,13 +6,13 @@
         <div id="navbar">
             <app-dashboard-navbar [title]="'Productos'"></app-dashboard-navbar>
         </div>
-        <div id="content" class="px-2 py-2">
+        <div id="content" class="px-3 py-2">
             <div id="options" class="d-flex pb-2">
                 <div id="filter" class="me-3 w-87">
-                    <input type="text" class="form-control" placeholder="Busca un producto..">
+                    <input type="text" class="form-control" id="search" placeholder="Busca un producto..">
                 </div>
                 <div id="new">
-                    <input type="button" value="Nuevo Producto" class="btn btn-primary">
+                    <input type="button" value="Nuevo Producto" class="btn btn-primary new">
                 </div>
             </div>
             <div id="products">

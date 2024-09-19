@@ -3,9 +3,28 @@
         <h4 id="title" class="fw-bold"> {{ title }} </h4>
     </div>
     <div id="config">
-        <div id="profile" class="d-flex align-items-center justify-content-center">
-            <img src="{{ path_img }}/user-icon.png" alt="user-img" id="user-img" class="me-3 w-20 br-50">
-            <strong> {{ user.name }} </strong>
+        <div id="profile" class="d-flex align-items-center">
+            <div id="user" class="py-1">
+                <strong> {{ user_logged.name }} </strong>
+                <ul class="dropdown-menu px-2 w-15">
+                    <li title="Empresa"  class="d-flex align-items-center py-2 px-3 rounded" (click)="noEvent($event)">
+                        <i class="fa-solid fa-building me-4"></i> 
+                        {{ user_logged.company_name }}
+                    </li>
+                    <li title="Perfil" class="d-flex align-items-center py-2 px-3 rounded" (click)="noEvent($event)">
+                        <i class="fa-solid fa-id-card me-3"></i> 
+                        {{ user_logged.profile_name }}
+                    </li>
+                    <hr class="my-2">
+                    <li class="d-flex align-items-center py-2 px-3 rounded" title="Salir del panel administrativo" (click)="setLogOut()"> 
+                        <i class="fas fa-sign-out-alt me-3"></i> 
+                        Cerrar Sesión 
+                    </li>
+                </ul>
+            </div>
+            <div id="img" data-bs-toggle="dropdown">
+                <i class="fas fa-cog"></i>
+            </div>
         </div>
     </div>
 </div>

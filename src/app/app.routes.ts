@@ -8,7 +8,7 @@ export const routes: Routes = [
   },
   {
     path: 'dashboard',
-    title: 'Dasboard',
+    title: 'Dashboard',
     loadComponent: () => import('./admin/dashboard/dashboard.component'),
   },
   {
@@ -17,14 +17,19 @@ export const routes: Routes = [
     loadComponent: () => import('./admin/dashboard/views/products/products.component'),
   },
   {
-    path: 'company',
-    title: 'Empresa',
-    loadComponent: () => import('./admin/dashboard/views/company/company.component'),
+    path: 'companys',
+    title: 'Empresas',
+    loadComponent: () => import('./admin/dashboard/views/companies/companies.component'),
   },
   {
     path: 'users',
     title: 'Usuarios',
     loadComponent: () => import('./admin/dashboard/views/users/users.component'),
+  },
+  {
+    path: 'profiles',
+    title: 'Perfiles',
+    loadComponent: () => import('./admin/dashboard/views/profiles/profiles.component'),
   },
   {
     path: 'restaurant/home',

@@ -23,10 +23,3 @@ li:hover {
     background: var(--bg-1);
     height: 100vh;
 }
-
-/* 
-    CLASSES
-*/
-.w-90 {
-    width: 90%;
-}

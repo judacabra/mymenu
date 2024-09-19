@@ -24,6 +24,7 @@ export default class InicioComponent implements OnInit {
     };
 
     public company: Company = {
+        id: 0,
         name: 'Devsoftone',
         nit: 0,
         description: 'Devsoftone es una empresa caleña de desarrollo de software.',

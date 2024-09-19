@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { NavbarDashboardComponent } from '../../navbar/navbar.component';
@@ -31,7 +31,6 @@ export default class ProductsComponent {
     public rowsPerPage = 8;
     public totalPages = 0;
     public pages: number[] = [];
-    public selectedProduct: Product | null = null;
 
     constructor(private listService: ListService) {
         this.getProducts();

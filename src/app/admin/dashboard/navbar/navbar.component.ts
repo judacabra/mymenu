@@ -1,12 +1,10 @@
 import { Component, Input } from '@angular/core';
 
-export interface User {
-    id: number,
-    name: string,
-    email: string,
-    password: string,
-    username: string,
-}
+import { AuthService } from '@services/authService/auth.service';
+import { UserService } from '@services/user/user.service';
+
+import { UserLogged } from '@core/interfaces/user_logged';
+
 
 @Component({
     selector: 'app-dashboard-navbar',
@@ -21,11 +19,42 @@ export class NavbarDashboardComponent {
 
     public path_img: string = '../../../public/img/';
 
-    public user: User = {
-        id: 1,
-        name: 'Julián Caicedo',
-        email: 'admin@devsoftone.com',
-        password: 'Devsoftone2012*',
-        username: 'admin',
+    public user_logged: UserLogged = {
+        id: 0,
+        name: '',
+        email: '',
+        company_name: '',
+        profile_name: '',
+        permissions: [
+            {
+                id: 0,
+                name: '',
+            }
+        ]
+    }
+
+    constructor(private userService: UserService, private authService: AuthService){
+        const username: string = sessionStorage.getItem('username')!;
+        this.getLoggedInfo(username);
+    }
+
+    public getLoggedInfo(username: string):void {
+        this.userService.get_logged_info(username).subscribe({
+            next: (response) => {
+                this.user_logged = response;
+            },
+            error: (error) => {
+                console.error("Error:", error);
+            }
+        });
+    }
+
+    public noEvent(event: Event):void {
+        event.stopPropagation();
+    }
+
+    public setLogOut(): void {
+        this.authService.logout();
+        this.authService.isNotAuthorized();
     }
 }

@@ -6,14 +6,14 @@ import { environment } from '../../../environments/environment';
 
 import { AlertService } from '@services/alertService/alert.service';
 
-import { Company } from '@core/interfaces/company';
-import { CompaniesInfo } from '@core/interfaces/companiesInfo';
+import { User } from '@core/interfaces/user'; 
+import { UserLogged } from '@core/interfaces/user_logged';
 
 @Injectable({
     providedIn: 'root'
 })
 
-export class CompanyService {
+export class UserService {
     private url = `${environment.apiUrl}`;
 
     private httpHeaders = new HttpHeaders({
@@ -22,29 +22,20 @@ export class CompanyService {
 
     constructor(private http: HttpClient, private alertService: AlertService) { }
 
-    public getCompanyById(id: number): Observable<Company> {    
+    public consultUsers(): Observable<User[]> {    
+        return this.http.get<User[]>(`${this.url}/users`, { headers: this.httpHeaders }).pipe(
+            catchError((e) => {
+                this.alertService.alert(e?.error?.detail, 'error');
+                return throwError(() => e);
+            })
+        );
+    }
+
+    public get_logged_info(username: string): Observable<UserLogged> { 
         let params = new HttpParams();
-        params = params.set('id', id); 
+        params = params.set('username', username);
 
-        return this.http.get<Company>(`${this.url}/company_by_id`, { params, headers: this.httpHeaders }).pipe(
-            catchError((e) => {
-                this.alertService.alert(e?.error?.detail, 'error');
-                return throwError(() => e);
-            })
-        );
-    }
-
-    public getCompaniesInfo(): Observable<CompaniesInfo> {    
-        return this.http.get<CompaniesInfo>(`${this.url}/companies_info`, { headers: this.httpHeaders }).pipe(
-            catchError((e) => {
-                this.alertService.alert(e?.error?.detail, 'error');
-                return throwError(() => e);
-            })
-        );
-    }
-
-    public consultCompanies(): Observable<Company[]> {    
-        return this.http.get<Company[]>(`${this.url}/companies`, { headers: this.httpHeaders }).pipe(
+        return this.http.get<UserLogged>(`${this.url}/logged_user`, { params, headers: this.httpHeaders }).pipe(
             catchError((e) => {
                 this.alertService.alert(e?.error?.detail, 'error');
                 return throwError(() => e);

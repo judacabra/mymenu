@@ -4,13 +4,49 @@
     </div>
     <div id="contenido">
         <div id="navbar">
-            <app-dashboard-navbar></app-dashboard-navbar>
+            <app-dashboard-navbar [title]="'Dashboard'"></app-dashboard-navbar>
         </div>
-        <div id="content">
-            &copy;
+        <div id="content" class="px-3 py-3">
+            <div class="container-fluid cards d-flex">
+                <div class="card me-5">
+                    <div class="card-body">
+                        <h5 class="card-text d-flex justify-content-center text-success fs-1"> 
+                            {{ companiesInfo.active }}
+                        </h5>
+                        <h5 class="mt-3 card-title text-center"> Empresas Activas </h5>
+                    </div>
+                </div>
+                <div class="card me-5">
+                    <div class="card-body">
+                        <h5 class="card-text d-flex justify-content-center text-danger fs-1"> 
+                            {{ companiesInfo.inactive }}
+                        </h5>
+                        <h5 class="mt-3 card-title text-center"> Empresas Inactivas </h5>
+                    </div>
+                </div>
+                <div class="card me-5">
+                    <div class="card-body">
+                        <h5 class="card-text d-flex justify-content-center text-primary fs-1"> 
+                            {{ companiesInfo.total }}
+                        </h5>
+                        <h5 class="mt-3 card-title text-center"> Total de Empresas </h5>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                        <h6> Del total de las empresas, tenemos: </h6>
+                        <div class="d-flex">
+                            {{ companiesInfo.porcent_active }} <h6>% <b class="text-success">activas</b>.</h6>
+                        </div>
+                        <div class="d-flex">
+                            {{ companiesInfo.porcent_inactive }} <h6>% <b class="text-danger">inactivas</b>.</h6>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
         <div id="footer">
             <app-dashboard-footer></app-dashboard-footer>
         </div>
-    </div>    
+    </div>
 </div>

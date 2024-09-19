@@ -5,61 +5,64 @@ import { Router } from '@angular/router';
 import { Observable, catchError, throwError } from 'rxjs';
 
 import { environment } from '../../../environments/environment';
+
+import { AlertService } from '@services/alertService/alert.service';
+
 import { Auth } from '@core/interfaces/auth';
 
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class AuthService {
 
-  private url = `${environment.apiUrl}`;
-  private httpHeaders = new HttpHeaders({
-    'Accept': 'application/json'
-  });
-
-  constructor(private http: HttpClient, private router: Router) { }
-
-  public login(username: string, pass: string): Observable<Auth> {
-    let params = new URLSearchParams();
-    params.set('username', username);
-    params.set('password', pass);
-
-    const transfer = this._getHttpTransfer();
-
-    return this.http.post<Auth>(`${this.url}/login`, params.toString(), { headers: transfer }).pipe(
-      catchError((e) => {
-        alert(e?.error?.detail);
-        return throwError(() => e);
-      })
-    );
-  }
-
-  private _getHttpTransfer(): HttpHeaders {
-    const httpHeaders = new HttpHeaders({
-      'Content-Type': 'application/x-www-form-urlencoded'
+    private url = `${environment.apiUrl}`;
+    private httpHeaders = new HttpHeaders({
+        'Accept': 'application/json'
     });
 
-    return httpHeaders;
-  }
+    constructor(private http: HttpClient, private router: Router, private alertService: AlertService) { }
 
-  public logout(): Observable<any> {
-    return this.http.post<any>(`${this.url}/`, null, { headers: this.httpHeaders }).pipe(
-      catchError((e) => {
-        alert(e?.error?.detail);
-        return throwError(() => e);
-      })
-    )
-  }
+    public login(username: string, pass: string): Observable<Auth> {
+        let params = new URLSearchParams();
+        params.set('username', username);
+        params.set('password', pass);
 
-  public isNotAuthorized(): void {
-    this.endSession();
-    this.router.navigate(['/admin']);
+        const transfer = this._getHttpTransfer();
 
-  }
+        return this.http.post<Auth>(`${this.url}/login`, params.toString(), { headers: transfer }).pipe(
+            catchError((e) => {
+                this.alertService.alert(e?.error?.detail, 'error');
+                return throwError(() => e);
+            })
+        );
+    }
 
-  private endSession(): void {
-    sessionStorage.clear();
-    localStorage.clear();
-  }
+    private _getHttpTransfer(): HttpHeaders {
+        const httpHeaders = new HttpHeaders({
+            'Content-Type': 'application/x-www-form-urlencoded'
+        });
+
+        return httpHeaders;
+    }
+
+    public logout(): Observable<any> {
+        return this.http.post<any>(`${this.url}/`, null, { headers: this.httpHeaders }).pipe(
+            catchError((e) => {
+                this.alertService.alert(e?.error?.detail, 'error');
+                return throwError(() => e);
+            })
+        )
+    }
+
+    public isNotAuthorized(): void {
+        this.endSession();
+        this.router.navigate(['/admin']);
+
+    }
+
+    private endSession(): void {
+        sessionStorage.clear();
+        localStorage.clear();
+    }
 }

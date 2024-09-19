@@ -2,14 +2,21 @@
     HTML
 */
 :root{
-    --bg-1: #c6c4f0;
-    --bg-2: #234052;
+    --bg-1:rgb(23, 24, 33);
+    --bg-2:rgb(33, 34, 45);
 
-    --white: #ffffff;
+    --white: rgb(255,255,255);
+
+    --cl-1:rgb(135, 136, 140);
+    --cl-2: rgb(210, 210, 210);
 }
 
 h1, h2, h3, h4, p {
     margin: 0 !important;
+}
+
+th, tr {
+    border-bottom: 0.5px solid rgba(255, 255, 255, 0.06) !important;
 }
 
 /* 
@@ -19,23 +26,18 @@ h1, h2, h3, h4, p {
     background: #9c807b !important;
     color: #ffffff !important;
 }
-
 .bg-brown:hover {
     background: #6d5b5b !important;
 }
-
 .br-none {
     border: none !important;
 }
-
 .pb-0 {
     padding-bottom: 0;
 }
-
 .cl-brown {
     color: #9c807b !important;
 }
-
 .d-flex-center{
     display: flex;
     justify-content: center;
@@ -44,8 +46,14 @@ h1, h2, h3, h4, p {
 .h100 {
     height: 100px;
 }
+.new {
+    color: var(--white) !important;
+}
 .w-10 {
     width: 10%;
+}
+.w-15 {
+    width: 15%;
 }
 .w-80 {
     width: 80%;

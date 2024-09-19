@@ -1,4 +1,12 @@
 /* 
+    HTML
+*/
+* {
+    font-family: 'Century Gothic', sans-serif;
+    color: var(--cl-1);
+}
+
+/* 
     IDS
 */
 #sidebar, #contenido {
@@ -17,4 +25,17 @@
 #sidebar{
     width: 15%;
     border-right: 0.5px solid var(--bg-2);
+}
+
+/* 
+    CLASSES
+*/
+.card {
+    width: 22%;
+    background: var(--bg-2);
+}
+
+.circle-number {
+    font-size: 60px;
+    background: var(--bg-1);
 }

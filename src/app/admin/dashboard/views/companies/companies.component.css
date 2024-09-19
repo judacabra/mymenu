@@ -8,12 +8,13 @@
 
 th {
     background: var(--bg-2);
-    color: var(--cl-1);
+    color: var(--white);
 }
 
 td {
     background: var(--bg-1);
-    color: var(--white);
+    color: var(--cl-1);
+
 }
 
 table {
@@ -70,42 +71,31 @@ nav ul li:hover {
     color: var(--cl-1);
 }
 
+#formulario {
+    width: 100%;
+    background: var(--bg-2);
+    color: var(--white);
+}
+
+#lbl-toggle {
+    margin: 0;
+}
+
 /* 
     CLASSES
 */
-.w-5 {
-    width: 5%;
+.form-switch {
+    padding: 0;
 }
 
-.w-20 {
-    width: 20%;
+.me-0 {
+    margin-left: 0;
 }
 
-.w-30 {
-    width: 30%;
-}
-
-.w-40 {
-    width: 40%;
-}
-
-.w-87 {
-    width: 87%;
-}
-
-.fa-pen-to-square,
-.fa-trash-can,
-.img {
-    cursor: pointer;
-}
-
-.fa-pen-to-square,
-.fa-trash-can {
-    font-size: 20px;
-}
-
-.img-on-popup {
-    width: 100%;
+.bg {
+    background: var(--bg-1);
+    border: none;
+    color: var(--cl-2);
 }
 
 .rnd-first-top {
@@ -119,4 +109,12 @@ nav ul li:hover {
 .page-selected {
     background: var(--bg-2) !important;
     color: var(--white) !important;
+}
+
+.fa-pen-to-square, .fa-trash-can {
+    cursor: pointer;
+}
+
+.modal-dialog, .modal-content {
+    background: none;
 }

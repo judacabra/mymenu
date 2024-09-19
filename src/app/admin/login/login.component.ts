@@ -1,11 +1,10 @@
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { ConfigView } from '@core/interfaces/configView';
 import { AuthService } from '@services/authService/auth.service';
-
 
 @Component({
     selector: 'app-login',
@@ -30,10 +29,6 @@ export default  class LoginComponent {
         password: ['', Validators.required],
     });
     
-    public resetForm = this._formBuilder.group({
-        email: ['', Validators.required],
-    });
-    
     public config: ConfigView = {
         input: 'password',
         title: 'Mostrar contraseña',
@@ -48,8 +43,6 @@ export default  class LoginComponent {
     public actionSet(): void {
         if (this.authForm.valid) {
             const dataAuth = this.authForm.getRawValue();
-
-            console.log(dataAuth)
         
             if (dataAuth.username && dataAuth.password) {
                 this.setUser(dataAuth.username);
@@ -87,7 +80,6 @@ export default  class LoginComponent {
             this.noPassword = true;
         }
     }
-
   
     public previewPass(): void {
         this.view = !this.view;
