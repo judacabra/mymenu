@@ -42,6 +42,7 @@ export class NavbarDashboardComponent {
         this.userService.get_logged_info(username).subscribe({
             next: (response) => {
                 this.user_logged = response;
+                sessionStorage.setItem('user_id', response.id.toString());
             },
             error: (error) => {
                 console.error("Error:", error);

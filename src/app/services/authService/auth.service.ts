@@ -55,6 +55,30 @@ export class AuthService {
         )
     }
 
+    public setCredentials(token: string): void {
+        const payload = JSON.parse(window.atob(token.split('.')[1]));
+        
+        sessionStorage.setItem('token', token);
+        sessionStorage.setItem('idUser', payload.sub);
+    }
+
+    public getCredentials(): string | null {
+        return sessionStorage.getItem('token') ?? null;
+    }
+
+    public isTokenExpired(): boolean {
+        const token = this.getCredentials() ? this.getCredentials() : null;
+        if (token && token.length > 0) {
+            const payload = JSON.parse(window.atob(token.split('.')[1]));
+            const date = new Date(0);
+            date.setUTCSeconds(payload.exp);
+
+            return new Date() < date;
+        }
+
+        return false;
+    }
+
     public isNotAuthorized(): void {
         this.endSession();
         this.router.navigate(['/admin']);

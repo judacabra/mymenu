@@ -35,16 +35,20 @@ export default class DashboardComponent {
     public getCompaniesInfo():void {
         this.companyService.getCompaniesInfo().subscribe({
             next: (response) => {
-                this.companiesInfo.total = response.total;
-                this.companiesInfo.active = response.active;
-                this.companiesInfo.inactive = response.total - response.active;
-                this.companiesInfo.porcent_active = Math.round((response.active / response.total) * 100);
-                this.companiesInfo.porcent_inactive = Math.round((this.companiesInfo.inactive / response.total) * 100);
+                this.setDashboardInfo(response);
             },
         
             error: (error) => { 
                 console.error(error)
             }
         })
+    }
+
+    public setDashboardInfo(data: any):void {
+        this.companiesInfo.total = data.total;
+        this.companiesInfo.active = data.active;
+        this.companiesInfo.inactive = data.total - data.active;
+        this.companiesInfo.porcent_active = Math.round((data.active / data.total) * 100);
+        this.companiesInfo.porcent_inactive = Math.round((this.companiesInfo.inactive / data.total) * 100);
     }
 }

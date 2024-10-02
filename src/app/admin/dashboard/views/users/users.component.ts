@@ -8,6 +8,7 @@ import { FooterDasboardComponent } from '../../footer/footer.component';
 import { User } from '@core/interfaces/user';
 
 import { UserService } from '@services/user/user.service';
+import { UserLogged } from '@core/interfaces/user_logged';
 
 @Component({
     selector: 'app-users',
@@ -30,13 +31,27 @@ export default class UsersComponent {
     public totalPages = 0;
     public pages: number[] = [];
 
+    public user_logged: UserLogged = {
+        id: 0,
+        name: '',
+        email: '',
+        company_name: '',
+        profile_name: '',
+        permissions: [
+            {
+                id: 0,
+                name: '',
+            },
+        ],
+    }
+
     constructor(private userService: UserService) {
-        this.getUsers();
+        this.getUsers(Number(sessionStorage.getItem('user_id')));
         this.updatePagination();
     }
 
-    public getUsers(): void {
-        this.userService.consultUsers().subscribe({
+    public getUsers(user_id: number): void {
+        this.userService.consultUsers(user_id).subscribe({
             next: (response) => {
                 this.users = response;
                 this.updatePagination();

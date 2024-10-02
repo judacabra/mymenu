@@ -8,12 +8,12 @@
 
 th {
     background: var(--bg-2);
-    color: var(--cl-1);
+    color: var(--white);
 }
 
 td {
     background: var(--bg-1);
-    color: var(--white);
+    color: var(--cl-1);
 }
 
 table {

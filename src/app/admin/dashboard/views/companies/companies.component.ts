@@ -29,31 +29,10 @@ export default class CompaniesComponent {
     public rowsPerPage = 8;
     public totalPages = 0;
     public pages: number[] = [];
-    
-    public company: Company = {
-        id: 0,
-        name: '',
-        nit: 0,
-        address: '',
-        active: true,
-        description: '',
-    };
 
     constructor(private companyService: CompanyService){
         this.getCompanies();
         this.updatePagination();
-    }
-
-    public getCompanyById(id: number):void {
-        this.companyService.getCompanyById(id).subscribe({
-            next: (response) => {
-                this.company = response;
-            },
-        
-            error: (error) => { 
-                console.error(error)
-            }
-        })
     }
 
     public getCompanies(): void {

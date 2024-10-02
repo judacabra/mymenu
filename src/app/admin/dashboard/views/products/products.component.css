@@ -6,6 +6,10 @@
     color: var(--cl-1);
 }
 
+input, select, textarea {
+    outline: none;
+}
+
 th {
     background: var(--bg-2);
     color: var(--white);
@@ -13,6 +17,7 @@ th {
 
 td {
     background: var(--bg-1);
+    color: var(--cl-1);
 }
 
 table {
@@ -117,5 +122,43 @@ nav ul li:hover {
 
 .page-selected {
     background: var(--bg-2) !important;
+    color: var(--white) !important;
+}
+
+.no-btn {
+    padding: 0;
+    margin: 0;
+    background: none;
+    width: 25px;
+    border: none;
+}
+
+.form-label {
+    color: var(--white);
+}
+
+.modal-content {
+    background: var(--bg-1) !important;
+}
+
+.modal-header,
+.modal-footer {
+    background: var(--bg-2) !important;
+}
+
+.modal-header {
+    border-bottom: 0.5px var(--cl-1) solid !important;
+}
+
+.modal-footer {
+    border-top: 0.5px var(--cl-1) solid !important;
+}
+
+.modal-title {
+    font-weight: bold;
+}
+
+.modal-title,
+.btn-close {
     color: var(--white) !important;
 }

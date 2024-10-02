@@ -1,9 +1,11 @@
+import { CompanyService } from './../../../services/company/company.service';
 import { Component } from '@angular/core';
 
 import { UserService } from '@services/user/user.service';
 
 import { Permission } from '@core/interfaces/permission';
 import { View } from '@core/interfaces/view';
+import { Company } from '@core/interfaces/company';
 
 @Component({
     selector: 'app-dashboard-sidebar',
@@ -15,6 +17,14 @@ import { View } from '@core/interfaces/view';
 
 export class SidebarDashboardComponent {
     public path_img: string = '../../../public/img/';
+
+    public company: Company = {
+        id: 0,
+        name: '',
+        description: '',
+        nit: 0,
+        active: true,
+    }
     
     public permissions: Permission[] = [];
 
@@ -51,9 +61,10 @@ export class SidebarDashboardComponent {
         },
     ]
 
-    constructor(private userService: UserService){
+    constructor(private userService: UserService, private companyService: CompanyService){
         const username: string = sessionStorage.getItem('username')!;
         this.getPermissions(username);
+        this.getcompanyInfo();
     }
 
     public getPermissions(username: string):void {
@@ -73,7 +84,20 @@ export class SidebarDashboardComponent {
         return this.views.filter(view => permissionNames.includes(view.name));
     }
 
-    public setURL(url:string):void {
+    public setURL(url: string): void {
         window.location.href = url;
+    }
+
+    public getcompanyInfo(): void {
+        var user_id = Number(sessionStorage.getItem('user_id'));
+
+        this.companyService.getCompanyByParam(user_id).subscribe({
+            next: (response) => {
+                this.company = response;
+            },
+            error: (error) => {
+                console.error("Error:", error);
+            }
+        });
     }
 }

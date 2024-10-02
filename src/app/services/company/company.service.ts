@@ -22,11 +22,18 @@ export class CompanyService {
 
     constructor(private http: HttpClient, private alertService: AlertService) { }
 
-    public getCompanyById(id: number): Observable<Company> {    
+    public getCompanyByParam(id?: number, name?: string): Observable<Company> {    
         let params = new HttpParams();
-        params = params.set('id', id); 
 
-        return this.http.get<Company>(`${this.url}/company_by_id`, { params, headers: this.httpHeaders }).pipe(
+        if (id) {
+            params = params.set('id', id); 
+        }
+
+        if (name) {
+            params = params.set('name', name); 
+        }
+
+        return this.http.get<Company>(`${this.url}/company_by_param`, { params, headers: this.httpHeaders }).pipe(
             catchError((e) => {
                 this.alertService.alert(e?.error?.detail, 'error');
                 return throwError(() => e);

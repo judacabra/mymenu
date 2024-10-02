@@ -22,8 +22,11 @@ export class UserService {
 
     constructor(private http: HttpClient, private alertService: AlertService) { }
 
-    public consultUsers(): Observable<User[]> {    
-        return this.http.get<User[]>(`${this.url}/users`, { headers: this.httpHeaders }).pipe(
+    public consultUsers(user_id: number): Observable<User[]> {    
+        let params = new HttpParams();
+        params = params.set('user_id', user_id);
+
+        return this.http.get<User[]>(`${this.url}/users`, { params, headers: this.httpHeaders }).pipe(
             catchError((e) => {
                 this.alertService.alert(e?.error?.detail, 'error');
                 return throwError(() => e);

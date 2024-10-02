@@ -8,6 +8,8 @@
         </ul>
     </div>
     <div id="info" class="h100 w-80 d-flex-center ">
-        <img src="../../../../public/img/logo-empresa.png" alt="Logoi empresa" id="logo-empresa">
+        @if (company.img != ''){
+            <img src="{{ path_img + company.img }}" alt="Logo-empresa" id="logo-empresa">
+        }
     </div>
 </div>

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable, catchError, throwError } from 'rxjs';
 
 import { environment } from '../../../environments/environment';
@@ -21,8 +21,11 @@ export class MenuService {
 
     constructor(private http: HttpClient, private alertService: AlertService) { }
 
-    public consultTypes(): Observable<TypeUrl[]> {    
-        return this.http.get<TypeUrl[]>(`${this.url}/type/menu`, { headers: this.httpHeaders }).pipe(
+    public consultTypesByCompany(company_id: number): Observable<TypeUrl[]> {  
+        let params = new HttpParams();
+        params = params.set('company_id', company_id);
+
+        return this.http.get<TypeUrl[]>(`${this.url}/type/menu`, {params, headers: this.httpHeaders }).pipe(
             catchError((e) => {
                 this.alertService.alert(e?.error?.detail, 'error');
                 return throwError(() => e);
