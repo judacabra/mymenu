@@ -1,10 +1,8 @@
 /* 
     HTML
 */
-a{
+a {
     text-decoration: none;
-    color: #000000;
-    font-weight: bold;
 }
 
 /* 
@@ -16,9 +14,22 @@ a{
 }
 
 #copyright {
-    width: 60%;
+    width: 40%;
 }
 
 #info {
-    width: 40%;
+    width: 60%;
+}
+
+#sf-link {
+    color: var(--white);
+    font-weight: bold;
+}
+
+#info a {
+    color: var(--cl-1);
+}
+
+#info a:hover {
+    color: var(--cl-2);
 }

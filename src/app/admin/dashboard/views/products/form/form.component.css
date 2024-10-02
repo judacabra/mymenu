@@ -1,0 +1,27 @@
+/* 
+    CLASSES
+*/
+.toggle-active {
+    position: absolute;
+    left: 36px;
+    color: #ffffff;
+    top: 327px;
+}
+
+.toggle-inactive {
+    position: absolute;
+    left: 80px;
+    color: #3F5FB7;
+    top: 327px;
+}
+
+.toggle-active:hover, 
+.toggle-inactive:hover {
+    cursor: pointer;
+}
+
+.form-control,
+.form-select {
+    background: var(--bg-2);
+    border: none;
+}

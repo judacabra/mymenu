@@ -20,6 +20,7 @@ export default class BookingsComponent {
     public isOther: boolean = false;
 
     public company: Company = {
+        id: 0,
         name: 'Devsoftone',
         nit: 0,
         description: 'Devsoftone es una empresa caleña de desarrollo de software.',

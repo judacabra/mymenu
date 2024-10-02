@@ -5,7 +5,7 @@
     <div id="login-form" class="w-50 d-flex flex-column align-items-center justify-content-center">
         <div id="form" class="shadow-radius-2 px-5 py-5">
             <div id="title" class="mb-3">
-                <h3 class="text-primary text-center fw-bold"> Inicio de Sesión </h3>
+                <h3 class="text-center fw-bold"> Inicio de Sesión </h3>
             </div>
             <form class="d-flex flex-column" [formGroup]="authForm">
                 <div class="input-group mb-3 dp-flex-L">
@@ -18,15 +18,15 @@
                 </div>
                 <div class="input-group mb-2 dp-flex-L">
                     <label for="password" class="mb-2"> <small> Contraseña </small> </label>
-                    <div class="input-oval bg-white d-flex justify-content-between align-items-center mb-3">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
                         <div class="input-group mb-3">
                             <input [type]="config.input" placeholder="* * * * * * *" id="password" class="form-control" 
                                 formControlName="password" (keyup.enter)="actionSet()" 
                                 [ngClass]="{'input-valid': password, 'input-error': noPassword,}" (change)="onPasswordChange('password')"
                             >
                             @if (validatePassword().length > 0) {
-                                <span class="input-group-text" (click)="previewPass()" title="{{ config.title }}">
-                                    <i class="{{ config.icon }}"></i>
+                                <span class="input-group-text" [ngClass]="{'input-valid': password}" (click)="previewPass()" title="{{ config.title }}">
+                                    <i [ngClass]="config.icon"></i>
                                 </span>
                             }
                         </div>

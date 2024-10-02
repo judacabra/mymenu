@@ -1,0 +1,120 @@
+/* 
+    HTML
+*/
+* {
+    font-family: 'Century Gothic', sans-serif;
+    color: var(--cl-1);
+}
+
+th {
+    background: var(--bg-2);
+    color: var(--white);
+}
+
+td {
+    background: var(--bg-1);
+    color: var(--cl-1);
+
+}
+
+table {
+    font-size: 15px;
+}
+
+nav {
+    position: absolute;
+    bottom: 30px;
+    right: 15px;
+}
+
+nav ul li a {
+    background: var(--bg-1);
+    color: #000;
+}
+
+nav ul li {
+    cursor: pointer;
+}
+
+nav ul li:hover {
+    background: var(--bg-2);
+}
+
+/* 
+    IDS
+*/
+#sidebar, #contenido {
+    height: 100vh;
+}
+
+#contenido {
+    width: 85%;
+}
+
+#content {
+    height: 85vh;
+    background: var(--bg-1);
+}
+
+#sidebar{
+    width: 15%;
+    border-right: 0.5px solid var(--bg-2);
+}
+
+#search {
+    background: var(--bg-2);
+    border: none;
+    color: var(--cl-2);
+}
+
+#search::placeholder{
+    color: var(--cl-1);
+}
+
+#formulario {
+    width: 100%;
+    background: var(--bg-2);
+    color: var(--white);
+}
+
+#lbl-toggle {
+    margin: 0;
+}
+
+/* 
+    CLASSES
+*/
+.form-switch {
+    padding: 0;
+}
+
+.me-0 {
+    margin-left: 0;
+}
+
+.bg {
+    background: var(--bg-1);
+    border: none;
+    color: var(--cl-2);
+}
+
+.rnd-first-top {
+    border-radius: 10px 0 0 0;
+}
+
+.rnd-last-top {
+    border-radius: 0 10px 0 0;
+}
+
+.page-selected {
+    background: var(--bg-2) !important;
+    color: var(--white) !important;
+}
+
+.fa-pen-to-square, .fa-trash-can {
+    cursor: pointer;
+}
+
+.modal-dialog, .modal-content {
+    background: none;
+}

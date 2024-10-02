@@ -1,0 +1,78 @@
+/* 
+    HTML
+*/
+*{
+    text-decoration: none;
+    list-style: none;
+    font-family: 'Century gothic', sans-serif;
+}
+
+h3 {
+    margin: 0;
+    color: var(--cl-1);
+}
+
+ul {
+    margin: 0;
+}
+
+a {
+    color: var(--cl-1);
+}
+
+li:hover {
+    background: var(--bg-2);
+    color: var(--cl-2);
+}
+
+/* 
+    IDS
+*/
+#body {
+    background: var(--bg-2);
+}
+
+#bg_home {
+    width: 100%;
+}
+
+#navbar, #footer {
+    height: 80px;
+    width: 100%;
+    background: var(--bg-1); 
+}
+
+#company {
+    width: 30%;
+}
+
+#urls {
+    width: 40%;
+}
+
+#auth {
+    width: 30%;
+}
+
+#logo-company {
+    height: 65px;
+}
+
+#content, #copyright {
+    width: 100%;
+    color: var(--white);
+}
+
+#mymenu-example{
+    height: 550px;
+    background: url('../../../public/img/bg-home.png');
+}
+
+#our {
+    height: 400px;
+}
+
+#clients {
+    height: 250px;
+    background: url('../../../public/img/bg-white.png') no-repeat 100%;
+}

@@ -1,11 +1,10 @@
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { ConfigView } from '@core/interfaces/configView';
 import { AuthService } from '@services/authService/auth.service';
-
 
 @Component({
     selector: 'app-login',
@@ -18,22 +17,18 @@ import { AuthService } from '@services/authService/auth.service';
     styleUrl: './login.component.css'
 })
 
-export default  class LoginComponent {
+export default class LoginComponent {
     public path_logo: string = '../../../public/img/mm-logo.png';
-    public username: boolean = false; 
-    public noUsername: boolean = false; 
-    public password: boolean = false; 
+    public username: boolean = false;
+    public noUsername: boolean = false;
+    public password: boolean = false;
     public noPassword: boolean = false;
-    
+
     public authForm = this._formBuilder.group({
         username: ['', Validators.required],
         password: ['', Validators.required],
     });
-    
-    public resetForm = this._formBuilder.group({
-        email: ['', Validators.required],
-    });
-    
+
     public config: ConfigView = {
         input: 'password',
         title: 'Mostrar contraseña',
@@ -42,23 +37,24 @@ export default  class LoginComponent {
     }
 
     private view: boolean = false;
-    
+
     constructor(private _formBuilder: FormBuilder, private _authService: AuthService, private router: Router) { }
 
     public actionSet(): void {
         if (this.authForm.valid) {
             const dataAuth = this.authForm.getRawValue();
 
-            console.log(dataAuth)
-        
             if (dataAuth.username && dataAuth.password) {
                 this.setUser(dataAuth.username);
                 this._authService.login(dataAuth.username, dataAuth.password).subscribe({
-                next: () => {
-                    this.router.navigate(['/dashboard']);
-                },
-        
-                error: (error) => { }
+                    next: (response) => {
+                        this._authService.setCredentials(response.access_token);
+                        this.router.navigate(['/dashboard']);
+                    },
+
+                    error: (error) => {
+                        console.error(error)
+                    }
                 })
             }
         }
@@ -67,7 +63,7 @@ export default  class LoginComponent {
     public onUsernameChange(nameValidator: string): void {
         const control = this.authForm.get(nameValidator);
 
-        if(control?.value != ''){
+        if (control?.value != '') {
             this.username = true;
             this.noUsername = false;
         } else {
@@ -79,7 +75,7 @@ export default  class LoginComponent {
     public onPasswordChange(nameValidator: string): void {
         const control = this.authForm.get(nameValidator);
 
-        if(control?.value != ''){
+        if (control?.value != '') {
             this.password = true;
             this.noPassword = false;
         } else {
@@ -88,15 +84,14 @@ export default  class LoginComponent {
         }
     }
 
-  
     public previewPass(): void {
         this.view = !this.view;
 
         this.config = {
-          input: this.view ? 'password' : 'text',
-          title: this.view ? 'Mostrar contraseña' : 'Ocultar contraseña',
-          icon: this.view ? 'fas fa-eye' : 'fas fa-eye-slash',
-          helpText: this.view ? 'View Password Icon' : 'No view Password Icon',
+            input: this.view ? 'password' : 'text',
+            title: this.view ? 'Mostrar contraseña' : 'Ocultar contraseña',
+            icon: this.view ? 'fas fa-eye' : 'fas fa-eye-slash',
+            helpText: this.view ? 'View Password Icon' : 'No view Password Icon',
         }
     }
 
@@ -106,7 +101,7 @@ export default  class LoginComponent {
 
     public validatePassword(): string {
         const pass = this.authForm.get('password')?.value;
-        
+
         return (pass ?? '');
     }
 }
