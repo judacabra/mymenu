@@ -1,15 +1,27 @@
 /* 
     HTML
 */
-:root{
-    --bg-1: #c6c4f0;
-    --bg-2: #234052;
+:root {
+    --bg-1: rgb(23, 24, 33);
+    --bg-2: rgb(33, 34, 45);
 
-    --white: #ffffff;
+    --white: rgb(255, 255, 255);
+
+    --cl-1: rgb(135, 136, 140);
+    --cl-2: rgb(210, 210, 210);
 }
 
-h1, h2, h3, h4, p {
+h1,
+h2,
+h3,
+h4,
+p {
     margin: 0 !important;
+}
+
+th,
+tr {
+    border-bottom: 0.5px solid rgba(255, 255, 255, 0.06) !important;
 }
 
 /* 
@@ -36,17 +48,57 @@ h1, h2, h3, h4, p {
     color: #9c807b !important;
 }
 
-.d-flex-center{
+.d-flex-center {
     display: flex;
     justify-content: center;
     align-items: center;
 }
+
 .h100 {
     height: 100px;
 }
+
+.form-control,
+.form-select {
+    color: var(--cl-2) !important;
+}
+
+.form-control::placeholder {
+    color: var(--cl-1) !important;
+}
+
+.form-check-input {
+    margin: 0 !important;
+    width: 110px !important;
+    height: 30px !important;
+    cursor: pointer !important;
+}
+
+.invisible {
+    display: none;
+}
+
+.new {
+    color: var(--white) !important;
+}
+
+.p-0 {
+    padding: 0;
+}
+
+.visible {
+    display: block;
+    font-weight: bold;
+}
+
 .w-10 {
     width: 10%;
 }
+
+.w-15 {
+    width: 15%;
+}
+
 .w-80 {
     width: 80%;
 }

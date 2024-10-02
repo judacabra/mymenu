@@ -1,0 +1,108 @@
+<div id="body" class="d-flex">
+    <div id="sidebar">
+        <app-dashboard-sidebar></app-dashboard-sidebar>
+    </div>
+    <div id="contenido">
+        <div id="navbar">
+            <app-dashboard-navbar [title]="'Empresas'"></app-dashboard-navbar>
+        </div>
+        <div id="content" class="px-3 py-3">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th class="w-20 rnd-first-top">NOMBRE</th>
+                        <th>NIT</th>
+                        <th class="w-20">DESCRIPCION</th>
+                        <th class="w-10 text-center">ACTIVE</th>
+                        <th class="w-10 rnd-last-top"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (company of paginatedCompanies; track $index) {
+                        <tr>
+                            <td> {{ company.name }} </td>
+                            <td> {{ company.nit }} </td>
+                            <td> {{ company.description }} </td>
+                            <td class="text-center"> 
+                                <i 
+                                    class="fa-solid fs-4" 
+                                    [ngClass]="{
+                                        'fa-check text-success' : company.active, 
+                                        'fa-xmark text-danger' : !company.active
+                                    }"
+                                ></i>
+                            </td>
+                            <td>
+                                <i 
+                                    class="fas fa-edit me-5 text-success-subtle" 
+                                    title="Editar" 
+                                    [attr.data-bs-toggle]="'modal'"
+                                    [attr.data-bs-target]="'#update-' + company.id"
+                                ></i>
+                                <i class="fas fa-trash-alt text-danger" title="Eliminar"></i>
+                            </td>
+                        </tr>
+                        <!-- Update company Modal -->
+                        <div class="modal fade" id="update-{{ company.id }}" tabindex="-1" aria-hidden="true">
+                            <div class="modal-dialog ">
+                                <div class="modal-content">
+                                    <div class="modal-body pt-0">
+                                        <div id="formulario" class="container mt-2 px-3 py-3 rounded">
+                                            <form>
+                                                <div class="mb-3">
+                                                    <label for="name" class="form-label"> Nombre </label>
+                                                    <input type="text" class="form-control bg" id="name" value="{{ company.name }}">
+                                                </div>                    
+                                                <div class="mb-3">
+                                                    <label for="nit" class="form-label"> Nit </label>
+                                                    <input type="text" class="form-control bg" id="nit" value="{{ company.nit }}">
+                                                </div>                    
+                                                <div class="mb-3">
+                                                    <label for="address" class="form-label"> Dirección </label>
+                                                    <input type="text" class="form-control bg" id="address" value="{{ company.address }}">
+                                                </div>
+                                                <div class="form-check form-switch d-flex flex-column row-reverse mb-3">
+                                                    <label for="toggle" id="lbl-toggle" class="form-label"> Activa </label>
+                                                    <input class="form-check-input me-0" type="checkbox" role="switch" id="toggle" [checked]="company.active">
+                                                </div>
+                                                <div class="mb-4">
+                                                    <label for="description" class="form-label"> Descripción </label>
+                                                    <textarea class="form-control bg" id="description"> {{ company.description }} </textarea>
+                                                </div>
+                                                <div class="d-flex justify-content-center">
+                                                    <button type="submit" class="btn btn-primary w-25 new"> Actualizar </button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </tbody>
+            </table>
+            <!-- <nav class="d-flex justify-content-end" aria-label="Page navigation">
+                <ul class="pagination">
+                    <li class="page-item" [class.disabled]="currentPage === 1">
+                        <a class="page-link" (click)="changePage(currentPage - 1)" aria-label="Previous" title="Anterior">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                    @for (page of pages; track $index){
+                        <li class="page-item">
+                            <a class="page-link" [ngClass]="{'page-selected': page === currentPage}" (click)="changePage(page)">{{ page }}</a>
+                        </li>
+                    }
+                    <li class="page-item" [class.disabled]="currentPage === totalPages">
+                        <a class="page-link" (click)="changePage(currentPage + 1)" aria-label="Next" title="Siguiente">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav> -->
+        </div>
+        <div id="footer">
+            <app-dashboard-footer></app-dashboard-footer>
+        </div>
+    </div>
+</div>

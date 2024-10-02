@@ -6,13 +6,14 @@
         <div id="navbar">
             <app-dashboard-navbar [title]="'Productos'"></app-dashboard-navbar>
         </div>
-        <div id="content" class="px-2 py-2">
+        <div id="content" class="px-3 py-2">
             <div id="options" class="d-flex pb-2">
                 <div id="filter" class="me-3 w-87">
-                    <input type="text" class="form-control" placeholder="Busca un producto..">
+                    <input type="text" class="form-control" id="search" placeholder="Busca un producto..">
                 </div>
                 <div id="new">
-                    <input type="button" value="Nuevo Producto" class="btn btn-primary">
+                    <input type="button" value="Nuevo Producto" data-bs-toggle="modal" data-bs-target="#productsForm"
+                        class="btn btn-primary new" (click)="setMode('Insertar')">
                 </div>
             </div>
             <div id="products">
@@ -35,38 +36,65 @@
                             <td class="text-center"> {{ product.price }} </td>
                             <td class="text-center"> {{ product.stock }} </td>
                             <td class="text-center">
-                                <img src="{{ product.img }}" alt="img-product" class="img w-40 rounded"
+                                <img src="{{ path_img + product.img }}" alt="img-product" class="img w-40 rounded"
                                     data-bs-toggle="modal" [attr.data-bs-target]="'#'+product.id">
                             </td>
                             <td>
-                                <i class="fas fa-edit me-5 text-success-subtle" title="Editar"></i>
-                                <i class="fas fa-trash-alt text-danger" title="Eliminar"></i>
+                                <button data-bs-toggle="modal" data-bs-target="#productsForm" (click)="setMode('Modificar')" class="no-btn me-2">
+                                    <i class="fas fa-edit text-success-subtle" title="Editar"></i>
+                                </button>
+                                <button (click)="verifyDeleteProduct(product.id)" class="no-btn">
+                                    <i class="fas fa-trash-alt text-danger" title="Eliminar"></i>
+                                </button>
                             </td>
                         </tr>
 
-                        <!-- Product Modal -->
+                        <!-- Product Img Modal -->
                         <div class="modal fade" id="{{product.id }}" tabindex="-1" aria-hidden="true">
                             <div class="modal-dialog">
-                                <img src="{{ product.img }}" alt="product" class="img-on-popup">
+                                <img src="{{ path_img + product.img }}" alt="product" class="img-on-popup">
                             </div>
                         </div>
                         }
                     </tbody>
                 </table>
+
+                <!-- Modal Form -->
+                <div class="modal fade" id="productsForm" tabindex="-1" aria-labelledby="ModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-dialog-scrolleable">
+                        <div class="modal-content">
+                            <div class="modal-header" data-bs-theme="dark">
+                                <h1 class="modal-title fs-5" id="exampleModalLabel"> {{ mode.action }} Producto</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <app-form-products [product]="product"></app-form-products>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-primary text-white"> {{ mode.actioner }} </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <nav class="d-flex justify-content-end" aria-label="Page navigation">
                     <ul class="pagination">
                         <li class="page-item" [class.disabled]="currentPage === 1">
-                            <a class="page-link" (click)="changePage(currentPage - 1)" aria-label="Previous" title="Anterior">
+                            <a class="page-link" (click)="changePage(currentPage - 1)" aria-label="Previous"
+                                title="Anterior">
                                 <span aria-hidden="true">&laquo;</span>
                             </a>
                         </li>
                         @for (page of pages; track $index){
-                            <li class="page-item">
-                                <a class="page-link" [ngClass]="{'page-selected': page === currentPage}" (click)="changePage(page)">{{ page }}</a>
-                            </li>
+                        <li class="page-item">
+                            <a class="page-link" [ngClass]="{'page-selected': page === currentPage}"
+                                (click)="changePage(page)">{{ page }}</a>
+                        </li>
                         }
                         <li class="page-item" [class.disabled]="currentPage === totalPages">
-                            <a class="page-link" (click)="changePage(currentPage + 1)" aria-label="Next" title="Siguiente">
+                            <a class="page-link" (click)="changePage(currentPage + 1)" aria-label="Next"
+                                title="Siguiente">
                                 <span aria-hidden="true">&raquo;</span>
                             </a>
                         </li>

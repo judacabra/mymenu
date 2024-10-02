@@ -3,6 +3,11 @@
 */
 * {
     font-family: 'Century Gothic', sans-serif;
+    color: var(--cl-1);
+}
+
+input, select, textarea {
+    outline: none;
 }
 
 th {
@@ -12,6 +17,7 @@ th {
 
 td {
     background: var(--bg-1);
+    color: var(--cl-1);
 }
 
 table {
@@ -21,7 +27,7 @@ table {
 nav {
     position: absolute;
     bottom: 30px;
-    right: 5px;
+    right: 15px;
 }
 
 nav ul li a {
@@ -56,6 +62,16 @@ nav ul li:hover {
 #sidebar{
     width: 15%;
     border-right: 0.5px solid var(--bg-2);
+}
+
+#search {
+    background: var(--bg-2);
+    border: none;
+    color: var(--cl-2);
+}
+
+#search::placeholder{
+    color: var(--cl-1);
 }
 
 /* 
@@ -106,5 +122,43 @@ nav ul li:hover {
 
 .page-selected {
     background: var(--bg-2) !important;
+    color: var(--white) !important;
+}
+
+.no-btn {
+    padding: 0;
+    margin: 0;
+    background: none;
+    width: 25px;
+    border: none;
+}
+
+.form-label {
+    color: var(--white);
+}
+
+.modal-content {
+    background: var(--bg-1) !important;
+}
+
+.modal-header,
+.modal-footer {
+    background: var(--bg-2) !important;
+}
+
+.modal-header {
+    border-bottom: 0.5px var(--cl-1) solid !important;
+}
+
+.modal-footer {
+    border-top: 0.5px var(--cl-1) solid !important;
+}
+
+.modal-title {
+    font-weight: bold;
+}
+
+.modal-title,
+.btn-close {
     color: var(--white) !important;
 }

@@ -1,0 +1,74 @@
+<div id="body">
+    <form [formGroup]="productForm">
+        <div class="mb-3">
+            <label for="name" class="form-label"> Nombre: </label>
+            <input type="email" class="form-control" id="name" formControlName="name" placeholder="Ejemplo: Pizza" 
+                value="{{ product.name }}">
+        </div>
+        <div class="mb-3">
+            <label for="description" class="form-label"> Descripción: </label>
+            <textarea type="email" class="form-control" id="description" formControlName="description"
+                placeholder="Ejemplo: Pizza artesanal grande...">{{ product.description }}</textarea>
+        </div>
+        <div class="mb-3">
+            <label for="name" class="form-label"> Tipo: </label>
+            <select class="form-select" aria-label="type select" formControlName="id_type">
+                <option [selected]="product.id_type == 0"> Seleccione un tipo </option>
+                @for (type of types; track $index){
+                    @if(type.name != ''){
+                        <option value="{{ type.id }}"> {{ type.name }} </option>
+                    }
+                }
+            </select>
+        </div>
+        <div class="form-check form-switch d-flex flex-column p-0 mb-3">
+            <div>
+                <label for="recommended" class="form-label"> ¿Recomendado del chef?: </label>
+            </div>
+            <div>
+                <input class="form-check-input" id="recommended" formControlName="recommended" type="checkbox" 
+                    [checked]="product.recommended == 'SI'" (change)="changeToggleText();" value="{{ product.recommended }}">
+                <span class="toggle-inactive" [ngClass]="{
+                        'visible' : product.recommended == 'NO',
+                        'invisible': product.recommended == 'SI'
+                    }"
+                >
+                    NO
+                </span>
+                <span class="toggle-active" [ngClass]="{
+                        'visible' : product.recommended == 'SI',
+                        'invisible': product.recommended == 'NO'
+                    }"
+                >
+                    SI
+                </span>
+            </div>
+        </div>
+        <div>      
+            <div>
+                <label for="price" class="form-label"> Precio: </label>
+            </div>
+            <div class="input-group mb-3">
+                <span class="input-group-text">$</span>
+                <input id="price" class="form-control" aria-label="COP, Peso colombiano" value="{{ product.price }}">
+            </div>
+        </div>
+        <div>      
+            <div>
+                <label for="stock" class="form-label"> Cantidad en stock: </label>
+            </div>
+            <div class="input-group mb-3">
+                <span class="input-group-text"> Und </span>
+                <input id="stock" class="form-control" aria-label="Unidades" value="{{ product.stock }}">
+            </div>
+        </div>
+        <div class="mb-3">
+            <label for="img" class="form-label"> Imagen: </label>
+            <input class="form-control" type="file" id="img" formControlName="img" (change)="verifyIMG($event)">
+        </div>
+        <div class="mb-3 d-none">
+            <label for="company" class="form-label"> Company: </label>
+            <input type="email" class="form-control" id="company" formControlName="id_company" value="{{ product.id_company }}">
+        </div>
+    </form>
+</div>

@@ -1,6 +1,12 @@
 import { Routes } from '@angular/router';
+import { authGuard } from '@core/authGuard/auth.guard';
 
 export const routes: Routes = [
+  {
+    path: 'index',
+    title: 'MyMenu',
+    loadComponent: () => import('./webpage/webpage.component'),
+  },
   {
     path: 'admin',
     title: 'Login',
@@ -8,57 +14,62 @@ export const routes: Routes = [
   },
   {
     path: 'dashboard',
-    title: 'Dasboard',
+    title: 'Dashboard',
     loadComponent: () => import('./admin/dashboard/dashboard.component'),
+    canActivate: [authGuard],
   },
   {
     path: 'products',
     title: 'Productos',
     loadComponent: () => import('./admin/dashboard/views/products/products.component'),
+    canActivate: [authGuard],
   },
   {
-    path: 'company',
-    title: 'Empresa',
-    loadComponent: () => import('./admin/dashboard/views/company/company.component'),
+    path: 'companys',
+    title: 'Empresas',
+    loadComponent: () => import('./admin/dashboard/views/companies/companies.component'),
+    canActivate: [authGuard],
   },
   {
     path: 'users',
     title: 'Usuarios',
     loadComponent: () => import('./admin/dashboard/views/users/users.component'),
+    canActivate: [authGuard],
   },
   {
-    path: 'restaurant/home',
+    path: 'profiles',
+    title: 'Perfiles',
+    loadComponent: () => import('./admin/dashboard/views/profiles/profiles.component'),
+    canActivate: [authGuard],
+  },
+  {
+    path: ':restaurant/home',
     title: 'Inicio',
     loadComponent: () => import('./restaurant/inicio/inicio.component'),
   },
   {
-    path: 'restaurant/menu',
+    path: ':restaurant/menu',
     title: 'Menu',
     loadComponent: () => import('./restaurant/menu/menu.component'),
   },
   {
-    path: 'restaurant/menu/list',
+    path: ':restaurant/menu/list',
     title: 'Menu',
     loadComponent: () => import('./restaurant/menu/list/list.component'),
   },
   {
-    path: 'restaurant/bookings',
+    path: ':restaurant/bookings',
     title: 'Reservas',
     loadComponent: () => import('./restaurant/bookings/bookings.component'),
   },
   {
-    path: 'restaurant/contact',
-    title: 'Contacto',
-    loadComponent: () => import('./restaurant/contact/contact.component'),
-  },
-  {
     path: '',
-    redirectTo: 'restaurant/home',
+    redirectTo: 'index',
     pathMatch: 'full',
   },
   {
     path: '**',
-    redirectTo: 'restaurant/home',
+    redirectTo: 'index',
     pathMatch: 'full',
   },
 ];

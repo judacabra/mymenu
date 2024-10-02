@@ -1,14 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
-import { ListService } from '@services/list/list.service';
+import { FooterComponent } from '../../footer/footer.component';
+import { NavbarComponent } from '../../navbar/navbar.component';
+
+import { ProductService } from '@services/product/product.service';
+import { MenuService } from '@services/menu/menu.service';
 
 import { TypeUrl } from '@core/interfaces/type-url';
 import { Product } from '@core/interfaces/product';
+import { Company } from '@core/interfaces/company';
+import { CompanyService } from '@services/company/company.service';
 
-import { NavbarComponent } from '../../navbar/navbar.component';
-import { FooterComponent } from '../../footer/footer.component';
-import { MenuService } from '@services/menu/menu.service';
 
 @Component({
     selector: 'app-list',
@@ -19,23 +22,33 @@ import { MenuService } from '@services/menu/menu.service';
     ],
     templateUrl: './list.component.html',
     styleUrl: './list.component.css',
-    providers: [
-        ListService
-    ],
 })
 
-export default class ListComponent implements OnInit {
-    public pathImg: string = '../../../../public/'; 
+export default class ListComponent {
+    public pathImg: string = '../../../../../public/img/'; 
+    public restaurant: string = ''; 
+    
+    public company: Company = {
+        id: 0,
+        name: '',
+        img: '',
+        nit: 0,
+        description: '',
+        active: true, 
+    };
+
     public types: TypeUrl[] = [];
     public typeRecommended: TypeUrl[] = [];
     public products: Product[] = [];
 
-    constructor(private route: ActivatedRoute, private listService: ListService, private menuService:MenuService){}
+    constructor(private route: ActivatedRoute, private productService: ProductService, 
+        private menuService:MenuService, private companyService: CompanyService
+    ){
+        this.route.paramMap.subscribe(params => {
+            this.restaurant = params.get('restaurant')!;
+        });
 
-    ngOnInit(): void {
-        this.getAllTypes();
-        this.getTypeRecommended();
-        this.getProducts();
+        this.getCompanyInfo(this.restaurant);
     }
 
     ngAfterViewInit(): void {
@@ -52,8 +65,8 @@ export default class ListComponent implements OnInit {
         }, 200); 
     }
 
-    public getAllTypes(): void {
-        this.menuService.consultTypes().subscribe({
+    public getAllTypesByCompany(company_id: number): void {
+        this.menuService.consultTypesByCompany(company_id).subscribe({
             next: (response) => {
                 this.types = response;
             },
@@ -63,8 +76,8 @@ export default class ListComponent implements OnInit {
         });
     }
     
-    public getProducts(): void {
-        this.listService.consultProducts().subscribe({
+    public getProductsByCompany(company_id: number): void {
+        this.productService.consultProductsByCompany(company_id).subscribe({
             next: (response) => {
                 this.products = response; 
 
@@ -84,8 +97,8 @@ export default class ListComponent implements OnInit {
         return this.products.filter(product => product.recommended === 'SI');
     }
 
-    public getTypeRecommended(): void {
-        this.listService.typeRecommended().subscribe({
+    public getTypeRecommendedByCompany(company_id: number): void {
+        this.productService.typeRecommendedByCompany(company_id).subscribe({
             next: (response) => {
                 this.typeRecommended = response;
             },
@@ -106,5 +119,21 @@ export default class ListComponent implements OnInit {
         }
 
         return result;
+    }
+
+    public getCompanyInfo(restaurant: string): void {
+        this.companyService.getCompanyByParam(undefined, restaurant).subscribe({
+            next: (response) => {
+                this.company = response;
+
+                this.getAllTypesByCompany(response.id);
+                this.getTypeRecommendedByCompany(response.id);
+                this.getProductsByCompany(response.id);
+            },
+        
+            error: (error) => {
+                console.error(error);
+            }
+        })
     }
 }
