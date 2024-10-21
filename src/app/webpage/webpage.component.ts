@@ -1,11 +1,13 @@
-import { Component, CUSTOM_ELEMENTS_SCHEMA, OnInit } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, ElementRef, HostListener, OnInit } from '@angular/core';
 import { register } from 'swiper/element/bundle';
+import lottie from 'lottie-web';
 
 import { CompanyService } from '@services/company/company.service';
+import { AlertService } from '@services/alertService/alert.service';
 
 import { Company } from '@core/interfaces/company';
 
-export interface Section{
+export interface Section {
     name: string,
     url: string
 }
@@ -22,19 +24,19 @@ export interface Section{
 })
 
 export default class WebpageComponent implements OnInit {
-    public path_img: string = '../../../../../public/img/';
+    public apiWpp: string = 'https://api.whatsapp.com/send?phone=573057506743&text=Hola%20quiero%20empezar%20a%20utilizar%20*MyMenu*%20ahora%20mismo.';
+    public path: string = '../../../../../public/';
+    public path_img: string = this.path + 'img/';
+    public path_json: string = this.path + 'json/';
     public logo_company: string = 'mm-logo.png';
     public bg_1: string = 'bg-home.png';
+    public btnVisible: boolean = false;
     public companies: Company[] = [];
 
     public sections: Section[] = [
         {
-            name: 'INICIO',
-            url: 'index#',
-        },
-        {
-            name: 'BENEFICIOS',
-            url: 'index#benefits',
+            name: '¿PORQUE MyMenu?',
+            url: 'index#why-us',
         },
         {
             name: 'CLIENTES',
@@ -46,16 +48,57 @@ export default class WebpageComponent implements OnInit {
         },
     ];
 
-    constructor(private companyService: CompanyService){
+    constructor(private companyService: CompanyService, private element: ElementRef, private alertService: AlertService) {
         this.getCompanies();
     }
 
     ngOnInit(): void {
         register();
+
+        lottie.loadAnimation({
+            container: this.element.nativeElement.querySelector('.lottie-check'),
+            path: this.path_json + 'check.json',
+            renderer: 'svg',
+            loop: true,
+            autoplay: true,
+        });
+
+        lottie.loadAnimation({
+            container: this.element.nativeElement.querySelector('.lottie-contact'),
+            path: this.path_json + 'contact.json',
+            renderer: 'svg',
+            loop: true,
+            autoplay: true,
+        });
     }
 
-    public goToLogin(): void{
+    @HostListener('window:scroll', [])
+    onWindowScroll() {
+        if (window.top?.scrollY === 0) {
+            this.btnVisible = false;
+        } else {
+            this.btnVisible = true;
+        }
+    }
+
+    public scrollToTop(): void {
+        if (window.top?.scrollY === 0) {
+            this.btnVisible = false;
+        } else {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+    }
+    
+
+    public goToLogin(): void {
         window.location.href = '/admin';
+    }
+
+    public goToWpp(): void {
+        window.open(this.apiWpp, '_blank');
     }
 
 
@@ -68,5 +111,12 @@ export default class WebpageComponent implements OnInit {
                 console.error("Error:", error);
             }
         });
+    }
+
+    public sendMessage(event: Event): void{
+        event!.preventDefault();
+        const msg = 'Mensaje Enviado Exitosamente';
+
+        this.alertService.notification(msg, 'success');
     }
 }

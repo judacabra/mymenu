@@ -1,26 +1,26 @@
 /* 
     HTML
 */
-*{
+* {
     text-decoration: none;
-    list-style: none;
     font-family: 'Century gothic', sans-serif;
+    list-style: none;
 }
 
 h3 {
     margin: 0;
-    color: var(--cl-1);
+    color: var(--cl-2);
 }
 
 ul {
     margin: 0;
 }
 
-a {
+a, .links span, span, p {
     color: var(--cl-1);
 }
 
-li:hover {
+a li:hover {
     background: var(--bg-2);
     color: var(--cl-2);
 }
@@ -30,16 +30,18 @@ li:hover {
 */
 #body {
     background: var(--bg-2);
+    overflow: auto;
 }
 
 #bg_home {
     width: 100%;
 }
 
-#navbar, #footer {
+#navbar,
+#footer {
     height: 80px;
     width: 100%;
-    background: var(--bg-1); 
+    background: var(--bg-1);
 }
 
 #company {
@@ -47,23 +49,28 @@ li:hover {
 }
 
 #urls {
-    width: 40%;
+    width: 50%;
 }
 
 #auth {
-    width: 30%;
+    width: 20%;
+}
+
+#bars {
+    display: none;
 }
 
 #logo-company {
     height: 65px;
 }
 
-#content, #copyright {
+#content,
+#copyright {
     width: 100%;
     color: var(--white);
 }
 
-#mymenu-example{
+#mymenu-example {
     height: 550px;
     background: url('../../../public/img/bg-home.png');
 }
@@ -73,6 +80,96 @@ li:hover {
 }
 
 #clients {
-    height: 250px;
+    height: 300px;
     background: url('../../../public/img/bg-white.png') no-repeat 100%;
+}
+
+#backToTop {
+    position: fixed;
+    bottom: 20px;
+    right: 15px;
+    cursor: pointer;
+    font-size: 30px;
+}
+
+/* 
+    CLASSES
+*/
+.lottie-check {
+    width: 300px;
+    height: 300px;
+    margin: 0 auto;
+}
+
+.lottie-contact {
+    width: 500px;
+    height: 500px;
+}
+
+.w-40 {
+    width: 40%;
+}
+
+.w-60 {
+    width: 60%;
+}
+
+/* 
+    MEDIA QUERY
+*/
+@media (max-width: 600px) {
+    #auth, #lottie-1, #lottie-2, #urls ul {
+        display: none !important;
+    }
+
+    #bars {
+        display: flex;
+        margin-left: 10px !important;
+    }
+
+    #company {
+        margin-right: 0 !important;
+    }
+
+    #logo-company {
+        margin-left: 15% !important;
+    }
+
+    #contact-us {
+        flex-direction: column-reverse;
+    }
+
+    #contact-form, 
+    #why-us-info {
+        width: 100% !important;
+    }
+
+    #social-links {
+        width: 300px !important;
+    }
+
+    #send {
+        display: flex !important;
+        justify-content: center;
+        width: 300px !important;
+    }
+
+    #send input{
+        margin: 0 auto;
+    }
+
+    #mymenu-example {
+        height: 150px;
+        background: url('../../../public/img/bg-home.png') 100%;
+        background-size: cover;
+    }
+
+    .dropdown-menu {
+        background: var(--bg-2);
+
+    }
+
+    .form-control, .form-label {
+        width: 300px !important;
+    }
 }
