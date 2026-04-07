@@ -2,21 +2,20 @@
     <form [formGroup]="productForm">
         <div class="mb-3">
             <label for="name" class="form-label"> Nombre: </label>
-            <input type="email" class="form-control" id="name" formControlName="name" placeholder="Ejemplo: Pizza" 
-                value="{{ product.name }}">
+            <input type="text" class="form-control" id="name" formControlName="name" placeholder="Ejemplo: Pizza">
         </div>
         <div class="mb-3">
             <label for="description" class="form-label"> Descripción: </label>
-            <textarea type="email" class="form-control" id="description" formControlName="description"
-                placeholder="Ejemplo: Pizza artesanal grande...">{{ product.description }}</textarea>
+            <textarea id="description" class="form-control" formControlName="description"
+                placeholder="Ejemplo: Pizza artesanal grande..."></textarea>
         </div>
         <div class="mb-3">
             <label for="name" class="form-label"> Tipo: </label>
             <select class="form-select" aria-label="type select" formControlName="id_type">
-                <option [selected]="product.id_type == 0"> Seleccione un tipo </option>
+                <option [value]="0"> Seleccione un tipo </option>
                 @for (type of types; track $index){
                     @if(type.name != ''){
-                        <option value="{{ type.id }}"> {{ type.name }} </option>
+                        <option [value]="type.id"> {{ type.name }} </option>
                     }
                 }
             </select>
@@ -26,49 +25,70 @@
                 <label for="recommended" class="form-label"> ¿Recomendado del chef?: </label>
             </div>
             <div>
-                <input class="form-check-input" id="recommended" formControlName="recommended" type="checkbox" 
-                    [checked]="product.recommended == 'SI'" (change)="changeToggleText();" value="{{ product.recommended }}">
+                <input class="form-check-input" id="recommended" type="checkbox"
+                    [checked]="productForm.get('recommended')!.value == 'SI'" (change)="changeToggleText();">
                 <span class="toggle-inactive" [ngClass]="{
-                        'visible' : product.recommended == 'NO',
-                        'invisible': product.recommended == 'SI'
-                    }"
-                >
+                    'visible' : productForm.get('recommended')?.value == 'NO',
+                    'invisible': productForm.get('recommended')?.value == 'SI'
+                }">
                     NO
                 </span>
                 <span class="toggle-active" [ngClass]="{
-                        'visible' : product.recommended == 'SI',
-                        'invisible': product.recommended == 'NO'
-                    }"
-                >
+                    'visible' : productForm.get('recommended')?.value == 'SI',
+                    'invisible': productForm.get('recommended')?.value == 'NO'
+                }">
                     SI
                 </span>
             </div>
         </div>
-        <div>      
+        <div>
             <div>
                 <label for="price" class="form-label"> Precio: </label>
             </div>
             <div class="input-group mb-3">
                 <span class="input-group-text">$</span>
-                <input id="price" class="form-control" aria-label="COP, Peso colombiano" value="{{ product.price }}">
+                <input id="price" class="form-control" aria-label="COP, Peso colombiano" formControlName="price">
             </div>
         </div>
-        <div>      
+        <div>
             <div>
                 <label for="stock" class="form-label"> Cantidad en stock: </label>
             </div>
             <div class="input-group mb-3">
                 <span class="input-group-text"> Und </span>
-                <input id="stock" class="form-control" aria-label="Unidades" value="{{ product.stock }}">
+                <input id="stock" class="form-control" aria-label="Unidades" formControlName="stock">
             </div>
         </div>
-        <div class="mb-3">
-            <label for="img" class="form-label"> Imagen: </label>
-            <input class="form-control" type="file" id="img" formControlName="img" (change)="verifyIMG($event)">
-        </div>
+        @if(product.img || imagePreview){
+            <div class="mt-3 mb-3 hovered">
+                <div id="changeImgTxt">
+                    <h1 class="text-white"> Cambiar imagen </h1>
+                </div>
+                <div class="image-container" (click)="changeImg()">
+                    <div id="changeImgTxt">
+                        <h1 class="text-white">Cambiar imagen</h1>
+                    </div>
+                    @if (product.img) {
+                        <img alt="{{ productForm.get('name')!.value }}" 
+                            id="{{ 'product_' + productForm.get('id')?.value }}" 
+                            src="{{ path_img + product.img }}"
+                            class="rounded img_changing"
+                        >
+                    } @else {
+                        <img src="{{ imagePreview }}" alt="description" class="rounded img_changing">
+                    }
+                </div>
+            </div>
+        } @else {
+            <div class="mb-3">
+                <label for="img" class="form-label"> Imagen: </label>
+                <input #fileInput class="form-control" type="file" id="img" formControlName="img" (change)="verifyIMG($event)">
+            </div>
+        }
         <div class="mb-3 d-none">
             <label for="company" class="form-label"> Company: </label>
-            <input type="email" class="form-control" id="company" formControlName="id_company" value="{{ product.id_company }}">
+            <input type="email" class="form-control" id="company" formControlName="id_company"
+                value="{{ productForm.get('id_company')?.value }}">
         </div>
     </form>
 </div>

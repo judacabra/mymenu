@@ -33,19 +33,22 @@ export class NavbarDashboardComponent {
         ]
     }
 
-    constructor(private userService: UserService, private authService: AuthService){
+    constructor(
+        private userService: UserService, 
+        private authService: AuthService
+    ){
         const username: string = sessionStorage.getItem('username')!;
         this.getLoggedInfo(username);
     }
 
     public getLoggedInfo(username: string):void {
         this.userService.get_logged_info(username).subscribe({
-            next: (response) => {
+            next: (response: any) => {
                 this.user_logged = response;
                 sessionStorage.setItem('user_id', response.id.toString());
             },
-            error: (error) => {
-                console.error("Error:", error);
+            error: (error: any) => {
+                console.error("Error: ", error);
             }
         });
     }

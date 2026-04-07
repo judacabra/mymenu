@@ -35,3 +35,18 @@
         width: 60%;
     }
 }
+
+@media (max-width: 600px){
+    #logo-empresa {
+        width: 200px;
+        height: 80px;
+    }
+
+    #operation {
+        width: 20%;
+    }
+
+    #info {
+        width: 60%;
+    }
+}

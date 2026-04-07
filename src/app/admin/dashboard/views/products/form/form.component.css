@@ -1,6 +1,45 @@
 /* 
+    ID's
+*/
+#changeImgTxt {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: none;
+    cursor: pointer;
+}
+
+#changeImgTxt h1 {
+    color: white;
+    margin: 0;
+    font-size: 1.5rem;
+}
+
+/* 
     CLASSES
 */
+.image-container {
+    position: relative;
+}
+
+.image-container:hover #changeImgTxt {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.6);
+    border-radius: 7px;
+}
+
+.img_changing {
+    max-width: 465px !important;
+    min-width: 465px !important;
+    max-height: 290px !important;
+    min-height: 290px !important;
+    cursor: pointer;
+}
+
 .toggle-active {
     position: absolute;
     left: 36px;

@@ -8,11 +8,11 @@
         </div>
         <div id="content" class="px-3 py-2">
             <div id="options" class="d-flex pb-2">
-                <div id="filter" class="me-3 w-87">
+                <div id="filter" class="me-3 w-87 mb-4">
                     <input type="text" class="form-control" id="search" placeholder="Busca un producto..">
                 </div>
                 <div id="new">
-                    <input type="button" value="Nuevo Producto" data-bs-toggle="modal" data-bs-target="#productsForm"
+                    <input type="button" value="Nuevo producto" data-bs-toggle="modal" data-bs-target="#productsForm"
                         class="btn btn-primary new" (click)="setMode('Insertar')">
                 </div>
             </div>
@@ -33,14 +33,23 @@
                         <tr>
                             <td> {{ product.name }} </td>
                             <td> {{ product.description }} </td>
-                            <td class="text-center"> {{ product.price }} </td>
+                            <td class="text-center"> $ {{ product.price }} </td>
                             <td class="text-center"> {{ product.stock }} </td>
                             <td class="text-center">
-                                <img src="{{ path_img + product.img }}" alt="img-product" class="img w-40 rounded"
+                                @if(product.img) {
+                                    <img src="{{ path_img + product.img }}" alt="img-product" class="img w-40 h-40- rounded"
                                     data-bs-toggle="modal" [attr.data-bs-target]="'#'+product.id">
+                                } @else {
+                                    <h3> - </h3>
+                                }
                             </td>
                             <td>
-                                <button data-bs-toggle="modal" data-bs-target="#productsForm" (click)="setMode('Modificar')" class="no-btn me-2">
+                                <button 
+                                    data-bs-toggle="modal" 
+                                    data-bs-target="#productsForm" 
+                                    (click)="setMode('Modificar', product.id)" 
+                                    class="no-btn me-2"
+                                >
                                     <i class="fas fa-edit text-success-subtle" title="Editar"></i>
                                 </button>
                                 <button (click)="verifyDeleteProduct(product.id)" class="no-btn">
@@ -51,8 +60,8 @@
 
                         <!-- Product Img Modal -->
                         <div class="modal fade" id="{{product.id }}" tabindex="-1" aria-hidden="true">
-                            <div class="modal-dialog">
-                                <img src="{{ path_img + product.img }}" alt="product" class="img-on-popup">
+                            <div class="modal-dialog rounded">
+                                <img src="{{ path_img + product.img }}" alt="product" class="img-on-popup rounded">
                             </div>
                         </div>
                         }
@@ -64,7 +73,7 @@
                     <div class="modal-dialog modal-dialog-centered modal-dialog-scrolleable">
                         <div class="modal-content">
                             <div class="modal-header" data-bs-theme="dark">
-                                <h1 class="modal-title fs-5" id="exampleModalLabel"> {{ mode.action }} Producto</h1>
+                                <h1 class="modal-title fs-5" id="exampleModalLabel"> {{ mode.action }} producto</h1>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                     aria-label="Close"></button>
                             </div>

@@ -43,6 +43,10 @@ nav ul li:hover {
     background: var(--bg-2);
 }
 
+.h-40- {
+    height: 40px !important;
+}
+
 /* 
     IDS
 */

@@ -26,7 +26,7 @@ export class ProductService {
         let params = new HttpParams();
         params = params.set('id', id);
         
-        return this.http.get<Product>(`${this.url}/products`, { params, headers: this.httpHeaders }).pipe(
+        return this.http.get<Product>(`${this.url}/product_by_id`, { params, headers: this.httpHeaders }).pipe(
             catchError((e) => {
                 this.alertService.alert(e?.error?.detail, 'error');
                 return throwError(() => e);

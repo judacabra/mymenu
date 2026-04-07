@@ -25,7 +25,7 @@ import { CompanyService } from '@services/company/company.service';
 })
 
 export default class ListComponent {
-    public pathImg: string = '../../../../../public/img/'; 
+    public pathImg: string = './public/img/'; 
     public restaurant: string = ''; 
     
     public company: Company = {
@@ -41,8 +41,11 @@ export default class ListComponent {
     public typeRecommended: TypeUrl[] = [];
     public products: Product[] = [];
 
-    constructor(private route: ActivatedRoute, private productService: ProductService, 
-        private menuService:MenuService, private companyService: CompanyService
+    constructor(
+        private route: ActivatedRoute, 
+        private productService: ProductService, 
+        private menuService:MenuService, 
+        private companyService: CompanyService
     ){
         this.route.paramMap.subscribe(params => {
             this.restaurant = params.get('restaurant')!;
@@ -67,24 +70,22 @@ export default class ListComponent {
 
     public getAllTypesByCompany(company_id: number): void {
         this.menuService.consultTypesByCompany(company_id).subscribe({
-            next: (response) => {
+            next: (response: any) => {
                 this.types = response;
             },
-            error: (error) => {
-                console.error("Error:", error);
+            error: (error: any) => {
+                console.error("Error: ", error);
             }
         });
     }
     
     public getProductsByCompany(company_id: number): void {
         this.productService.consultProductsByCompany(company_id).subscribe({
-            next: (response) => {
+            next: (response: any) => {
                 this.products = response; 
-
-                console.log(this.products)
             },
-            error: (error) => {
-                console.error("Error:", error);
+            error: (error: any) => {
+                console.error("Error: ", error);
             }
         });
     }
@@ -99,11 +100,11 @@ export default class ListComponent {
 
     public getTypeRecommendedByCompany(company_id: number): void {
         this.productService.typeRecommendedByCompany(company_id).subscribe({
-            next: (response) => {
+            next: (response: any) => {
                 this.typeRecommended = response;
             },
-            error: (error) => {
-                console.error("Error:", error);
+            error: (error: any) => {
+                console.error("Error: ", error);
             }
         });
     }
@@ -123,7 +124,7 @@ export default class ListComponent {
 
     public getCompanyInfo(restaurant: string): void {
         this.companyService.getCompanyByParam(undefined, restaurant).subscribe({
-            next: (response) => {
+            next: (response: any) => {
                 this.company = response;
 
                 this.getAllTypesByCompany(response.id);
@@ -131,8 +132,8 @@ export default class ListComponent {
                 this.getProductsByCompany(response.id);
             },
         
-            error: (error) => {
-                console.error(error);
+            error: (error: any) => {
+                console.error("Error: " + error);
             }
         })
     }

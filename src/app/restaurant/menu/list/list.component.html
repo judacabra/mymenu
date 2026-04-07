@@ -2,14 +2,14 @@
     <div id="navbar">
         <app-navbar></app-navbar>
     </div>
-    <div id="content" class="container pt-1 pb-5">
+    <div id="content" class="container pt-1 pb-1">
         @for (type of typeRecommended; track $index) {
             <div 
                 id="{{ type.url }}" 
                 class="type px-3 py-3 d-flex flex-column align-items-center br-brown" 
                 title="Ir a {{type.name}}"
             >
-                <h1 class="mb-3 cl-brown"> {{ type.name }} </h1>  
+                <h1 class="text-center mb-3 cl-brown"> {{ type.name }} </h1>  
                 
                 <div class="cards row mt-3 mb-5">
                     @for (product of productsRecommended(); track $index) {

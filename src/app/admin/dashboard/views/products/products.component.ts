@@ -30,22 +30,23 @@ export default class ProductsComponent {
         id: 0,
         name: '',
         description: '',
-        recommended: 'NO',
+        recommended: '',
         id_company: 0,
         id_type: 0,
         img: '',
         price: 0,
         stock: 0,
     }
-    
-    public path_img: string = '../../../../public/img/';
+
+    public path_img: string = './public/img/';
+
     public mode: Mode = {
         action: '',
         actioner: '',
     }
 
     public products: Product[] = [];
-    public paginatedProducts: Product[] = []; 
+    public paginatedProducts: Product[] = [];
     public currentPage = 1;
     public rowsPerPage = 8;
     public totalPages = 0;
@@ -58,7 +59,8 @@ export default class ProductsComponent {
 
     public getProducts(user_id: number): void {
         this.productService.consultProductsByUser(user_id).subscribe({
-            next: (response) => {
+            next: (response: any) => {
+                console.log(response)
                 this.products = response;
                 this.updatePagination();
             },
@@ -71,6 +73,7 @@ export default class ProductsComponent {
     public updatePagination() {
         const start = (this.currentPage - 1) * this.rowsPerPage;
         const end = Math.min(start + this.rowsPerPage, this.products.length);
+
         this.paginatedProducts = this.products.slice(start, end);
         this.totalPages = Math.ceil(this.products.length / this.rowsPerPage);
         this.pages = Array.from({ length: this.totalPages }, (_, i) => i + 1);
@@ -82,34 +85,29 @@ export default class ProductsComponent {
         this.updatePagination();
     }
 
-    public setMode(mode: string, id?: number):void {
-        console.log(mode)
-
+    public setMode(mode: string, id?: number): void {
         if (mode == 'Insertar') {
             this.mode.action = 'Nuevo';
             this.mode.actioner = 'Insertar';
-        } 
-        if (mode == 'Modificar'){
-            if (id){
-                this.getProductById(id);
-            }
+        }
+
+        if (mode == 'Modificar') {
+            if (id) this.getProductById(id);
 
             this.mode.action = 'Actualizar';
             this.mode.actioner = 'Modificar';
         }
     }
 
-    public verifyDeleteProduct(id: number):void {
+    public verifyDeleteProduct(id: number): void { }
 
-    }
-
-    public getProductById(id: number):void {
+    public getProductById(id: number): void {
         this.productService.consultProductById(id).subscribe({
-            next: (response) => {
+            next: (response: any) => {
                 this.product = response;
             },
-            error: (error) => {
-                console.error("Error:", error);
+            error: (error: any) => {
+                console.error("Error: ", error);
             }
         });
     }
