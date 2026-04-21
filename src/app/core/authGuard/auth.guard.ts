@@ -7,15 +7,13 @@ export const authGuard: CanActivateFn = (route, state) => {
   const router = inject(Router);
   const authentication = authService.isTokenExpired();
 
-  if(authentication && state.url === '/index'){
+  if (authentication && state.url === '/index'){
     setTimeout(() => {
       router.navigate(['/dashboard']);
     });
-
   }
 
-
-  if(!authentication){
+  if (!authentication){
     setTimeout(() => {
       authService.isNotAuthorized();
       router.navigate(['/index']);

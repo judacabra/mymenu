@@ -25,7 +25,7 @@ export interface Section {
 
 export default class WebpageComponent implements OnInit {
     public apiWpp: string = 'https://api.whatsapp.com/send?phone=573057506743&text=Hola%20quiero%20empezar%20a%20utilizar%20*MyMenu*%20ahora%20mismo.';
-    public path: string = '../../../../../public/';
+    public path: string = './public/';
     public path_img: string = this.path + 'img/';
     public path_json: string = this.path + 'json/';
     public logo_company: string = 'mm-logo.png';
@@ -48,7 +48,11 @@ export default class WebpageComponent implements OnInit {
         },
     ];
 
-    constructor(private companyService: CompanyService, private element: ElementRef, private alertService: AlertService) {
+    constructor(
+        private companyService: CompanyService, 
+        private element: ElementRef, 
+        private alertService: AlertService
+    ) {
         this.getCompanies();
     }
 
@@ -74,11 +78,7 @@ export default class WebpageComponent implements OnInit {
 
     @HostListener('window:scroll', [])
     onWindowScroll() {
-        if (window.top?.scrollY === 0) {
-            this.btnVisible = false;
-        } else {
-            this.btnVisible = true;
-        }
+        this.btnVisible = (window.top?.scrollY === 0) ? false : true;
     }
 
     public scrollToTop(): void {
@@ -104,11 +104,11 @@ export default class WebpageComponent implements OnInit {
 
     public getCompanies(): void {
         this.companyService.consultCompanies().subscribe({
-            next: (response) => {
+            next: (response: any) => {
                 this.companies = response;
             },
-            error: (error) => {
-                console.error("Error:", error);
+            error: (error: any) => {
+                console.error("Error: ", error);
             }
         });
     }
@@ -117,6 +117,6 @@ export default class WebpageComponent implements OnInit {
         event!.preventDefault();
         const msg = 'Mensaje Enviado Exitosamente';
 
-        this.alertService.notification(msg, 'success');
+        this.alertService.notification(msg);
     }
 }

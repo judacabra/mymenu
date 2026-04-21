@@ -1,34 +1,37 @@
 import { CompanyService } from './../../../services/company/company.service';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 import { UserService } from '@services/user/user.service';
 
 import { Permission } from '@core/interfaces/permission';
 import { View } from '@core/interfaces/view';
 import { Company } from '@core/interfaces/company';
+import { NgClass } from '@angular/common';
 
+type Views = "dashboard" | "users" | "companies" | "profiles" | "products";
 @Component({
     selector: 'app-dashboard-sidebar',
     standalone: true,
-    imports: [],
+    imports: [NgClass],
     templateUrl: './sidebar.component.html',
     styleUrl: './sidebar.component.css'
 })
 
-export class SidebarDashboardComponent {
-    public path_img: string = '../../../public/img/';
+export class SidebarDashboardComponent implements OnInit {
+    public path_img: string = './public/img/';
 
     public company: Company = {
         id: 0,
         name: '',
         description: '',
         nit: 0,
+        img: '',
         active: true,
     }
     
-    public permissions: Permission[] = [];
+    private permissions: Permission[] = [];
 
-    public views: View[] = [
+    private views: View[] = [
         {
             id: 1,
             url: 'dashboard',
@@ -43,7 +46,7 @@ export class SidebarDashboardComponent {
         },
         {
             id: 3,
-            url: 'companys',
+            url: 'companies',
             name: 'Empresas',
             icon: 'fas fa-building',
         },
@@ -59,21 +62,30 @@ export class SidebarDashboardComponent {
             name: 'Productos',
             icon: 'fas fa-hamburger',
         },
-    ]
+    ];
 
-    constructor(private userService: UserService, private companyService: CompanyService){
+    public viewSelected: Views = window.location.href.split('/')[3] as Views;
+
+    constructor(
+        private userService: UserService, 
+        private companyService: CompanyService
+    ){
         const username: string = sessionStorage.getItem('username')!;
+
         this.getPermissions(username);
+    }
+
+    ngOnInit(): void {
         this.getcompanyInfo();
     }
 
-    public getPermissions(username: string):void {
+    private getPermissions(username: string): void {
         this.userService.get_logged_info(username).subscribe({
-            next: (response) => {
+            next: (response: any) => {
                 this.permissions = response.permissions;
             },
-            error: (error) => {
-                console.error("Error:", error);
+            error: (error: any) => {
+                console.error("Error: ", error);
             }
         });
     }
@@ -88,16 +100,18 @@ export class SidebarDashboardComponent {
         window.location.href = url;
     }
 
-    public getcompanyInfo(): void {
+    private getcompanyInfo(): void {
         var user_id = Number(sessionStorage.getItem('user_id'));
 
-        this.companyService.getCompanyByParam(user_id).subscribe({
-            next: (response) => {
-                this.company = response;
-            },
-            error: (error) => {
-                console.error("Error:", error);
-            }
-        });
+        if (user_id){
+            this.companyService.getCompanyByParam(user_id).subscribe({
+                next: (response: any) => {
+                    this.company = response;
+                },
+                error: (error: any) => {
+                    console.error("Error: ", error);
+                }
+            });
+        }
     }
 }

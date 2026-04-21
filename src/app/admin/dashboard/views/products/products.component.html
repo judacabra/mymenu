@@ -9,7 +9,13 @@
         <div id="content" class="px-3 py-2">
             <div id="options" class="d-flex pb-2">
                 <div id="filter" class="me-3 w-87 mb-4">
-                    <input type="text" class="form-control" id="search" placeholder="Busca un producto..">
+                    <input 
+                        type="text" 
+                        id="search" 
+                        class="form-control" 
+                        placeholder="Busca un producto.." 
+                        (input)="searchProduct($event)"
+                    />
                 </div>
                 <div id="new">
                     <input type="button" value="Nuevo producto" data-bs-toggle="modal" data-bs-target="#productsForm"
@@ -25,6 +31,7 @@
                             <th class="w-10 text-center">PRECIO</th>
                             <th class="w-10 text-center">STOCK</th>
                             <th class="w-10 text-center">IMG</th>
+                            <th class="w-10 text-center">ESTADO</th>
                             <th class="w-10 rnd-last-top"></th>
                         </tr>
                     </thead>
@@ -36,20 +43,29 @@
                             <td class="text-center"> $ {{ product.price }} </td>
                             <td class="text-center"> {{ product.stock }} </td>
                             <td class="text-center">
-                                @if(product.img) {
-                                    <img src="{{ path_img + product.img }}" alt="img-product" class="img w-40 h-40- rounded"
-                                    data-bs-toggle="modal" [attr.data-bs-target]="'#'+product.id">
-                                } @else {
-                                    <h3> - </h3>
-                                }
+                                <img 
+                                    src="{{ product.img 
+                                        ? path_server + product.img 
+                                        : path_img + 'not-found-img.jpg' 
+                                    }}"
+                                    alt="img-product" class="img w-40 h-40- rounded" 
+                                    data-bs-toggle="modal"
+                                    [attr.data-bs-target]="'#' + product.id" 
+                                />
+                            </td>
+                            <td class="text-center "> 
+                                <i 
+                                    class="fas text-success-subtle fs-4" 
+                                    [ngClass]="{
+                                        'fa-check text-success': product.status, 
+                                        'fa-times text-danger': !product.status,
+                                    }" 
+                                    title="{{ product.status ? 'Activo' : 'Inactivo' }}"
+                                ></i> 
                             </td>
                             <td>
-                                <button 
-                                    data-bs-toggle="modal" 
-                                    data-bs-target="#productsForm" 
-                                    (click)="setMode('Modificar', product.id)" 
-                                    class="no-btn me-2"
-                                >
+                                <button data-bs-toggle="modal" data-bs-target="#productsForm"
+                                    (click)="setMode('Modificar', product.id)" class="no-btn me-3">
                                     <i class="fas fa-edit text-success-subtle" title="Editar"></i>
                                 </button>
                                 <button (click)="verifyDeleteProduct(product.id)" class="no-btn">
@@ -61,7 +77,14 @@
                         <!-- Product Img Modal -->
                         <div class="modal fade" id="{{product.id }}" tabindex="-1" aria-hidden="true">
                             <div class="modal-dialog rounded">
-                                <img src="{{ path_img + product.img }}" alt="product" class="img-on-popup rounded">
+                                <img 
+                                    src="{{ product.img 
+                                        ? path_server + product.img 
+                                        : path_img + 'not-found-img.jpg' 
+                                    }}"
+                                    alt="product" 
+                                    class="img-on-popup rounded"
+                                />
                             </div>
                         </div>
                         }
@@ -78,10 +101,7 @@
                                     aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
-                                <app-form-products [product]="product"></app-form-products>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-primary text-white"> {{ mode.actioner }} </button>
+                                <app-form-products [product]="product" [actioner]="mode.actioner"></app-form-products>
                             </div>
                         </div>
                     </div>

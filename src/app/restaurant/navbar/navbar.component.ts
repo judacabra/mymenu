@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+
+import { CompanyService } from '@services/company/company.service';
 
 import { TypeUrl } from '@core/interfaces/type-url';
 import { Company } from '@core/interfaces/company';
-import { ActivatedRoute } from '@angular/router';
-import { CompanyService } from '@services/company/company.service';
 
 @Component({
     selector: 'app-navbar',
@@ -14,9 +15,10 @@ import { CompanyService } from '@services/company/company.service';
 })
 
 export class NavbarComponent {
-    public path_img: string = '../../../../../public/img/';
+    @ViewChild('operation') dropdownElement!: ElementRef;
+
+    public path_img: string = './public/img/';
     public restaurant: string = '';
-    public types: TypeUrl[] = [];
 
     public company: Company = {
         id: 0,
@@ -24,11 +26,15 @@ export class NavbarComponent {
         img: '',
         nit: 0,
         description: '',
-        active: true, 
+        active: true,
     };
 
-    constructor(private route: ActivatedRoute, private companyService: CompanyService
-    ){
+    public expanded: boolean = false;
+
+    constructor(
+        private route: ActivatedRoute,
+        private companyService: CompanyService
+    ) {
         this.route.paramMap.subscribe(params => {
             this.restaurant = params.get('restaurant')!;
         });
@@ -38,12 +44,11 @@ export class NavbarComponent {
 
     public getCompanyInfo(restaurant: string): void {
         this.companyService.getCompanyByParam(undefined, restaurant).subscribe({
-            next: (response) => {
+            next: (response: any) => {
                 this.company = response;
             },
-        
-            error: (error) => {
-                console.error(error);
+            error: (error: any) => {
+                console.error("Error: ", error);
             }
         })
     }

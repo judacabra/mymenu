@@ -2,86 +2,125 @@
     <div id="navbar">
         <app-navbar></app-navbar>
     </div>
+    <div 
+        id="navegator" 
+        [ngClass]="{'d-none': positionTop, 'd-block': !positionTop}"
+    >
+        <swiper-container centered="true" slides-per-view="5" class="d-flex align-items-center border-bottom"
+                autoplay-delay="1000" loop mousewheel="false" grab-cursor="false">
+            @for (type of types; track $index) {
+                <swiper-slide class="d-flex align-items-center">
+                    <li 
+                        class="px-3 py-2" 
+                        [ngClass]="{ 
+                            'border-bottom-brown': type.url == typeSelected
+                        }"
+                    >
+                        <a 
+                            href="{{ location + 'list#' + type.url }}" 
+                            [ngClass]="{
+                                'cl-brown': type.url != typeSelected, 
+                                'cl-brown-dark': type.url == typeSelected
+                            }"
+                            (click)="setType(type.name)"
+                        > {{ type.name }} </a>
+                    </li>
+                </swiper-slide>
+            }
+        </swiper-container>
+    </div>
     <div id="content" class="container pt-1 pb-1">
+        @if(productsRecommended().length > 0){
         @for (type of typeRecommended; track $index) {
-            <div 
-                id="{{ type.url }}" 
-                class="type px-3 py-3 d-flex flex-column align-items-center br-brown" 
-                title="Ir a {{type.name}}"
-            >
-                <h1 class="text-center mb-3 cl-brown"> {{ type.name }} </h1>  
-                
-                <div class="cards row mt-3 mb-5">
-                    @for (product of productsRecommended(); track $index) {
-                        <div class="col">
-                            <div class="card" data-bs-toggle="modal" [attr.data-bs-target]="'#' + type.id + '-' + product.id">
-                                <img src="{{ pathImg + product.img }}" class="card-img-top" alt="product">
-                                <div class="card-body">
-                                    <h5 class="card-title text-center mb-1"> {{ product.name }} </h5>
-                                    <p class="card-text text-center mb-1"> {{ truncateText(product.description) }}</p>
-                                    <p class="card-text text-center fw-bold cl-brown price">$ {{ product.price }}</p>
-                                </div>
+        <div #typeElement id="{{ type.url }}" class="type px-3 py-3 d-flex flex-column align-items-center br-brown">
+            <h1 class="text-center mb-3 cl-brown"> {{ type.name }} </h1>
+
+            <div class="cards row mt-3 mb-5">
+                @for (product of productsRecommended(); track $index) {
+                <div class="col">
+                    <div class="card" data-bs-toggle="modal" [attr.data-bs-target]="'#' + type.id + '-' + product.id">
+                        <img src="{{ product.img 
+                                ? path_server + product.img 
+                                : path_img + 'not-found-img.jpg' 
+                            }}" class="card-img-top" alt="product" />
+                        <div class="card-body">
+                            <h5 class="card-title text-center mb-1 two-rows"> {{ product.name }} </h5>
+                            <p class="card-text text-center mb-1"> {{ truncateText(product.description, 30) }}
+                            </p>
+                            <p class="card-text text-center fw-bold cl-brown price">$ {{
+                                formater.formatLocalCurrency(product.price) }}</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Item Modal -->
+                <div class="modal fade" id="{{ type.id + '-' + product.id }}" tabindex="-1" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <img src="{{ product.img 
+                                    ? path_server + product.img 
+                                    : path_img + 'not-found-img.jpg' 
+                                }}" alt="product" class="img-on-popup rounded-top" />
+                            <div class="modal-footer br-none d-flex justify-content-center">
+                                <h5 class="card-title fs-3"> {{ product.name }} </h5>
+
+                                <p class="card-text text-center mb-3 fs-6 px-2"> {{ product.description }}</p>
+                                <p class="card-text text-center fs-3 fw-bold cl-brown pb-2">$ {{
+                                    formater.formatLocalCurrency(product.price) }}</p>
                             </div>
                         </div>
-
-                        <!-- Item Modal -->
-                        <div class="modal fade" id="{{ type.id + '-' + product.id }}" tabindex="-1" aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered">
-                                <div class="modal-content">
-                                    <div class="modal-header br-none pb-0 d-flex justify-content-center">
-                                        <h5 class="card-title"> {{ product.name }} </h5>
-                                    </div>
-                                    <div class="modal-body">
-                                        <img src="{{ pathImg + product.img }}" alt="product" class="img-on-popup mb-3">
-                                        <p class="card-text text-center"> {{ product.description }}</p>
-                                        <p class="card-text text-center fs-4 cl-brown">$ {{ product.price }}</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>  
-                    }
+                    </div>
                 </div>
-            </div>        
+                }
+            </div>
+        </div>
         }
+        }
+
         @for (type of types; track $index) {
-            <div 
-                id="{{ type.url }}" 
-                class="type px-3 py-3 d-flex flex-column align-items-center br-brown" 
-                title="Ir a {{type.name}}"
-            >
-                <h1 class="mb-3 cl-brown"> {{ type.name }} </h1>  
-                
-                <div class="cards row mt-3 mb-5">
-                    @for (product of productsByType(type.id); track $index) {
-                        <div class="col">
-                            <div class="card" data-bs-toggle="modal" [attr.data-bs-target]="'#' + type.id + '-' + product.id">
-                                <img src="{{ pathImg + product.img }}" class="card-img-top" alt="product">
-                                <div class="card-body">
-                                    <h5 class="card-title text-center mb-1"> {{ product.name }} </h5>
-                                    <p class="card-text text-center mb-1"> {{ truncateText(product.description) }}</p>
-                                    <p class="card-text text-center fw-bold cl-brown price">$ {{ product.price }}</p>
-                                </div>
+        <div #typeElement id="{{ type.url }}" class="type px-3 py-3 d-flex flex-column align-items-center br-brown"
+            title="Ir a {{type.name}}">
+            <h1 class="mb-3 cl-brown"> {{ type.name }} </h1>
+
+            <div class="cards row mt-3 mb-5">
+                @for (product of productsByType(type.id); track $index) {
+                <div class="col">
+                    <div class="card" data-bs-toggle="modal" [attr.data-bs-target]="'#' + type.id + '-' + product.id">
+                        <img src="{{ product.img 
+                            ? path_server + product.img 
+                            : path_img + 'not-found-img.jpg' 
+                        }}" class="card-img-top" alt="product" />
+                        <div class="card-body">
+                            <h5 class="card-title text-center mb-1"> {{ product.name }} </h5>
+                            <p class="card-text text-center mb-1"> {{ truncateText(product.description, 30) }}
+                            </p>
+                            <p class="card-text text-center fw-bold cl-brown price">$ {{
+                                formater.formatLocalCurrency(product.price) }}</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Item Modal -->
+                <div class="modal fade" id="{{ type.id + '-' + product.id }}" tabindex="-1" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <img src="{{ product.img 
+                                ? path_server + product.img 
+                                : path_img + 'not-found-img.jpg' 
+                            }}" alt="product" class="img-on-popup rounded-top" />
+                            <div class="modal-footer br-none d-flex justify-content-center">
+                                <h5 class="card-title fs-3"> {{ product.name }} </h5>
+
+                                <p class="card-text text-center mb-3 fs-6 px-2"> {{ product.description }}</p>
+                                <p class="card-text text-center fs-3 fw-bold cl-brown pb-2">$ {{
+                                    formater.formatLocalCurrency(product.price) }}</p>
                             </div>
                         </div>
-
-                        <!-- Item Modal -->
-                        <div class="modal fade" id="{{ type.id + '-' + product.id }}" tabindex="-1" aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered">
-                                <div class="modal-content">
-                                    <div class="modal-header br-none pb-0 d-flex justify-content-center">
-                                        <h5 class="card-title"> {{ product.name }} </h5>
-                                    </div>
-                                    <div class="modal-body">
-                                        <img src="{{ pathImg + product.img }}" alt="product" class="img-on-popup mb-3">
-                                        <p class="card-text text-center"> {{ product.description }}</p>
-                                        <p class="card-text text-center fs-4 cl-brown">$ {{ product.price }}</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>  
-                    }
+                    </div>
                 </div>
-            </div>            
+                }
+            </div>
+        </div>
         }
     </div>
     <div id="footer">

@@ -7,7 +7,7 @@
         <div class="mb-3">
             <label for="description" class="form-label"> Descripción: </label>
             <textarea id="description" class="form-control" formControlName="description"
-                placeholder="Ejemplo: Pizza artesanal grande..."></textarea>
+                placeholder="Ejemplo: 2 ingredientes a elección..." rows="3"></textarea>
         </div>
         <div class="mb-3">
             <label for="name" class="form-label"> Tipo: </label>
@@ -15,7 +15,7 @@
                 <option [value]="0"> Seleccione un tipo </option>
                 @for (type of types; track $index){
                     @if(type.name != ''){
-                        <option [value]="type.id"> {{ type.name }} </option>
+                        <option [value]="type.id" [selected]="type.id == productForm.get('id_type')!.value"> {{ type.name }} </option>
                     }
                 }
             </select>
@@ -71,7 +71,10 @@
                     @if (product.img) {
                         <img alt="{{ productForm.get('name')!.value }}" 
                             id="{{ 'product_' + productForm.get('id')?.value }}" 
-                            src="{{ path_img + product.img }}"
+                            src="{{ product.img 
+                                ? path_server + product.img 
+                                : path_img + 'not-found-img.jpg' 
+                            }}"
                             class="rounded img_changing"
                         >
                     } @else {
@@ -82,13 +85,20 @@
         } @else {
             <div class="mb-3">
                 <label for="img" class="form-label"> Imagen: </label>
-                <input #fileInput class="form-control" type="file" id="img" formControlName="img" (change)="verifyIMG($event)">
+                <input #fileInput class="form-control" type="file" id="img" (change)="verifyIMG($event)">
             </div>
         }
         <div class="mb-3 d-none">
             <label for="company" class="form-label"> Company: </label>
             <input type="email" class="form-control" id="company" formControlName="id_company"
                 value="{{ productForm.get('id_company')?.value }}">
+        </div>
+        <div class="d-flex justify-content-center align-items-center">
+            <button 
+                type="button" 
+                class="btn btn-primary text-white" 
+                (click)="onSubmit(actioner)"
+            > {{ actioner }} </button>
         </div>
     </form>
 </div>

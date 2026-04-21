@@ -1,4 +1,11 @@
 /* 
+    HTML
+*/
+textarea {
+    resize: none;
+}
+
+/* 
     ID's
 */
 #changeImgTxt {
@@ -44,14 +51,14 @@
     position: absolute;
     left: 36px;
     color: #ffffff;
-    top: 327px;
+    top: 352px;
 }
 
 .toggle-inactive {
     position: absolute;
     left: 80px;
     color: #3F5FB7;
-    top: 327px;
+    top: 352px;
 }
 
 .toggle-active:hover, 

@@ -17,7 +17,7 @@ import { UserLogged } from '@core/interfaces/user_logged';
 export class NavbarDashboardComponent {
     @Input() title: string = '';
 
-    public path_img: string = '../../../public/img/';
+    public path_img: string = './public/img/';
 
     public user_logged: UserLogged = {
         id: 0,
@@ -35,13 +35,13 @@ export class NavbarDashboardComponent {
 
     constructor(
         private userService: UserService, 
-        private authService: AuthService
+        private authService: AuthService,
     ){
         const username: string = sessionStorage.getItem('username')!;
         this.getLoggedInfo(username);
     }
 
-    public getLoggedInfo(username: string):void {
+    public getLoggedInfo(username: string): void {
         this.userService.get_logged_info(username).subscribe({
             next: (response: any) => {
                 this.user_logged = response;
@@ -51,10 +51,6 @@ export class NavbarDashboardComponent {
                 console.error("Error: ", error);
             }
         });
-    }
-
-    public noEvent(event: Event):void {
-        event.stopPropagation();
     }
 
     public setLogOut(): void {

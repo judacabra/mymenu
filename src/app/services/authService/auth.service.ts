@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 
 import { Observable, catchError, throwError } from 'rxjs';
 
-import { environment } from '../../../environments/environment';
+import { environment } from '../../../environments';
 
 import { AlertService } from '@services/alertService/alert.service';
 
@@ -15,16 +15,21 @@ import { Auth } from '@core/interfaces/auth';
     providedIn: 'root'
 })
 export class AuthService {
-
     private url = `${environment.apiUrl}`;
+
     private httpHeaders = new HttpHeaders({
         'Accept': 'application/json'
     });
 
-    constructor(private http: HttpClient, private router: Router, private alertService: AlertService) { }
+    constructor(
+        private http: HttpClient, 
+        private router: Router, 
+        private alertService: AlertService
+    ) {}
 
     public login(username: string, pass: string): Observable<Auth> {
         let params = new URLSearchParams();
+        
         params.set('username', username);
         params.set('password', pass);
 

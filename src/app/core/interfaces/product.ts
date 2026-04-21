@@ -8,4 +8,5 @@ export interface Product {
     price: number,
     stock: number,
     recommended?: string,
+    status: boolean,
 }

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable, catchError, throwError } from 'rxjs';
 
-import { environment } from '../../../environments/environment';
+import { environment } from '../../../environments';
 
 import { AlertService } from '@services/alertService/alert.service';
 
@@ -20,7 +20,14 @@ export class ProductService {
         'Accept': 'application/json'
     });
 
-    constructor(private http: HttpClient, private alertService: AlertService) { }
+    private httpFilesHeaders = new HttpHeaders({
+        'Accept': 'multipart/form-data'
+    });
+
+    constructor(
+        private http: HttpClient, 
+        private alertService: AlertService
+    ) {}
 
     public consultProductById(id: number): Observable<Product> {  
         let params = new HttpParams();
@@ -63,6 +70,36 @@ export class ProductService {
         params = params.set('company_id', company_id);
         
         return this.http.get<Product[]>(`${this.url}/products`, { params, headers: this.httpHeaders }).pipe(
+            catchError((e) => {
+                this.alertService.alert(e?.error?.detail, 'error');
+                return throwError(() => e);
+            })
+        );
+    }
+
+    public setProduct(data: any): Observable<Product> { 
+        return this.http.post<Product>(`${this.url}/products`, data, { headers: this.httpFilesHeaders }).pipe(
+            catchError((e) => {
+                this.alertService.alert(e?.error?.detail, 'error');
+                return throwError(() => e);
+            })
+        );
+    }
+
+    public updateProduct(id: number, data: any): Observable<Product> { 
+        return this.http.put<Product>(`${this.url}/product/${id}`, data, { headers: this.httpFilesHeaders }).pipe(
+            catchError((e) => {
+                this.alertService.alert(e?.error?.detail, 'error');
+                return throwError(() => e);
+            })
+        );
+    }
+
+    public deleteProductById(id: number): Observable<Product> {  
+        let params = new HttpParams();
+        params = params.set('id', id);
+        
+        return this.http.delete<Product>(`${this.url}/product_by_id`, { params, headers: this.httpHeaders }).pipe(
             catchError((e) => {
                 this.alertService.alert(e?.error?.detail, 'error');
                 return throwError(() => e);

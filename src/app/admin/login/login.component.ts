@@ -18,7 +18,7 @@ import { AuthService } from '@services/authService/auth.service';
 })
 
 export default class LoginComponent {
-    public path_logo: string = '../../../public/img/mm-logo.png';
+    public path_logo: string = './public/img/mm-logo.png';
     public username: boolean = false;
     public noUsername: boolean = false;
     public password: boolean = false;
@@ -38,7 +38,11 @@ export default class LoginComponent {
 
     private view: boolean = false;
 
-    constructor(private _formBuilder: FormBuilder, private _authService: AuthService, private router: Router) { }
+    constructor(
+        private _formBuilder: FormBuilder, 
+        private _authService: AuthService, 
+        private router: Router
+    ) {}
 
     public actionSet(): void {
         if (this.authForm.valid) {

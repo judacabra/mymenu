@@ -2,10 +2,12 @@
     HTML
 */
 :root {
+    --white: rgb(255, 255, 255);
+    --brown: #9c807b;
+    --brown-dark: #6d5b5b;
+
     --bg-1: rgb(23, 24, 33);
     --bg-2: rgb(33, 34, 45);
-
-    --white: rgb(255, 255, 255);
 
     --cl-1: rgb(135, 136, 140);
     --cl-2: rgb(210, 210, 210);
@@ -28,12 +30,12 @@ tr {
     CLASSES
 */
 .bg-brown {
-    background: #9c807b !important;
-    color: #ffffff !important;
+    background: var(--brown) !important;
+    color: var(--white) !important;
 }
 
 .bg-brown:hover {
-    background: #6d5b5b !important;
+    background: var(--brown-dark) !important;
 }
 
 .br-none {
@@ -45,7 +47,15 @@ tr {
 }
 
 .cl-brown {
-    color: #9c807b !important;
+    color: var(--brown) !important;
+}
+
+.cl-brown-dark {
+    color: var(--brown-dark) !important;
+}
+
+.border-bottom-brown { 
+    border-bottom: solid var(--brown-dark) !important;
 }
 
 .d-flex-center {
@@ -57,6 +67,11 @@ tr {
 .h100 {
     height: 100px;
 }
+
+.navbar-h {
+    height: 15vh;
+}
+
 
 .form-control,
 .form-select {

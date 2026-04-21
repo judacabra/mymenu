@@ -11,7 +11,7 @@ li {
     cursor: pointer;
 }
 
-li:hover {
+li:hover, .selected {
     background: var(--bg-2);
     color: var(--white);
 }

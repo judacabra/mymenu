@@ -1,6 +1,5 @@
-import { CompaniesInfo } from '@core/interfaces/companiesInfo';
 import { Company } from '@core/interfaces/company';
-import { Component, Input } from '@angular/core';
+import { Component } from '@angular/core';
 
 import { MenuService } from '@services/menu/menu.service';
 
@@ -45,7 +44,6 @@ export class OptionsComponent {
 
                 this.getAllTypesByCompany(response.id);
             },
-        
             error: (error) => {
                 console.error(error);
             }
@@ -57,7 +55,6 @@ export class OptionsComponent {
             next: (response) => {
                 this.types = response;
             },
-        
             error: (error) => { 
                 console.error('Error:' + error);
             }

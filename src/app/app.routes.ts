@@ -1,6 +1,8 @@
 import { Routes } from '@angular/router';
 import { authGuard } from '@core/authGuard/auth.guard';
 
+const isToken: boolean = localStorage.getItem('token') !== "";
+
 export const routes: Routes = [
   {
     path: 'index',
@@ -25,7 +27,7 @@ export const routes: Routes = [
     canActivate: [authGuard],
   },
   {
-    path: 'companys',
+    path: 'companies',
     title: 'Empresas',
     loadComponent: () => import('./admin/dashboard/views/companies/companies.component'),
     canActivate: [authGuard],
@@ -69,7 +71,7 @@ export const routes: Routes = [
   },
   {
     path: '**',
-    redirectTo: 'index',
+    redirectTo: isToken ? 'dashboard' : 'index',
     pathMatch: 'full',
   },
 ];

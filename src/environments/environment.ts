@@ -1,4 +1,5 @@
 export const environment = {
-    production: true,
-    apiUrl: 'http://192.168.1.119:8000'
+    production: false,
+    apiUrl: 'http://127.0.0.1:8000',
+    imgUrl: 'http://127.0.0.1:8000/'
 };

@@ -1,9 +1,12 @@
-import { CommonModule } from '@angular/common';
-import { ChangeDetectorRef, Component, ElementRef, Input, OnChanges, OnInit, SimpleChanges, Type, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { FormBuilder, Validators, ReactiveFormsModule, FormGroup } from '@angular/forms';
-import { Product } from '@core/interfaces/product';
+import { CommonModule } from '@angular/common';
+
 import { TypeUrl } from '@core/interfaces/type-url';
+
 import { AlertService } from '@services/alertService/alert.service';
+import { ProductService } from '@services/product/product.service';
+import { environment } from 'src/environments';
 
 @Component({
     selector: 'app-form-products',
@@ -18,6 +21,8 @@ import { AlertService } from '@services/alertService/alert.service';
 
 export class FormProductComponent implements OnInit, OnChanges {
     @Input() product: any = null;
+    @Input() actioner: string = "";
+
     @ViewChild('fileInput') fileInput!: ElementRef;
 
     public productForm!: FormGroup;
@@ -27,13 +32,19 @@ export class FormProductComponent implements OnInit, OnChanges {
     public isChecked: boolean = false;
 
     public path_img: string = './public/img/';
+    public path_server: string = environment.imgUrl;
 
-    public types: TypeUrl[] = [];
+    public types: TypeUrl[] = [
+        { id: 5, name: "Entradas", url: "" },
+        { id: 6, name: "Fuertes", url: "" },
+        { id: 7, name: "Bebidas", url: "" },
+    ];
 
     constructor(
         private formBuilder: FormBuilder,
         private alertService: AlertService,
-    ) {}
+        private productService: ProductService,
+    ) { }
 
     ngOnInit(): void {
         this.initForm();
@@ -47,14 +58,14 @@ export class FormProductComponent implements OnInit, OnChanges {
 
     private initForm(): void {
         this.productForm = this.formBuilder.group({
-            id: [{ value: 0, disabled: true }], // ID normalmente no editable
+            id: [{ value: 0, disabled: true }],
             name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(100)]],
             description: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(500)]],
             id_type: [0, [Validators.required, Validators.min(1)]],
             price: [0, [Validators.required, Validators.min(0.01)]],
             stock: [0, [Validators.required, Validators.min(0)]],
-            recommended: ['', [Validators.required]],
-            id_company: [0, [Validators.required]]
+            recommended: ['NO', [Validators.required]],
+            id_company: [1, [Validators.required]]
         });
 
         if (this.product) {
@@ -70,13 +81,11 @@ export class FormProductComponent implements OnInit, OnChanges {
             id_type: this.product.id_type || 0,
             price: this.product.price || 0,
             stock: this.product.stock || 0,
-            recommended: this.product.recommended || '',
-            id_company: this.product.id_company || 0
+            recommended: this.product.recommended || 'NO',
+            id_company: this.product.id_company || 1
         });
 
-        if (this.product.img) {
-            this.imagePreview = this.path_img + this.product.img;
-        }
+        this.imagePreview = this.product.img ? this.path_img + this.product.img : '';
     }
 
     public changeImg() {
@@ -86,6 +95,7 @@ export class FormProductComponent implements OnInit, OnChanges {
 
     public changeToggleText(): void {
         const currentValue = this.productForm.get('recommended')?.value;
+
         this.productForm.patchValue({
             recommended: currentValue === 'SI' ? 'NO' : 'SI'
         });
@@ -133,30 +143,52 @@ export class FormProductComponent implements OnInit, OnChanges {
         }
     }
 
-    onSubmit(): void {
-        if (this.productForm.invalid) {
-            this.markFormGroupTouched(this.productForm);
-            this.alertService.alert("Por favor complete todos los campos requeridos correctamente", "error");
-            return;
+    public onSubmit(actioner: string): void {
+        const dataSend = new FormData();
+        
+        const productObject = {
+            name: this.productForm.get('name')!.value,
+            description: this.productForm.get('description')!.value,
+            id_type: this.productForm.get('id_type')!.value,
+            recommended: this.productForm.get('recommended')!.value,
+            price: this.productForm.get('price')!.value,
+            stock: this.productForm.get('stock')!.value,
+            id_company: this.productForm.get('id_company')!.value
+        };
+
+        dataSend.append("product_data", JSON.stringify(productObject));
+
+        if (this.selectedFile) {
+            dataSend.append("img", this.selectedFile);
         }
 
-        const formData = new FormData();
-        const formValues = this.productForm.getRawValue(); // getRawValue incluye campos disabled
+        if (actioner == 'Modificar') {
+            this.updateProduct(this.productForm.get('id')!.value, dataSend);
+        } else {
+            this.setProduct(dataSend);
+        }
+    }
 
-        // Agregar todos los campos del formulario
-        Object.keys(formValues).forEach(key => {
-            if (formValues[key] !== null && formValues[key] !== undefined) {
-                formData.append(key, formValues[key].toString());
+    private setProduct(data: any): void {
+        this.productService.setProduct(data).subscribe({
+            next: () => {
+                this.alertService.alert(`Producto creado exitosamente`, 'success', false);
+            },
+            error: (error: any) => {
+                console.error("Error: ", error);
             }
         });
+    }
 
-        // Agregar la imagen si se seleccionó una nueva
-        if (this.selectedFile) {
-            formData.append('img', this.selectedFile);
-        }
-
-        // Aquí llamas a tu servicio para guardar
-        // this.productService.saveProduct(formData).subscribe(...)
+    private updateProduct(id: number, data: any): void {
+        this.productService.updateProduct(id, data).subscribe({
+            next: () => {
+                this.alertService.alert(`Producto actualizado exitosamente`, 'success', false);
+            },
+            error: (error: any) => {
+                console.error("Error: ", error);
+            }
+        });
     }
 
     private markFormGroupTouched(formGroup: FormGroup): void {
