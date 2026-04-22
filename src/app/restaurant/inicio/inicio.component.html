@@ -1,17 +1,12 @@
-<div id="contenedor" class="container">
-    <div class="logo-empresa d-flex-center mt-5 mb-5">
-        @if (company.img != ''){
-            <img src="{{ path_img + company.img }}" alt="Logo empresa" id="logo-empresa" title="{{ company.name }}">   
-        }
+<div id="contenedor">
+    <div id="navbar" class="mb-5">
+        <app-navbar></app-navbar>
     </div>
     <div class="container mb-5">
         @for (type of types; track $index){
-            <div class="type px-3 py-3 d-flex-center mb-3 br-brown" (click)="location(type.name, type.url);" title="Ir a {{ type.name }}">
+            <div class="type px-3 py-3 d-flex-center mb-4 border-brown bg-white box-shadow-brown" (click)="location(type.name, type.url);" title="Ir a {{ type.name }}">
                 <h3> {{ type.name }} </h3>
             </div>
         }
-    </div>
-    <div class="container info-empresa d-flex-center">
-        <p class="text-center" id="description"> {{ company.description }} </p>
     </div>
 </div>

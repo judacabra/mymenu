@@ -1,3 +1,11 @@
+:host {
+    --grey: #9b9898;
+
+    --dark: #504e4e;
+    --cl-1: rgb(135, 136, 140) !important;
+    --cl-2: rgb(210, 210, 210) !important;
+}
+
 /* 
     HTML
 */
@@ -8,12 +16,19 @@ h1 {
 /* 
     IDS
 */
-/* Quitar spinners en Chrome, Safari, y Edge */
-#document::-webkit-inner-spin-button,
-#document::-webkit-outer-spin-button {
-  -webkit-appearance: none;
-  -moz-appearance: textfield;
-  margin: 0;
+#contenedor {
+    background: linear-gradient(30deg,rgba(213, 219, 213, 1) 0%, rgba(224, 162, 126, 1) 50%, rgba(213, 219, 213, 1) 100%);
+}
+
+/* 
+    CLASSES
+*/
+.bg-transparent- {
+    background: rgba(255, 255, 255, .2);
+}
+
+.btn-disabled {
+    background: var(--cl-1);
 }
 
 /* 

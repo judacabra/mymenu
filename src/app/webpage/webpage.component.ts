@@ -6,6 +6,7 @@ import { CompanyService } from '@services/company/company.service';
 import { AlertService } from '@services/alertService/alert.service';
 
 import { Company } from '@core/interfaces/company';
+import { environment } from 'src/environments';
 
 export interface Section {
     name: string,
@@ -24,13 +25,18 @@ export interface Section {
 })
 
 export default class WebpageComponent implements OnInit {
-    public apiWpp: string = 'https://api.whatsapp.com/send?phone=573057506743&text=Hola%20quiero%20empezar%20a%20utilizar%20*MyMenu*%20ahora%20mismo.';
+    public mensaje: string = encodeURIComponent(`Hola, quiero empezar a utilizar *MyMenu* ahora mismo`);
+    public apiWpp: string = `https://api.whatsapp.com/send?phone=573057506743&text=${this.mensaje}`;
+
     public path: string = './public/';
+    public path_server: string = environment.imgUrl;
     public path_img: string = this.path + 'img/';
     public path_json: string = this.path + 'json/';
-    public logo_company: string = 'mm-logo.png';
+    
+    public logo_company: string = 'logo.png';
     public bg_1: string = 'bg-home.png';
     public btnVisible: boolean = false;
+
     public companies: Company[] = [];
 
     public sections: Section[] = [

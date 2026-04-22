@@ -16,7 +16,7 @@ a {
     CLASSES
 */
 .br-brown {
-    border: #9c807b solid;
+    border: #9c807b solid 0.5px;
     border-radius: 15px;
 }
 

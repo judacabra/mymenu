@@ -1,45 +1,71 @@
-<div class="container mt-5">
-    <div class="mb-5">
-        <h1 class="mb-3 text-center cl-brown"> Datos para la reserva </h1>
+<div id="contenedor" class="container p-4">
+    <h1 class="mb-3 text-center"> Datos para la reserva </h1>
 
-        <form class="container">
-            <div class="mb-3">
-                <label for="fullname" class="form-label"> Nombre Completo: </label>
-                <input type="text" class="form-control" id="fullname">
+    <form class="container" [formGroup]="form">
+        <div class="mb-3">
+            <label for="fullname" class="form-label"> Nombre Completo:</label>
+            <input type="text" class="form-control" id="fullname" formControlName="fullname" placeholder="Ej: Ever Ramos" />
+        </div>
+        <div class="mb-3">
+            <label for="document" class="form-label"> Número de documento: </label>
+            <input type="number" class="form-control" id="document" formControlName="document" placeholder="Ej: 1144xxxxxx" />
+        </div>
+        <div class="mb-3">
+            <label for="cantidad_personas" class="form-label"> Cantidad de personas: </label>
+            <select class="form-select" id="cantidad_personas" formControlName="cantidad_personas">
+                <option selected disabled value="">-- Seleccione una cantidad --</option>
+                @for (number of numbers; track $index){
+                <option value="{{ number }}"> {{ number }} </option>
+                }
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="incluye_deco" class="form-label"> Incluir decoración?: </label>
+            <select class="form-select" id="incluye_deco" formControlName="incluye_deco" #incluyedeco
+                (change)="verifyDeco()">
+                <option selected disabled value="">-- Seleccione una opción --</option>
+                @for (option of options; track $index){
+                    <option value="{{ option.value }}"> {{ option.label }} </option>
+                }
+            </select>
+        </div>
+
+        @if (showMotives){
+            <div class="bg-transparent- mb-3 py-2 px-3 rounded">
+                <small> 
+                    <b class="text-danger">Nota:</b> La decoración tiene un costo adicional, se paga antes y <b>NO</b> es reembolsable.
+                </small>
             </div>
             <div class="mb-3">
-                <label for="document" class="form-label"> Número de documento: </label>
-                <input type="number" class="form-control" id="document">
-            </div>
-            <div class="mb-3">
-                <label for="persons" class="form-label"> Cantidad de personas: </label>
-                <select class="form-select" aria-label="Default select example" id="persons">
-                    <option selected disabled></option>
-                    @for (number of numbers; track $index){
-                        <option value="{{ number }}"> {{ number }} </option>
-                    }
-                </select>
-            </div>
-            <div class="mb-3">
-                <label for="motive" class="form-label"> Motivo de reserva: </label>
-                <select class="form-select" aria-label="Default select example" id="motive" #motive (change)="verifyMotive(motive.value);">
-                    <option selected disabled></option>
+                <label for="motive" class="form-label"> Motivo para decorar: </label>
+                <select class="form-select" id="motive" formControlName="motive" #motive
+                    (change)="verifyMotive($any($event.target).value);">
+                    <option selected disabled value="">-- Seleccione un motivo --</option>
                     @for (motive of motives; track $index){
-                        <option value="{{ motive.id }}"> {{ motive.name }} </option>
+                    <option value="{{ motive.id }}"> {{ motive.name }} </option>
                     }
                 </select>
             </div>
-            <div class="mb-3" [ngClass]="isOther ? '' : 'd-none'">
-                <label for="motive" class="form-label"> Cual: </label>
-                <input type="text" class="form-control" id="other-motive">
-            </div>
+        }
+
+        @if (isOther) {
             <div class="mb-3">
-                <label for="add-info" class="form-label"> Información / Petición de servicio adicional </label>
-                <textarea class="form-control" id="add-info" rows="3"></textarea>
+                <label for="other_motive" class="form-label"> Cual: </label>
+                <input type="text" class="form-control" id="other_motive" formControlName="other_motive" placeholder="Escribe otro motivo" />
             </div>
-            <div class="mb-3 d-flex justify-content-around">
-                <input type="button" value="Enviar" class="btn bg-brown">
-            </div>
-        </form>
-    </div>
+        }
+        <div class="mb-4">
+            <label for="info_adicional" class="form-label"> Información / Petición de servicio adicional </label>
+            <textarea class="form-control" id="info_adicional" formControlName="info_adicional" rows="3" placeholder="(Opcional)"></textarea>
+        </div>
+        <div class="mb-3 d-flex justify-content-around">
+            <button 
+                type="button" 
+                class="btn text-white px-5" 
+                [ngClass]="{'bg-brown': form.valid, 'btn-disabled': form.invalid}"
+                [disabled]="form.invalid"
+                (click)="onSubmit()"
+            > Enviar </button>
+        </div>
+    </form>
 </div>

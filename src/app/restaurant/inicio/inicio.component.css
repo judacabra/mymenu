@@ -14,24 +14,12 @@ html, body {
     IDS
 */
 #contenedor {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-}
-
-#logo-empresa{
-    width: 350px;
-    height: 100px;
+    background: linear-gradient(30deg,rgba(213, 219, 213, 1) 0%, rgba(224, 162, 126, 1) 50%, rgba(213, 219, 213, 1) 100%);
 }
 
 /* 
     CLASSES
 */
-.br-brown {
-    border: #9c807b solid;
-    border-radius: 15px;
-}
-
 .type{
     cursor: pointer;
     color: #9c807b;

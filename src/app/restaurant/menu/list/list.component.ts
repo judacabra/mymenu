@@ -135,19 +135,6 @@ export default class ListComponent {
         });
     }
 
-    public truncateText(text: string, n?: number): string {
-        const maxLength: number = (n && n > 0) ? n : 17;
-        var result: string;
-
-        if (text.length > maxLength) {
-            result = text.substring(0, maxLength) + '...';
-        } else {
-            result = text;
-        }
-
-        return result;
-    }
-
     public getCompanyInfo(restaurant: string): void {
         this.companyService.getCompanyByParam(undefined, restaurant).subscribe({
             next: (response: any) => {
@@ -177,9 +164,9 @@ export default class ListComponent {
         this.typeElements.forEach((typeRef) => {
             const element: any = typeRef.nativeElement;
             const rect: any = element.getBoundingClientRect();
-            const viewportCenter: number = window.innerHeight / 2;
+            const viewportCenter: number = window.innerHeight / 2.5;
             
-            const elementCenter: number = rect.top + rect.height / 2;
+            const elementCenter: number = rect.top + rect.height / 2.5;
             const distance: number = Math.abs(elementCenter - viewportCenter);
             
             if (distance < minDistance) {

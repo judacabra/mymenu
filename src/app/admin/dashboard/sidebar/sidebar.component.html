@@ -1,6 +1,14 @@
 <div id="body">
     <div id="company-logo" class="pt-3 mb-3">
-        <img src="{{ path_img + (company.img ? company.img : 'logo.png') }}" alt="company-logo" id="company-logo" class="ps-3 w-80 ms-2 rounded">
+        <img
+            src="{{ !company.img 
+                ? path_server + company.img 
+                : path_img + 'logo.png' 
+            }}" 
+            id="company-logo" 
+            class="mx-4 w-80 rounded" 
+            alt="company-logo" 
+        />
     </div>
     <div id="options">
         <ul id="views" class="px-3">

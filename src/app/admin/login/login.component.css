@@ -10,7 +10,7 @@ h3 {
     color: var(--white);
 }
 
-input {
+input, input:focus {
     background: var(--bg-1);
     border: none;
     color: var(--cl-1);

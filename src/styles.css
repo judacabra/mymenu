@@ -9,8 +9,17 @@
     --bg-1: rgb(23, 24, 33);
     --bg-2: rgb(33, 34, 45);
 
-    --cl-1: rgb(135, 136, 140);
-    --cl-2: rgb(210, 210, 210);
+    --dark: #504e4e;
+    --cl-1: rgb(135, 136, 140) !important;
+    --cl-2: rgb(210, 210, 210) !important;
+}
+
+/* Quitar spinners en Chrome, Safari, y Edge */
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  -moz-appearance: textfield;
+  margin: 0;
 }
 
 h1,
@@ -54,6 +63,23 @@ tr {
     color: var(--brown-dark) !important;
 }
 
+.bg-brown-gradient {
+    background: linear-gradient(var(--brown) 0%, var(--brown-dark) 50%, var(--brown) 100%);
+}
+
+.box-shadow-brown {
+    box-shadow: 0 0 30px 0 #7a7575;
+}
+
+.border-brown {
+    border: #9c807b solid 0.5px;
+    border-radius: 15px;
+}
+
+.border-bottom-white { 
+    border-bottom: solid var(--white) !important;
+}
+
 .border-bottom-brown { 
     border-bottom: solid var(--brown-dark) !important;
 }
@@ -72,13 +98,16 @@ tr {
     height: 15vh;
 }
 
-
 .form-control,
-.form-select {
-    color: var(--cl-2) !important;
+select option:not(:first-child),
+textarea {
+    color: var(--dark) !important;
 }
 
-.form-control::placeholder {
+.form-control::placeholder, 
+textarea::placeholder, 
+select option:first-child, 
+select option:disabled {
     color: var(--cl-1) !important;
 }
 

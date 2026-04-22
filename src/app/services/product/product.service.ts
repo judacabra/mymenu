@@ -78,7 +78,7 @@ export class ProductService {
     }
 
     public setProduct(data: any): Observable<Product> { 
-        return this.http.post<Product>(`${this.url}/products`, data, { headers: this.httpFilesHeaders }).pipe(
+        return this.http.post<Product>(`${this.url}/product`, data, { headers: this.httpFilesHeaders }).pipe(
             catchError((e) => {
                 this.alertService.alert(e?.error?.detail, 'error');
                 return throwError(() => e);

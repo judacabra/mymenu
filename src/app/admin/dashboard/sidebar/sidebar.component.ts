@@ -7,6 +7,7 @@ import { Permission } from '@core/interfaces/permission';
 import { View } from '@core/interfaces/view';
 import { Company } from '@core/interfaces/company';
 import { NgClass } from '@angular/common';
+import { environment } from 'src/environments';
 
 type Views = "dashboard" | "users" | "companies" | "profiles" | "products";
 @Component({
@@ -19,6 +20,7 @@ type Views = "dashboard" | "users" | "companies" | "profiles" | "products";
 
 export class SidebarDashboardComponent implements OnInit {
     public path_img: string = './public/img/';
+    public path_server: string = environment.imgUrl;
 
     public company: Company = {
         id: 0,

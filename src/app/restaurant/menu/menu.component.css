@@ -1,6 +1,13 @@
 /* 
     MEDIA QUERYS
 */
+#contenedor {
+    background: linear-gradient(30deg,rgba(213, 219, 213, 1) 0%, rgba(224, 162, 126, 1) 50%, rgba(213, 219, 213, 1) 100%);
+}
+
+/* 
+    MEDIA QUERYS
+*/
 @media (max-width: 600px){
     #logo-empresa{
         width: 200px;

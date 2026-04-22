@@ -1,5 +1,7 @@
-:host {
-    --white: white; 
+:root {
+    --white: rgb(255, 255, 255);
+    --brown: #9c807b;
+    --brown-dark: #6d5b5b;
 }
 
 /* 
@@ -33,12 +35,16 @@ li {
 /* 
     ID
 */
+#contenedor {
+    background: linear-gradient(35deg,rgba(213, 219, 213, 1) 0%, rgba(224, 162, 126, 1) 38%, rgba(213, 219, 213, 1) 100%);
+}
+
 #navegator {
     width: 100vw;
     position: fixed;
+    background: var(--brown);
     top: 0;
-    background: var(--white);
-    z-index: 2;
+    z-index: 3;
 }
 
 /* 
@@ -48,8 +54,22 @@ li {
     width: 100%;
 }
 
+.card-body {
+    border-top: solid 0.5px #c2c2c2;
+    background: linear-gradient(30deg,rgb(214, 219, 214) 0%, rgb(247, 244, 244) 35%, rgba(247, 244, 244) 55%, rgba(213, 219, 213, 1) 100%);
+    border-radius: 0 0 6px 6px;
+}
+
 .card-title {
     font-weight: bold;
+}
+
+.card-text {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    text-overflow: ellipsis;
 }
 
 .card {
@@ -60,16 +80,24 @@ li {
     height: 100px;
 }
 
+.label-info {
+    font-size: 11px;
+    position: absolute;
+    top: -10px;
+    right: -5px;
+    z-index: 2;
+}
+
+.img-modal {
+    max-height: 30vh;
+}
+
 .img-on-popup {
     width: 100%;
 }
 
 .type h1 {
     font-family: 'Lemmon shake';
-}
-
-.two-rows {
-    height: 80px;
 }
 
 @media (min-width: 1000px){
@@ -93,7 +121,8 @@ li {
     }
 
     .card-text {
-        font-size: 12px;
+        height: 40px;
+        font-size: 13px;
     }
 
     .price {

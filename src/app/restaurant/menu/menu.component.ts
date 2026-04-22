@@ -3,16 +3,16 @@ import { ActivatedRoute } from '@angular/router';
 
 import { CompanyService } from '@services/company/company.service';
 
-import { FooterComponent } from '../footer/footer.component';
 import { OptionsComponent } from './options/options.component';
 
 import { Company } from '@core/interfaces/company';
+import { NavbarComponent } from '../navbar/navbar.component';
 
 @Component({
     selector: 'app-menu',
     standalone: true,
     imports: [
-        FooterComponent,
+        NavbarComponent,
         OptionsComponent,
     ],
     templateUrl: './menu.component.html',
