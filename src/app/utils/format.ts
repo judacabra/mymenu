@@ -29,4 +29,18 @@ export default class Format {
 
         return new Intl.NumberFormat(lng, options).format(numericAmount);
     }
+
+    public isNewProduct(dateStr: string, maxNewDays: number): boolean {
+        const productDate = new Date(dateStr);
+        const now = new Date();
+        
+        if (isNaN(productDate.getTime())) {
+            throw new Error('Formato de fecha inválido');
+        }
+        
+        const diferenceMs = now.getTime() - productDate.getTime();
+        const days = Math.floor(diferenceMs / (1000 * 60 * 60 * 24));
+        
+        return days <= maxNewDays;
+    }
 }

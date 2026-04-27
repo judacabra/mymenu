@@ -15,6 +15,7 @@ import { CompanyService } from '@services/company/company.service';
 import { environment } from 'src/environments';
 
 import Format from 'src/app/utils/format';
+
 @Component({
     selector: 'app-list',
     standalone: true,
@@ -107,7 +108,7 @@ export default class ListComponent {
 
     public getProductsByCompany(company_id: number): void {
         this.productService.consultProductsByCompany(company_id).subscribe({
-            next: (response: any) => {
+            next: (response: Product[]) => {
                 this.products = response;
             },
             error: (error: any) => {

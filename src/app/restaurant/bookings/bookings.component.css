@@ -1,9 +1,13 @@
 :host {
     --grey: #9b9898;
-
     --dark: #504e4e;
+    
     --cl-1: rgb(135, 136, 140) !important;
     --cl-2: rgb(210, 210, 210) !important;
+}
+
+input, select, textarea {
+    color: var(--dark) !important;
 }
 
 /* 

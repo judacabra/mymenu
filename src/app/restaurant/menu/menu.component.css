@@ -2,6 +2,8 @@
     MEDIA QUERYS
 */
 #contenedor {
+    min-height: 100vh;
+    max-height: 100vh;
     background: linear-gradient(30deg,rgba(213, 219, 213, 1) 0%, rgba(224, 162, 126, 1) 50%, rgba(213, 219, 213, 1) 100%);
 }
 

@@ -29,10 +29,11 @@
                 @for (product of productsRecommended(); track $index) {
                 <div class="col">
                     <div class="card border-0 box-shadow-brown rounded" data-bs-toggle="modal" [attr.data-bs-target]="'#' + type.id + '-' + product.id">
-                        @if (product.id == 1 || product.id == 2) {
+                         @if (product.stock == 0 || formater.isNewProduct(product.date!, 30)) {
                         <label class="px-3 py-1 rounded-pill label-info text-white fw-bold"
-                            [ngClass]="{'bg-success': product.id == 1, 'bg-danger': product.id == 2,}"> {{ product.id == 1 ?
-                            'Nuevo' : 'Agotado' }} </label>
+                            [ngClass]="{'bg-danger': product.stock == 0, 'bg-success': formater.isNewProduct(product.date!, 30)}"> 
+                            {{ product.stock == 0 ? 'Agotado' : 'Nuevo' }} 
+                        </label>
                         }
                         <img src="{{ product.img 
                                 ? path_server + product.img 
@@ -79,10 +80,11 @@
                 @for (product of productsByType(type.id); track $index) {
                 <div class="col">
                     <div class="card border-0 box-shadow-brown rounded" data-bs-toggle="modal" [attr.data-bs-target]="'#' + type.id + '-' + product.id">
-                        @if (product.id == 1 || product.id == 2) {
+                        @if (product.stock == 0 || formater.isNewProduct(product.date!, 30)) {
                         <label class="px-3 py-1 rounded-pill label-info text-white fw-bold"
-                            [ngClass]="{'bg-success': product.id == 1, 'bg-danger': product.id == 2,}"> {{ product.id ==
-                            1 ? 'Nuevo' : 'Agotado' }} </label>
+                            [ngClass]="{'bg-danger': product.stock == 0, 'bg-success': formater.isNewProduct(product.date!, 30)}"> 
+                            {{ product.stock == 0 ? 'Agotado' : 'Nuevo' }} 
+                        </label>
                         }
                         <img src="{{ product.img 
                             ? path_server + product.img 

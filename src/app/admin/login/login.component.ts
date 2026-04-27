@@ -18,7 +18,7 @@ import { AuthService } from '@services/authService/auth.service';
 })
 
 export default class LoginComponent {
-    public path_logo: string = './public/img/mm-logo.png';
+    public path_logo: string = './public/img/logo.png';
     public username: boolean = false;
     public noUsername: boolean = false;
     public password: boolean = false;

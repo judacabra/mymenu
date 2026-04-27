@@ -3,8 +3,25 @@
 
     <form class="container" [formGroup]="form">
         <div class="mb-3">
+            <label for="date" class="form-label"> Fecha a reservar:</label>
+            <input type="date" class="form-control" id="date" formControlName="date" (change)="validateMinDate()" />
+        </div>
+        <div class="mb-3">
+            <label for="time" class="form-label"> Hora:</label>
+            <select class="form-select" id="time" formControlName="time">
+                <option selected disabled value="">-- Seleccione una hora --</option>
+                @for (time of times; track $index){
+                <option value="{{ time }}"> {{ time }} </option>
+                }
+            </select>
+        </div>
+        <div class="mb-3">
             <label for="fullname" class="form-label"> Nombre Completo:</label>
             <input type="text" class="form-control" id="fullname" formControlName="fullname" placeholder="Ej: Ever Ramos" />
+        </div>
+        <div class="mb-3">
+            <label for="email" class="form-label"> Correo electronico:</label>
+            <input type="mail" class="form-control" id="email" formControlName="email" placeholder="Ej: eramos@dominio.com" />
         </div>
         <div class="mb-3">
             <label for="document" class="form-label"> Número de documento: </label>

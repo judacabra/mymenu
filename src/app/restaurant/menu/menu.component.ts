@@ -51,6 +51,6 @@ export default class MenuComponent {
             error: (error: any) => {
                 console.error("Error: ", error);
             }
-        })
+        });
     }
 }

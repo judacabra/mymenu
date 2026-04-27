@@ -98,17 +98,8 @@ tr {
     height: 15vh;
 }
 
-.form-control,
-select option:not(:first-child),
-textarea {
-    color: var(--dark) !important;
-}
-
-.form-control::placeholder, 
-textarea::placeholder, 
-select option:first-child, 
-select option:disabled {
-    color: var(--cl-1) !important;
+.form-control, select {
+    color: var(--cl-2) !important;
 }
 
 .form-check-input {
