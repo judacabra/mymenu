@@ -18,6 +18,8 @@
 }
 
 #content {
+    min-height: 84.9vh;
+    max-height: 84.9vh;
     background: var(--bg-1);
 }
 
