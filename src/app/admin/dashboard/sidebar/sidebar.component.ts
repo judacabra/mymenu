@@ -8,6 +8,7 @@ import { View } from '@core/interfaces/view';
 import { Company } from '@core/interfaces/company';
 import { NgClass } from '@angular/common';
 import { environment } from 'src/environments';
+import { Router } from '@angular/router';
 
 type Views = "dashboard" | "users" | "companies" | "profiles" | "products";
 @Component({
@@ -54,9 +55,9 @@ export class SidebarDashboardComponent implements OnInit {
         },
         {
             id: 4,
-            url: 'profiles',
-            name: 'Perfiles',
-            icon: 'fas fa-check-square',
+            url: 'headquarters',
+            name: 'Sedes',
+            icon: 'fas fa-university',
         },
         {
             id: 5,
@@ -64,25 +65,31 @@ export class SidebarDashboardComponent implements OnInit {
             name: 'Productos',
             icon: 'fas fa-hamburger',
         },
+        {
+            id: 6,
+            url: 'profiles',
+            name: 'Perfiles',
+            icon: 'fas fa-check-square',
+        },
     ];
 
     public viewSelected: Views = window.location.href.split('/')[3] as Views;
 
     constructor(
         private userService: UserService, 
-        private companyService: CompanyService
+        private companyService: CompanyService,
+        private router: Router,
     ){
-        const username: string = sessionStorage.getItem('username')!;
-
-        this.getPermissions(username);
+        const id: string = sessionStorage.getItem('user_id')!;
+        this.getPermissions(id);
     }
 
     ngOnInit(): void {
-        this.getcompanyInfo();
+        this.getCompanyInfo();
     }
 
-    private getPermissions(username: string): void {
-        this.userService.get_logged_info(username).subscribe({
+    private getPermissions(id: string): void {
+        this.userService.getLoggedInfo(id).subscribe({
             next: (response: any) => {
                 this.permissions = response.permissions;
             },
@@ -99,21 +106,17 @@ export class SidebarDashboardComponent implements OnInit {
     }
 
     public setURL(url: string): void {
-        window.location.href = url;
+        this.router.navigateByUrl(url);
     }
 
-    private getcompanyInfo(): void {
-        var user_id = Number(sessionStorage.getItem('user_id'));
-
-        if (user_id){
-            this.companyService.getCompanyByParam(user_id).subscribe({
-                next: (response: any) => {
-                    this.company = response;
-                },
-                error: (error: any) => {
-                    console.error("Error: ", error);
-                }
-            });
-        }
+    private getCompanyInfo(): void {
+        this.companyService.getCompanyByParam(1).subscribe({
+            next: (response: any) => {
+                this.company = response;
+            },
+            error: (error: any) => {
+                console.error("Error: ", error);
+            }
+        });
     }
 }

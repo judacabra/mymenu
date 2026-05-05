@@ -1,0 +1,12 @@
+/* 
+    CLASSES
+*/
+.form-control,
+.form-select {
+    background: var(--bg-2);
+    border: none;
+}
+
+.form-control::placeholder {
+    color: var(--cl-1);
+}

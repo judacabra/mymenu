@@ -1,0 +1,63 @@
+<div id="body">
+    <form [formGroup]="userForm">
+        <div class="mb-3">
+            <label for="name" class="form-label"> Nombre completo: </label>
+            <input 
+                id="name" 
+                class="form-control" 
+                formControlName="name" 
+                placeholder="Ejemplo: Juan Carvajal" 
+                (keydown)="filterLetters($event)" 
+                (input)="createUsername()"
+            />
+        </div>
+        <div class="mb-3">
+            <label for="username" class="form-label"> Usuario: </label>
+            <input type="text" class="form-control" id="username" formControlName="username" placeholder="Ejemplo: jcarvajal" readonly>
+        </div>
+        <div>
+            <div>
+                <label for="email" class="form-label"> Correo electrónico: </label>
+            </div>
+            <div class="input-group mb-3">
+                <input id="email" class="form-control" formControlName="email" placeholder="Ejemplo: jcarvajal@domain.com">
+            </div>
+        </div>
+        <div class="mb-3">
+            <label for="id_profile" class="form-label"> Perfil: </label>
+            <select class="form-select" aria-label="type select" id="id_profile" formControlName="id_profile">
+                <option [value]="0"> Seleccione un perfil </option>
+                @for (profile of profiles; track $index){
+                    @if(profile.name != ''){
+                        <option [value]="profile.id" [selected]="profile.id == userForm.get('id_profile')!.value" [disabled]="profile.id == 1"> {{ profile.name }} </option>
+                    }
+                }
+            </select>
+        </div>
+        <div class="form-check form-switch d-flex flex-column p-0 mb-3">
+            <div>
+                <label for="active" class="form-label"> Activo: </label>
+            </div>
+            <div>
+                <input class="form-check-input" id="active" type="checkbox"
+                    [checked]="userForm.get('active')!.value" (change)="changeToggleText();">
+                <span class="toggle-inactive" [ngClass]="{
+                    'visible' : !userForm.get('active')?.value,
+                    'invisible': userForm.get('active')?.value
+                }">
+                    NO
+                </span>
+                <span class="toggle-active" [ngClass]="{
+                    'visible' : userForm.get('active')?.value,
+                    'invisible': !userForm.get('active')?.value
+                }">
+                    SI
+                </span>
+            </div>
+        </div>
+        <div class="d-flex justify-content-center align-items-center">
+            <button type="button" class="btn btn-primary text-white" (click)="onSubmit(actioner)"> {{ actioner }}
+            </button>
+        </div>
+    </form>
+</div>

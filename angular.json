@@ -19,6 +19,10 @@
             "polyfills": [
               "zone.js"
             ],
+            "allowedCommonJsDependencies": [
+              "sweetalert2",
+              "lottie-web"
+            ],
             "tsConfig": "tsconfig.app.json",
             "assets": [
               {

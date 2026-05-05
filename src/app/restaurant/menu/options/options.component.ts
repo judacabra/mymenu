@@ -42,7 +42,7 @@ export class OptionsComponent {
             next: (response) => {
                 this.company = response;
 
-                this.getAllTypesByCompany(response.id);
+                this.getAllTypesByCompany(response.id!);
             },
             error: (error) => {
                 console.error(error);

@@ -64,7 +64,7 @@ export class AuthService {
         const payload = JSON.parse(window.atob(token.split('.')[1]));
         
         sessionStorage.setItem('token', token);
-        sessionStorage.setItem('idUser', payload.sub);
+        sessionStorage.setItem('user_id', payload.sub);
     }
 
     public getCredentials(): string | null {

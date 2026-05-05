@@ -4,11 +4,11 @@
     </div>
     <div id="contenido">
         <div id="navbar">
-            <app-dashboard-navbar [title]="'Productos'"></app-dashboard-navbar>
+            <app-dashboard-navbar [title]="title"></app-dashboard-navbar>
         </div>
         <div id="content" class="px-3 py-2">
             <div id="options" class="d-flex pb-2">
-                <div id="filter" class="me-3 w-87 mb-4">
+                <div id="filter" class="me-2 w-87">
                     <input 
                         type="text" 
                         id="search" 
@@ -22,82 +22,23 @@
                         class="btn btn-primary new" (click)="setMode('Insertar')">
                 </div>
             </div>
-            <div id="products">
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th class="w-20 rnd-first-top">NOMBRE</th>
-                            <th class="w-30">DESCRIPCION</th>
-                            <th class="w-10 text-center">PRECIO</th>
-                            <th class="w-10 text-center">STOCK</th>
-                            <th class="w-10 text-center">IMG</th>
-                            <th class="w-10 text-center">ESTADO</th>
-                            <th class="w-10 rnd-last-top"></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @for (product of paginatedProducts; track $index) {
-                        <tr>
-                            <td> {{ product.name }} </td>
-                            <td> {{ product.description }} </td>
-                            <td class="text-center"> $ {{ product.price }} </td>
-                            <td class="text-center"> {{ product.stock }} </td>
-                            <td class="text-center">
-                                <img 
-                                    src="{{ product.img 
-                                        ? path_server + product.img 
-                                        : path_img + 'not-found-img.jpg' 
-                                    }}"
-                                    alt="img-product" class="img w-40 h-40- rounded" 
-                                    data-bs-toggle="modal"
-                                    [attr.data-bs-target]="'#' + product.id" 
-                                />
-                            </td>
-                            <td class="text-center "> 
-                                <i 
-                                    class="fas text-success-subtle fs-4" 
-                                    [ngClass]="{
-                                        'fa-check text-success': product.status, 
-                                        'fa-times text-danger': !product.status,
-                                    }" 
-                                    title="{{ product.status ? 'Activo' : 'Inactivo' }}"
-                                ></i> 
-                            </td>
-                            <td>
-                                <button data-bs-toggle="modal" data-bs-target="#productsForm"
-                                    (click)="setMode('Modificar', product.id)" class="no-btn me-3">
-                                    <i class="fas fa-edit text-success-subtle" title="Editar"></i>
-                                </button>
-                                <button (click)="verifyDeleteProduct(product.id)" class="no-btn">
-                                    <i class="fas fa-trash-alt text-danger" title="Eliminar"></i>
-                                </button>
-                            </td>
-                        </tr>
+            <div>
+                <app-table 
+                    [titles]="tableTitles" 
+                    [tableContent]="tableContent"
+                    [columnsCount]="columnsCount"
+                    [pages]="pages"
+                    [totalPages]="totalPages"
+                    [currentPage]="currentPage"
+                    [onChangePage]="changePage"
+                ></app-table>
 
-                        <!-- Product Img Modal -->
-                        <div class="modal fade" id="{{product.id }}" tabindex="-1" aria-hidden="true">
-                            <div class="modal-dialog rounded">
-                                <img 
-                                    src="{{ product.img 
-                                        ? path_server + product.img 
-                                        : path_img + 'not-found-img.jpg' 
-                                    }}"
-                                    alt="product" 
-                                    class="img-on-popup rounded"
-                                />
-                            </div>
-                        </div>
-                        }
-                    </tbody>
-                </table>
-
-                <!-- Modal Form -->
-                <div class="modal fade" id="productsForm" tabindex="-1" aria-labelledby="ModalLabel" aria-hidden="true">
+                <div class="modal fade" id="productsForm" tabindex="-1" aria-labelledby="ModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
                     <div class="modal-dialog modal-dialog-centered modal-dialog-scrolleable">
                         <div class="modal-content">
                             <div class="modal-header" data-bs-theme="dark">
                                 <h1 class="modal-title fs-5" id="exampleModalLabel"> {{ mode.action }} producto</h1>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" id="close-modal"
                                     aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
@@ -106,29 +47,6 @@
                         </div>
                     </div>
                 </div>
-
-                <nav class="d-flex justify-content-end" aria-label="Page navigation">
-                    <ul class="pagination">
-                        <li class="page-item" [class.disabled]="currentPage === 1">
-                            <a class="page-link" (click)="changePage(currentPage - 1)" aria-label="Previous"
-                                title="Anterior">
-                                <span aria-hidden="true">&laquo;</span>
-                            </a>
-                        </li>
-                        @for (page of pages; track $index){
-                        <li class="page-item">
-                            <a class="page-link" [ngClass]="{'page-selected': page === currentPage}"
-                                (click)="changePage(page)">{{ page }}</a>
-                        </li>
-                        }
-                        <li class="page-item" [class.disabled]="currentPage === totalPages">
-                            <a class="page-link" (click)="changePage(currentPage + 1)" aria-label="Next"
-                                title="Siguiente">
-                                <span aria-hidden="true">&raquo;</span>
-                            </a>
-                        </li>
-                    </ul>
-                </nav>
             </div>
         </div>
         <div id="footer">

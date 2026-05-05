@@ -1,0 +1,98 @@
+<div class="mt-3 p-custom">
+    <table class="table w-100">
+        <thead>
+            <tr>
+                @for (item of titles; track $index) {
+                <th class="py-2 {{ item.classes }}" 
+                    [ngClass]="{
+                        'rnd-first-top': $index == 0, 
+                        'rnd-last-top': $index == titles.length - 1
+                    }"
+                >
+                    {{ item.name }}
+                </th>
+                }
+            </tr>
+        </thead>
+        <tbody>
+            @if (tableContent.length == 0){
+            <tr>
+                <td [attr.colspan]="columnsCount - 1" class="py-2 text-center"> No se encontrarón resultados <td>
+            <tr>
+            } @else {
+                @for (item of tableContent; track $index) {
+                <tr>
+                    @for (col of item.columns; track $index) {
+                    <td class="py-2 {{ col.classes }}">
+                        @if (col.label.startsWith("uploads/")){
+                        <img 
+                            src="{{ col.label 
+                                ? path_server + col.label
+                                : path_img + 'not-found-img.jpg' 
+                            }}" alt="img" class="img w-40 h-40- rounded" data-bs-toggle="modal"
+                            [attr.data-bs-target]="'#' + col.id" 
+                        />
+
+                        <div class="modal fade" id="{{ col.id }}" tabindex="-1" aria-hidden="true">
+                            <div class="modal-dialog rounded bg-white p-2">
+                                <img 
+                                    src="{{ col.label 
+                                        ? path_server + col.label 
+                                        : path_img + 'not-found-img.jpg' 
+                                    }}" 
+                                    alt="img" 
+                                    class="img-on-popup rounded" 
+                                />
+                            </div>
+                        </div>
+                        } @else if (col.label == "true" || col.label == "false") {
+                            <span [innerHTML]="getIconHtml(col.label)"></span>
+                        } @else {
+                        {{ col.label }}
+                        }
+                    </td>
+                    }
+
+                    @if ((item.editRow && item.onEdit != null) || (item.deleteRow && item.onDelete != null)) {
+                    <td class="d-flex justify-content-center border-0">
+                        @if (item.editRow && item.onEdit != null) {
+                        <button type="button" class="btn rounded-50 bg-secondary bg-gradient me-3 text-white" title="Editar"
+                            data-bs-toggle="modal" [attr.data-bs-target]="'#' + item.idForm" (click)="item.onEdit()">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        }
+                        @if (item.deleteRow && item.onDelete != null) {
+                        <button type="button" class="btn rounded-50 bg-danger bg-gradient text-white" title="Eliminar"
+                            (click)="item.onDelete()">
+                            <i class="fas fa-trash-alt"></i>
+                        </button>
+                        }
+                    </td>
+                    }
+                </tr>
+                }
+            }
+        </tbody>
+    </table>
+    
+    <nav class="d-flex justify-content-end me-4" aria-label="Page navigation">
+        <ul class="pagination">
+            <li class="page-item" [class.disabled]="currentPage === 1">
+                <a class="page-link" (click)="onChangePage(currentPage - 1)" aria-label="Previous" title="Anterior">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+            @for (page of pages; track $index){
+            <li class="page-item">
+                <a class="page-link" [ngClass]="{'page-selected': page === currentPage}" (click)="onChangePage(page)">{{
+                    page }}</a>
+            </li>
+            }
+            <li class="page-item" [class.disabled]="currentPage === totalPages">
+                <a class="page-link" (click)="onChangePage(currentPage + 1)" aria-label="Next" title="Siguiente">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</div>

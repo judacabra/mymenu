@@ -4,64 +4,43 @@
     </div>
     <div id="contenido">
         <div id="navbar">
-            <app-dashboard-navbar [title]="'Usuarios'"></app-dashboard-navbar>
+            <app-dashboard-navbar [title]="title"></app-dashboard-navbar>
         </div>
         <div id="content" class="px-3 py-2">
             <div id="options" class="d-flex pb-2">
                 <div id="filter" class="me-3 w-87">
-                    <input type="text" class="form-control" id="search" placeholder="Busca un usuario..">
+                    <input type="text" class="form-control" id="search" placeholder="Busca un usuario.." (input)="searchUser($event)">
                 </div>
                 <div id="new">
-                    <input type="button" value="Nuevo usuario" class="btn btn-primary new">
+                    <input type="button" value="Nuevo usuario" data-bs-toggle="modal" data-bs-target="#usersForm"
+                        class="btn btn-primary new" (click)="setMode('Insertar')">
                 </div>
             </div>
             <div>
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th scope="col" class="w-20 rnd-first-top">NOMBRE</th>
-                            <th scope="col" class="w-10">USUARIO</th>
-                            <th scope="col" class="w-10">EMAIL</th>
-                            <th scope="col" class="w-15">PERFIL</th>
-                            <th scope="col" class="w-10">EMPRESA</th>
-                            <th scope="col" class="w-10 rnd-last-top"></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @for (user of paginatedUsers; track $index) {
-                            <tr>
-                                <td scope="row"> {{ user.name }} </td>
-                                <td> {{ user.username }} </td>
-                                <td> {{ user.email }} </td>
-                                <td> {{ user.profile_name }} </td>
-                                <td> {{ user.company_name }} </td>
-                                <td>
-                                    <i class="fas fa-edit me-5 text-success-subtle" title="Editar"></i>
-                                    <i class="fas fa-trash-alt text-danger" title="Eliminar"></i>
-                                </td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
-                <nav class="d-flex justify-content-end" aria-label="Page navigation">
-                    <ul class="pagination">
-                        <li class="page-item" [class.disabled]="currentPage === 1">
-                            <a class="page-link" (click)="changePage(currentPage - 1)" aria-label="Previous" title="Anterior">
-                                <span aria-hidden="true">&laquo;</span>
-                            </a>
-                        </li>
-                        @for (page of pages; track $index){
-                            <li class="page-item">
-                                <a class="page-link" [ngClass]="{'page-selected': page === currentPage}" (click)="changePage(page)">{{ page }}</a>
-                            </li>
-                        }
-                        <li class="page-item" [class.disabled]="currentPage === totalPages">
-                            <a class="page-link" (click)="changePage(currentPage + 1)" aria-label="Next" title="Siguiente">
-                                <span aria-hidden="true">&raquo;</span>
-                            </a>
-                        </li>
-                    </ul>
-                </nav>
+                <app-table 
+                    [titles]="tableTitles" 
+                    [tableContent]="tableContent"
+                    [columnsCount]="columnsCount"
+                    [pages]="pages"
+                    [totalPages]="totalPages"
+                    [currentPage]="currentPage"
+                    [onChangePage]="changePage"
+                ></app-table>
+
+                <div class="modal fade" id="usersForm" tabindex="-1" aria-labelledby="ModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+                    <div class="modal-dialog modal-dialog-centered modal-dialog-scrolleable">
+                        <div class="modal-content">
+                            <div class="modal-header" data-bs-theme="dark">
+                                <h1 class="modal-title fs-5" id="exampleModalLabel"> {{ mode.action }} usuario</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" id="close-modal"
+                                    aria-label="Close" (click)="closeModal()"></button>
+                            </div>
+                            <div class="modal-body">
+                                <app-form-users [user]="user" [profiles]="profiles" [actioner]="mode.actioner"></app-form-users>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         <div id="footer">

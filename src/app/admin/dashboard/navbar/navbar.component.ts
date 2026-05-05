@@ -4,6 +4,8 @@ import { AuthService } from '@services/authService/auth.service';
 import { UserService } from '@services/user/user.service';
 
 import { UserLogged } from '@core/interfaces/user_logged';
+import { AlertService } from '@services/alertService/alert.service';
+import { ViewTitle } from '@core/types/views';
 
 
 @Component({
@@ -15,11 +17,11 @@ import { UserLogged } from '@core/interfaces/user_logged';
 })
 
 export class NavbarDashboardComponent {
-    @Input() title: string = '';
+    @Input() title: ViewTitle = '';
 
     public path_img: string = './public/img/';
 
-    public user_logged: UserLogged = {
+    public user: UserLogged = {
         id: 0,
         name: '',
         email: '',
@@ -36,16 +38,16 @@ export class NavbarDashboardComponent {
     constructor(
         private userService: UserService, 
         private authService: AuthService,
+        private alertService: AlertService,
     ){
-        const username: string = sessionStorage.getItem('username')!;
-        this.getLoggedInfo(username);
+        const id: string = sessionStorage.getItem('user_id')!;
+        this.getLoggedInfo(id);
     }
 
-    public getLoggedInfo(username: string): void {
-        this.userService.get_logged_info(username).subscribe({
+    public getLoggedInfo(id: string): void {
+        this.userService.getLoggedInfo(id).subscribe({
             next: (response: any) => {
-                this.user_logged = response;
-                sessionStorage.setItem('user_id', response.id.toString());
+                this.user = response;
             },
             error: (error: any) => {
                 console.error("Error: ", error);
@@ -53,8 +55,10 @@ export class NavbarDashboardComponent {
         });
     }
 
-    public setLogOut(): void {
-        this.authService.logout();
-        this.authService.isNotAuthorized();
+    public async setLogOut(): Promise<void> {
+        if (await this.alertService.confirm(`¿Desea cerrar la sesión?`, 'Si, salir')) {
+            this.authService.logout();
+            this.authService.isNotAuthorized();
+        }
     }
 }

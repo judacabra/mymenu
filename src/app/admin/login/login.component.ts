@@ -49,7 +49,6 @@ export default class LoginComponent {
             const dataAuth = this.authForm.getRawValue();
 
             if (dataAuth.username && dataAuth.password) {
-                this.setUser(dataAuth.username);
                 this._authService.login(dataAuth.username, dataAuth.password).subscribe({
                     next: (response) => {
                         this._authService.setCredentials(response.access_token);
@@ -97,10 +96,6 @@ export default class LoginComponent {
             icon: this.view ? 'fas fa-eye' : 'fas fa-eye-slash',
             helpText: this.view ? 'View Password Icon' : 'No view Password Icon',
         }
-    }
-
-    private setUser(value: string): void {
-        sessionStorage.setItem('username', value);
     }
 
     public validatePassword(): string {

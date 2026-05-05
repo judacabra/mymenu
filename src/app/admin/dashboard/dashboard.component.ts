@@ -1,4 +1,4 @@
-import { CompaniesInfo } from './../../core/interfaces/companiesInfo';
+import { CompaniesInfo } from '@core/interfaces/company';
 import { Component } from '@angular/core';
 
 import { NavbarDashboardComponent } from './navbar/navbar.component';
@@ -6,6 +6,7 @@ import { SidebarDashboardComponent } from './sidebar/sidebar.component';
 import { FooterDasboardComponent } from './footer/footer.component';
 
 import { CompanyService } from '@services/company/company.service';
+import { ViewTitle } from '@core/types/views';
 
 @Component({
     selector: 'app-dashboard',
@@ -20,6 +21,8 @@ import { CompanyService } from '@services/company/company.service';
 })
 
 export default class DashboardComponent {
+    public title: ViewTitle = "Dashboard";
+
     public companiesInfo: CompaniesInfo = {
         total: 0,
         active: 0,

@@ -1,0 +1,42 @@
+<div id="body">
+    <form [formGroup]="headquarterForm">
+        <div class="mb-3">
+            <label for="name" class="form-label"> Nombre: </label>
+            <input type="text" class="form-control" id="name" formControlName="name" placeholder="Ejemplo: MyMenu">
+        </div>
+        <div class="mb-3">
+            <label for="description" class="form-label"> Descripción: </label>
+            <textarea id="description" class="form-control" formControlName="description"
+                placeholder="Ejemplo: Empresa de software..." rows="3"></textarea>
+        </div>
+        <div class="mb-3">
+            <label for="address" class="form-label"> Dirección: </label>
+            <input type="text" class="form-control" id="address" formControlName="address" placeholder="Ejemplo: Cll # 11 - 11">
+        </div>
+        <div class="form-check form-switch d-flex flex-column p-0 mb-3">
+            <div>
+                <label for="active" class="form-label"> Activa: </label>
+            </div>
+            <div>
+                <input class="form-check-input" id="active" type="checkbox"
+                    [checked]="headquarterForm.get('active')!.value" (change)="changeToggleText();">
+                <span class="toggle-inactive" [ngClass]="{
+                    'visible' : !headquarterForm.get('active')?.value,
+                    'invisible': headquarterForm.get('active')?.value
+                }">
+                    NO
+                </span>
+                <span class="toggle-active" [ngClass]="{
+                    'visible' : headquarterForm.get('active')?.value,
+                    'invisible': !headquarterForm.get('active')?.value
+                }">
+                    SI
+                </span>
+            </div>
+        </div>
+        <div class="d-flex justify-content-center align-items-center">
+            <button type="button" class="btn btn-primary text-white" (click)="onSubmit(actioner)"> {{ actioner }}
+            </button>
+        </div>
+    </form>
+</div>

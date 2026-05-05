@@ -34,11 +34,44 @@ export class UserService {
         );
     }
 
-    public get_logged_info(username: string): Observable<UserLogged> { 
+    public getLoggedInfo(id: string): Observable<UserLogged> { 
         let params = new HttpParams();
-        params = params.set('username', username);
+        params = params.set('id', id);
 
         return this.http.get<UserLogged>(`${this.url}/logged_user`, { params, headers: this.httpHeaders }).pipe(
+            catchError((e) => {
+                this.alertService.alert(e?.error?.detail, 'error');
+                return throwError(() => e);
+            })
+        );
+    }
+
+    public getUserById(id: number): Observable<User> { 
+        let params = new HttpParams();
+        params = params.set('id', id);
+
+        return this.http.get<User>(`${this.url}/user_by_id`, { params, headers: this.httpHeaders }).pipe(
+            catchError((e) => {
+                this.alertService.alert(e?.error?.detail, 'error');
+                return throwError(() => e);
+            })
+        );
+    }
+
+    public setUser(data: any): Observable<User> {    
+        return this.http.post<User>(`${this.url}/user`, data, { headers: this.httpHeaders }).pipe(
+            catchError((e) => {
+                this.alertService.alert(e?.error?.detail, 'error');
+
+                console.log('Error details:', e.error); 
+
+                return throwError(() => e);
+            })
+        );
+    }
+
+    public updateUser(id: number, data: any): Observable<User> {         
+        return this.http.put<User>(`${this.url}/user/${id}`, data, { headers: this.httpHeaders }).pipe(
             catchError((e) => {
                 this.alertService.alert(e?.error?.detail, 'error');
                 return throwError(() => e);

@@ -7,6 +7,8 @@ import { TypeUrl } from '@core/interfaces/type-url';
 import { AlertService } from '@services/alertService/alert.service';
 import { ProductService } from '@services/product/product.service';
 import { environment } from 'src/environments';
+import { Router } from '@angular/router';
+import { Product } from '@core/interfaces/product';
 
 @Component({
     selector: 'app-form-products',
@@ -44,6 +46,7 @@ export class FormProductComponent implements OnInit, OnChanges {
         private formBuilder: FormBuilder,
         private alertService: AlertService,
         private productService: ProductService,
+        private router: Router,
     ) { }
 
     ngOnInit(): void {
@@ -67,10 +70,6 @@ export class FormProductComponent implements OnInit, OnChanges {
             recommended: ['NO', [Validators.required]],
             id_company: [1, [Validators.required]]
         });
-
-        if (this.product) {
-            this.updateFormWithProduct();
-        }
     }
 
     private updateFormWithProduct(): void {
@@ -144,9 +143,9 @@ export class FormProductComponent implements OnInit, OnChanges {
     }
 
     public onSubmit(actioner: string): void {
-        const dataSend = new FormData();
+        const dataSend: FormData = new FormData();
         
-        const productObject = {
+        const productObject: Product = {
             name: this.productForm.get('name')!.value,
             description: this.productForm.get('description')!.value,
             id_type: this.productForm.get('id_type')!.value,
@@ -158,24 +157,30 @@ export class FormProductComponent implements OnInit, OnChanges {
 
         dataSend.append("product_data", JSON.stringify(productObject));
 
-        if (this.selectedFile) {
-            dataSend.append("img", this.selectedFile);
-        }
+        if (this.selectedFile) dataSend.append("img", this.selectedFile);
 
         if (actioner == 'Modificar') {
             this.updateProduct(this.productForm.get('id')!.value, dataSend);
         } else {
             this.setProduct(dataSend);
         }
+
+        this.updateFormWithProduct();
     }
 
     private setProduct(data: any): void {
         this.productService.setProduct(data).subscribe({
             next: () => {
-                this.alertService.alert(`Producto creado exitosamente`, 'success', false);
+                this.router.navigate(['/products'], {
+                    queryParams: { created: '1' }
+                });
             },
             error: (error: any) => {
                 console.error("Error: ", error);
+
+                this.router.navigate(['/products'], {
+                    queryParams: { created: '0' }
+                });
             }
         });
     }
@@ -183,10 +188,16 @@ export class FormProductComponent implements OnInit, OnChanges {
     private updateProduct(id: number, data: any): void {
         this.productService.updateProduct(id, data).subscribe({
             next: () => {
-                this.alertService.alert(`Producto actualizado exitosamente`, 'success', false);
+                this.router.navigate(['/products'], {
+                    queryParams: { updated: '1' }
+                });
             },
             error: (error: any) => {
                 console.error("Error: ", error);
+
+                this.router.navigate(['/products'], {
+                    queryParams: { updated: '0' }
+                });
             }
         });
     }
@@ -199,11 +210,4 @@ export class FormProductComponent implements OnInit, OnChanges {
             }
         });
     }
-
-    get name() { return this.productForm.get('name'); }
-    get description() { return this.productForm.get('description'); }
-    get id_type() { return this.productForm.get('id_type'); }
-    get price() { return this.productForm.get('price'); }
-    get stock() { return this.productForm.get('stock'); }
-    get recommended() { return this.productForm.get('recommended'); }
 }

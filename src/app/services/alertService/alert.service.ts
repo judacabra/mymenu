@@ -21,16 +21,16 @@ export class AlertService {
         })
     }
 
-    public notification(msn: string): void {
-        const success: string = `
+    public notification(msn: string, success: boolean = true): void {
+        const html: string = `
               <div class="d-flex justify-content-around align-items-center">
-                <i class="fas fa-check" style="font-size:50px;color:#3f80e5;"></i>
-                <p style="margin:0;color:#3f80e5;">${msn}</p>
+                <i class="fas ${success ? 'fa-check' : 'fa-times'}" style="font-size:50px; color: ${success ? '#3f80e5' : '#dc3545'};"></i>
+                <p style="margin: 0; color: ${success ? '#3f80e5' : '#dc3545'};">${msn}</p>
               </div>`;
 
         Swal.fire({
             position: "top-end",
-            html: success,
+            html,
             customClass: {
                 popup: 'titleClass',
                 htmlContainer: 'html-container',
@@ -40,12 +40,16 @@ export class AlertService {
         });
     }
 
-    public async confirm(msn: string): Promise<boolean> {
+    public async confirm(msn: string, confirmButtonText: string = 'Ok'): Promise<boolean> {
         return Swal.fire({
             title: "Confirmación",
             icon: "question",
             text: msn,
             width: "350px",
+            confirmButtonText,
+            confirmButtonColor: "#dc3545",
+            showCancelButton: true,
+            cancelButtonText: 'Cancelar',
         }).then((c) => c.isConfirmed);
     }
 }

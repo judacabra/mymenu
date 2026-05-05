@@ -8,10 +8,11 @@ export const routes: Routes = [
     path: 'index',
     title: 'MyMenu',
     loadComponent: () => import('./webpage/webpage.component'),
+    canActivate: [authGuard],
   },
   {
     path: 'admin',
-    title: 'Login',
+    title: 'MyMenu - Admin',
     loadComponent: () => import('./admin/login/login.component'),
   },
   {
@@ -30,6 +31,12 @@ export const routes: Routes = [
     path: 'companies',
     title: 'Empresas',
     loadComponent: () => import('./admin/dashboard/views/companies/companies.component'),
+    canActivate: [authGuard],
+  },
+  {
+    path: 'headquarters',
+    title: 'Sedes',
+    loadComponent: () => import('./admin/dashboard/views/headquarters/headquarters.component'),
     canActivate: [authGuard],
   },
   {
@@ -66,7 +73,7 @@ export const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: 'index',
+    redirectTo: isToken ? 'dashboard' : 'index',
     pathMatch: 'full',
   },
   {

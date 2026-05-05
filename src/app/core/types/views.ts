@@ -1,0 +1,1 @@
+export type ViewTitle = "Dashboard" | "Productos" | "Perfiles" | "Empresas" | "Sedes" | "Usuarios" | "Tipos" | "";

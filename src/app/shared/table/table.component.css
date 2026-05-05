@@ -1,0 +1,78 @@
+a {
+    color: var(--bg-1) !important;
+}
+
+th {
+    background: var(--bg-2);
+    color: var(--white);
+}
+
+td {
+    background: var(--bg-1);
+    color: var(--cl-1);
+}
+
+table {
+    font-size: 15px;
+}
+
+.fa-pen-to-square,
+.fa-trash-can,
+.img {
+    cursor: pointer;
+}
+
+.fa-pen-to-square,
+.fa-trash-can {
+    font-size: 14px;
+}
+
+.rnd-first-top {
+    border-radius: 10px 0 0 0;
+}
+
+.rnd-last-top {
+    border-radius: 0 10px 0 0;
+}
+
+.page-selected {
+    background: var(--bg-1) !important;
+    color: var(--white) !important;
+}
+
+.p-custom {
+    padding-left: .10rem;
+    padding-right: 1.55rem;
+}
+
+.rounded-50 {
+    border-radius: 50%;
+}
+
+.w-5 {
+    width: 5%;
+}
+
+.w-20 {
+    width: 20%;
+}
+
+.w-30 {
+    width: 30%;
+}
+
+.w-40 {
+    width: 40%;
+}
+
+.w-87 {
+    width: 87%;
+}
+
+.img-on-popup {
+    width: 100%;
+}
+
+.h-40- {
+    height: 40px !important;
+}

@@ -21,8 +21,38 @@ export class ProfileService {
 
     constructor(private http: HttpClient, private alertService: AlertService) { }
 
-    public consultProfiles(): Observable<Profile[]> {    
+    public consultProfiles(): Observable<Profile[]> {
         return this.http.get<Profile[]>(`${this.url}/profiles`, { headers: this.httpHeaders }).pipe(
+            catchError((e) => {
+                this.alertService.alert(e?.error?.detail, 'error');
+                return throwError(() => e);
+            })
+        );
+    }
+
+    public consultProfileById(id: number): Observable<Profile> {
+        let params: HttpParams = new HttpParams();
+        params = params.set('id', id);
+
+        return this.http.get<Profile>(`${this.url}/profile_by_id`, { params, headers: this.httpHeaders }).pipe(
+            catchError((e) => {
+                this.alertService.alert(e?.error?.detail, 'error');
+                return throwError(() => e);
+            })
+        );
+    }
+
+    public setProfile(data: any): Observable<Profile> {
+        return this.http.post<Profile>(`${this.url}/profile`, data, { headers: this.httpHeaders }).pipe(
+            catchError((e) => {
+                this.alertService.alert(e?.error?.detail, 'error');
+                return throwError(() => e);
+            })
+        );
+    }
+
+    public updateProfile(id: number, data: any): Observable<Profile> {
+        return this.http.put<Profile>(`${this.url}/profile/${id}`, data, { headers: this.httpHeaders }).pipe(
             catchError((e) => {
                 this.alertService.alert(e?.error?.detail, 'error');
                 return throwError(() => e);

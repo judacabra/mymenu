@@ -1,9 +1,15 @@
 export interface Company {
-    id: number,
+    id?: number,
     name: string,
     nit: number,
     img?: string,
-    address?: string,
     active: boolean,
     description: string,
+}
+export interface CompaniesInfo {
+    total: number,
+    active: number,
+    inactive: number,
+    porcent_active: number,
+    porcent_inactive: number
 }

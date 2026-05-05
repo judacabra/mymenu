@@ -6,17 +6,16 @@ import { environment } from '../../../environments';
 
 import { AlertService } from '@services/alertService/alert.service';
 
-import { Company } from '@core/interfaces/company';
-import { CompaniesInfo } from '@core/interfaces/companiesInfo';
+import { Company, CompaniesInfo } from '@core/interfaces/company';
 
 @Injectable({
     providedIn: 'root'
 })
 
 export class CompanyService {
-    private url = `${environment.apiUrl}`;
+    private url: string = `${environment.apiUrl}`;
 
-    private httpHeaders = new HttpHeaders({
+    private httpHeaders: HttpHeaders = new HttpHeaders({
         'Accept': 'application/json',
     });
 
@@ -29,7 +28,6 @@ export class CompanyService {
         let params = new HttpParams();
 
         if (id) params = params.set('id', id); 
-
         if (name) params = params.set('name', name); 
 
         return this.http.get<Company>(`${this.url}/company_by_param`, { params, headers: this.httpHeaders }).pipe(
@@ -51,6 +49,24 @@ export class CompanyService {
 
     public consultCompanies(): Observable<Company[]> {    
         return this.http.get<Company[]>(`${this.url}/companies`, { headers: this.httpHeaders }).pipe(
+            catchError((e) => {
+                this.alertService.alert(e?.error?.detail, 'error');
+                return throwError(() => e);
+            })
+        );
+    }
+
+    public setCompany(data: any): Observable<Company> {    
+        return this.http.post<Company>(`${this.url}/company`, data, { headers: this.httpHeaders }).pipe(
+            catchError((e) => {
+                this.alertService.alert(e?.error?.detail, 'error');
+                return throwError(() => e);
+            })
+        );
+    }
+
+    public updateCompany(id: number, data: any): Observable<Company> {    
+        return this.http.put<Company>(`${this.url}/company/${id}`, data, { headers: this.httpHeaders }).pipe(
             catchError((e) => {
                 this.alertService.alert(e?.error?.detail, 'error');
                 return throwError(() => e);

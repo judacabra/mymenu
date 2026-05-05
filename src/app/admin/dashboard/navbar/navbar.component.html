@@ -3,17 +3,17 @@
         <h4 id="title" class="fw-bold"> {{ title }} </h4>
     </div>
     <div id="config">
-        <div id="profile" class="d-flex align-items-center">
-            <div id="user" class="py-1">
-                <strong> {{ user_logged.name }} </strong>
+        <div id="profile" class="d-flex align-items-center pe-1">
+            <div id="user" class="d-flex justify-content-end px-2 py-1 me-2">
+                <strong> {{ user.name }} </strong>
                 <ul class="dropdown-menu mt-2 px-2 w-15 border-secondary">
                     <li title="Empresa"  class="d-flex align-items-center py-2 px-3 rounded text-white">
                         <i class="fa-solid fa-building me-4 text-white"></i> 
-                        {{ user_logged.company_name }}
+                        {{ user.company_name }}
                     </li>
                     <li title="Perfil" class="d-flex align-items-center py-2 px-3 rounded text-white">
                         <i class="fa-solid fa-id-card me-3 text-white"></i> 
-                        {{ user_logged.profile_name }}
+                        {{ user.profile_name }}
                     </li>
                     <hr class="my-2">
                     <li class="d-flex align-items-center py-2 px-3 rounded text-danger" title="Salir del panel administrativo" (click)="setLogOut()"> 

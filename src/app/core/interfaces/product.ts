@@ -1,13 +1,13 @@
 export interface Product {
-    id: number,
-    id_company: number,
+    id?: number,
     name: string,
     description: string,
     id_type: number,
-    img: string,
+    recommended: string,
     price: number,
     stock: number,
-    recommended?: string,
-    status: boolean,
+    status?: boolean,
+    img?: string,
     date?: string,
+    id_company: number,
 }

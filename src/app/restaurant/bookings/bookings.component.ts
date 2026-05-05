@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { BookingMotives } from '@core/interfaces/booking-motives';
 import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
 import { AlertService } from '@services/alertService/alert.service';
 import { SmtpService } from '@services/smtp/smtp.service';
+
+import { BookingMotives } from '@core/interfaces/booking';
 import { EmailData } from '@core/interfaces/smtp';
+
 import SMTP from 'src/app/utils/smtp';
 
 @Component({
@@ -81,7 +83,7 @@ export default class BookingsComponent implements OnInit {
             date: [new Date().toISOString().split('T')[0], [Validators.required]],
             time: ['', [Validators.required]],
             fullname: ['', [Validators.required, Validators.minLength(7), Validators.maxLength(50)]],
-            email: ['', [Validators.required, this.validarEmail.bind(this)]],
+            email: ['', [Validators.required, this.validateMail.bind(this)]],
             document: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(11)]],
             cantidad_personas: ['', [Validators.required, Validators.min(1)]], // Cambiado a string vacío
             incluye_deco: ['', Validators.required],
@@ -154,7 +156,7 @@ export default class BookingsComponent implements OnInit {
         }
     }
 
-    public validarEmail(control: AbstractControl): ValidationErrors | null {
+    public validateMail(control: AbstractControl): ValidationErrors | null {
         const email = control.value;
 
         if (!email || email === "") return null;

@@ -1,0 +1,52 @@
+<div id="body" class="d-flex">
+    <div id="sidebar">
+        <app-dashboard-sidebar></app-dashboard-sidebar>
+    </div>
+    <div id="contenido">
+        <div id="navbar">
+            <app-dashboard-navbar [title]="title"></app-dashboard-navbar>
+        </div>
+        <div id="content" class="px-3 py-2">
+            <div id="options" class="d-flex pb-2">
+                <div id="filter" class="me-2 w-87">
+                    <input type="text" id="search" class="form-control" placeholder="Busca una sede.."
+                        (input)="searchHeadquarter($event)" />
+                </div>
+                <div id="new">
+                    <input type="button" value="Nueva empresa" data-bs-toggle="modal" data-bs-target="#headquartersForm"
+                        class="btn btn-primary new" (click)="setMode('Insertar')">
+                </div>
+            </div>
+            <div>
+                <app-table 
+                    [titles]="tableTitles" 
+                    [tableContent]="tableContent" 
+                    [columnsCount]="columnsCount"
+                    [pages]="pages" 
+                    [totalPages]="totalPages" 
+                    [currentPage]="currentPage"
+                    [onChangePage]="changePage"
+                ></app-table>
+
+                <div class="modal fade" id="headquartersForm" tabindex="-1" aria-labelledby="ModalLabel" aria-hidden="true"
+                    data-bs-backdrop="static" data-bs-keyboard="false">
+                    <div class="modal-dialog modal-dialog-centered modal-dialog-scrolleable">
+                        <div class="modal-content">
+                            <div class="modal-header" data-bs-theme="dark">
+                                <h1 class="modal-title fs-5" id="exampleModalLabel"> {{ mode.action }} sede</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" id="close-modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <app-form-headquarters [headquarter]="headquarter" [actioner]="mode.actioner"></app-form-headquarters>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="footer">
+            <app-dashboard-footer></app-dashboard-footer>
+        </div>
+    </div>
+</div>
