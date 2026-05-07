@@ -6,6 +6,7 @@ import { AlertService } from '@services/alertService/alert.service';
 import { environment } from 'src/environments';
 import { Router } from '@angular/router';
 import { HeadquarterService } from '@services/headquarter/headquarter.service';
+import { Headquarter } from '@core/interfaces/headquarter';
 
 @Component({
     selector: 'app-form-headquarters',
@@ -86,7 +87,7 @@ export class FormHeadquarterComponent implements OnInit, OnChanges {
     }
 
     public onSubmit(actioner: string): void {
-        const dataSend: any = {
+        const dataSend: Headquarter = {
             name: this.headquarterForm.get('name')!.value,
             address: this.headquarterForm.get('address')!.value,
             description: this.headquarterForm.get('description')!.value,
@@ -102,7 +103,7 @@ export class FormHeadquarterComponent implements OnInit, OnChanges {
         this.updateFormWithHeadquarter();
     }
 
-    private setHeadquarter(data: any): void {
+    private setHeadquarter(data: Headquarter): void {
         this.headquarterService.setHeadquarter(data).subscribe({
             next: () => {
                 this.router.navigate(['/headquarters'], {

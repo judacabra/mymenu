@@ -13,8 +13,8 @@
                         (input)="searchHeadquarter($event)" />
                 </div>
                 <div id="new">
-                    <input type="button" value="Nueva empresa" data-bs-toggle="modal" data-bs-target="#headquartersForm"
-                        class="btn btn-primary new" (click)="setMode('Insertar')">
+                    <input type="button" value="Nueva sede" data-bs-toggle="modal" data-bs-target="#headquartersForm"
+                        class="btn btn-primary new px-4" (click)="setMode('Insertar')">
                 </div>
             </div>
             <div>
@@ -31,7 +31,7 @@
                 <div class="modal fade" id="headquartersForm" tabindex="-1" aria-labelledby="ModalLabel" aria-hidden="true"
                     data-bs-backdrop="static" data-bs-keyboard="false">
                     <div class="modal-dialog modal-dialog-centered modal-dialog-scrolleable">
-                        <div class="modal-content">
+                        <div class="modal-content modal-content-form">
                             <div class="modal-header" data-bs-theme="dark">
                                 <h1 class="modal-title fs-5" id="exampleModalLabel"> {{ mode.action }} sede</h1>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" id="close-modal"

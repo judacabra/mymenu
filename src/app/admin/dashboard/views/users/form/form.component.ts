@@ -8,6 +8,7 @@ import { environment } from 'src/environments';
 import { Router } from '@angular/router';
 import { User } from '@core/interfaces/user';
 import { Profile } from '@core/interfaces/profile';
+import { Headquarter } from '@core/interfaces/headquarter';
 
 @Component({
     selector: 'app-form-users',
@@ -23,6 +24,7 @@ import { Profile } from '@core/interfaces/profile';
 export class FormUserComponent implements OnInit, OnChanges {
     @Input() user: any = null;
     @Input() actioner: string = "";
+    @Input() headquarters: Headquarter[] = [];
     @Input() profiles: Profile[] = [];
 
     public userForm!: FormGroup;
@@ -51,6 +53,7 @@ export class FormUserComponent implements OnInit, OnChanges {
             username: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(20)]],
             email: ['', [Validators.required, this.validateMail.bind(this)]],
             id_profile: [0, [Validators.required]],
+            id_headquarter: [0, [Validators.required]],
             active: [false, [Validators.required]],
         });
     }
@@ -61,7 +64,8 @@ export class FormUserComponent implements OnInit, OnChanges {
             name: this.user.name || '',
             username: this.user.username || '',
             email: this.user.email || '',
-            id_profile: this.user.profile_id || 0,
+            id_profile: this.user.profile.id || 0,
+            id_headquarter: this.user.headquarter.id || 0,
             active: this.user.active || false,
         });
     }
@@ -123,8 +127,9 @@ export class FormUserComponent implements OnInit, OnChanges {
             name: this.userForm.get('name')!.value,
             email: this.userForm.get('email')!.value,
             username: this.userForm.get('username')!.value,
-            id_profile: this.userForm.get('id_profile')!.value,
             active: this.userForm.get('active')!.value,
+            id_profile: this.userForm.get('id_profile')!.value,
+            id_headquarter: this.userForm.get('id_headquarter')!.value,
         };
         
         if (actioner == 'Modificar') {

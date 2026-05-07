@@ -19,7 +19,7 @@
             }
         </swiper-container>
     </div>
-    <div id="content" class="container pt-1 pb-1 mb-5">
+    <div class="container pt-1 pb-1 mb-5">
         @if(productsRecommended().length > 0){
         @for (type of typeRecommended; track $index) {
         <div #typeElement id="{{ type.url }}" class="type px-3 py-3 d-flex flex-column align-items-center br-brown">
@@ -56,7 +56,7 @@
                                     ? path_server + product.img 
                                     : path_img + 'not-found-img.jpg' 
                                 }}" alt="product" class="img-on-popup rounded-top" />
-                            <div class="modal-footer br-none d-flex justify-content-center">
+                            <div class="modal-footer bg-white- border-0 d-flex justify-content-center">
                                 <h5 class="card-title d-flex align-items-center justify-content-center fs-3"> {{ product.name }} </h5>
                                 <p class="text-center mb-3 fs-6 px-2 w-100"> {{ product.description }}</p>
                                 <p class="text-center fs-3 fw-bold cl-brown pb-2">$ {{
@@ -107,7 +107,7 @@
                                 ? path_server + product.img 
                                 : path_img + 'not-found-img.jpg' 
                             }}" alt="product" class="img-on-popup rounded-top img-modal" />
-                            <div class="modal-footer br-none d-flex justify-content-center">
+                            <div class="modal-footer bg-white- border-0 d-flex justify-content-center">
                                 <h5 class="card-title d-flex align-items-center justify-content-center fs-3"> {{ product.name }} </h5>
                                 <p class="text-center mb-2 fs-6 px-2 w-100"> {{ product.description }}</p>
                                 <p class="text-center fs-3 fw-bold cl-brown">$ {{

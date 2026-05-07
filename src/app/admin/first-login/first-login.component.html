@@ -1,0 +1,56 @@
+<div class="contenedor d-flex">
+    <div id="logo" class="w-50 d-flex">
+        <img src="{{ path_logo }}" alt="logo-company" class="shadow-radius" id="img-mm">
+    </div>
+    <div id="login-form" class="w-50 d-flex flex-column align-items-center justify-content-center">
+        <div id="form" class="shadow-radius-2 px-5 py-5">
+            <div id="title" class="mb-3">
+                <h3 class="text-center fw-bold"> Cambio de contraseña </h3>
+            </div>
+            <form class="d-flex flex-column" [formGroup]="form">
+                <div class="input-group dp-flex-L">
+                    <label for="newPassword" class="mb-2"> <small> Nueva contraseña </small> </label>
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <div class="input-group mb-2">
+                            <input [type]="configNew.input" placeholder="* * * * * * *" id="newPassword" class="form-control" 
+                                formControlName="newPassword" (keyup.enter)="actionSet()" 
+                                [ngClass]="{'input-valid': newPassword, 'input-error': noNewPassword,}" (change)="onNewPasswordChange('newPassword')"
+                            >
+                            @if (validateNewPassword().length > 0) {
+                                <span class="input-group-text" [ngClass]="{'input-valid': newPassword}" (click)="previewNewPass()" title="{{ configNew.title }}">
+                                    <i [ngClass]="configNew.icon"></i>
+                                </span>
+                            }
+                        </div>
+                    </div>
+                </div>
+                <div class="input-group dp-flex-L">
+                    <label for="confirmPassword" class="mb-2"> <small> Confirmar contraseña </small> </label>
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <div class="input-group mb-3">
+                            <input [type]="configConfirm.input" placeholder="* * * * * * *" id="confirmPassword" class="form-control" 
+                                formControlName="confirmPassword" (keyup.enter)="actionSet()" 
+                                [ngClass]="{'input-valid': confirmPassword, 'input-error': noConfirmPassword,}" (change)="onConfirmPasswordChange('confirmPassword')"
+                            >
+                            @if (validateConfirmPassword().length > 0) {
+                                <span class="input-group-text" [ngClass]="{'input-valid': confirmPassword}" (click)="previewConfirmPass()" title="{{ configConfirm.title }}">
+                                    <i [ngClass]="configConfirm.icon"></i>
+                                </span>
+                            }
+                        </div>
+                    </div>
+                </div>
+                <input type="hidden" formControlName="id" />
+                <input 
+                    type="submit" 
+                    id="button" 
+                    [ngClass]="form.invalid ? 'btn-secondary' : 'btn-primary'" 
+                    class="btn" value="Enviar" 
+                    (click)="actionSet()"
+                    (keyup.enter)="actionSet()"
+                    [disabled]="form.invalid"
+                >
+            </form>    
+        </div>    
+    </div>
+</div>

@@ -29,14 +29,19 @@
 
                 <div class="modal fade" id="usersForm" tabindex="-1" aria-labelledby="ModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
                     <div class="modal-dialog modal-dialog-centered modal-dialog-scrolleable">
-                        <div class="modal-content">
+                        <div class="modal-content modal-content-form">
                             <div class="modal-header" data-bs-theme="dark">
                                 <h1 class="modal-title fs-5" id="exampleModalLabel"> {{ mode.action }} usuario</h1>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" id="close-modal"
                                     aria-label="Close" (click)="closeModal()"></button>
                             </div>
                             <div class="modal-body">
-                                <app-form-users [user]="user" [profiles]="profiles" [actioner]="mode.actioner"></app-form-users>
+                                <app-form-users 
+                                    [user]="user" 
+                                    [profiles]="profiles" 
+                                    [headquarters]="headquarters" 
+                                    [actioner]="mode.actioner"
+                                ></app-form-users>
                             </div>
                         </div>
                     </div>

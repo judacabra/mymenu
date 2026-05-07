@@ -40,7 +40,7 @@ export default class LoginComponent {
 
     constructor(
         private _formBuilder: FormBuilder, 
-        private _authService: AuthService, 
+        private authService: AuthService, 
         private router: Router
     ) {}
 
@@ -49,14 +49,21 @@ export default class LoginComponent {
             const dataAuth = this.authForm.getRawValue();
 
             if (dataAuth.username && dataAuth.password) {
-                this._authService.login(dataAuth.username, dataAuth.password).subscribe({
-                    next: (response) => {
-                        this._authService.setCredentials(response.access_token);
-                        this.router.navigate(['/dashboard']);
-                    },
+                this.authService.login(dataAuth.username, dataAuth.password).subscribe({
+                    next: (response: any) => {
+                        console.log(response)
+                        
+                        this.authService.setCredentials(response.access_token);
 
-                    error: (error) => {
-                        console.error(error)
+                        const nav: string = response.user.isFirstLogin ? 'first-login' : 'dashboard';
+                        const params: any = response.user.isFirstLogin ? { id : response.user.id } : {};
+
+                        this.router.navigate([`/${nav}`], {
+                            queryParams: params, 
+                        });
+                    },
+                    error: (error: any) => {
+                        console.error("Error: ", error)
                     }
                 })
             }

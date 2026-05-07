@@ -50,6 +50,10 @@ li {
 /* 
     CLASSES
 */
+.bg-white-{
+    background: var(--white) !important;
+}
+
 .cards {
     width: 100%;
 }
@@ -104,7 +108,7 @@ li {
     .cards {
         display: grid;
         grid-template-columns: repeat(4, 1fr); 
-        gap: 10px;
+        gap: 30px;
     }
 }
 
@@ -112,7 +116,7 @@ li {
     .cards {
         display: grid;
         grid-template-columns: repeat(2, 1fr); 
-        gap: 10px;
+        gap: 30px;
     }
 
     .card-title {

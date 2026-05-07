@@ -18,6 +18,8 @@ import { AlertService } from '@services/alertService/alert.service';
 import { ProfileService } from '@services/profile/profile.service';
 import { Profile } from '@core/interfaces/profile';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Headquarter } from '@core/interfaces/headquarter';
+import { HeadquarterService } from '@services/headquarter/headquarter.service';
 
 @Component({
     selector: 'app-users',
@@ -68,6 +70,7 @@ export default class UsersComponent implements OnInit, OnDestroy {
     ];
 
     public profiles: Profile[] = [];
+    public headquarters: Headquarter[] = [];
 
     public users: User[] = [];
     public filteredUsers: User[] = [];
@@ -76,7 +79,7 @@ export default class UsersComponent implements OnInit, OnDestroy {
 
     public columnsCount: number = 7;
     public currentPage: number = 1;
-    public rowsPerPage: number = 8;
+    public rowsPerPage: number = 7;
     public totalPages: number = 0;
     public pages: number[] = [];
 
@@ -86,6 +89,7 @@ export default class UsersComponent implements OnInit, OnDestroy {
         private userService: UserService,
         private alertService: AlertService,
         private profileService: ProfileService,
+        private headquarterService: HeadquarterService,
         private router: Router,
         private route: ActivatedRoute,
     ) {
@@ -95,6 +99,7 @@ export default class UsersComponent implements OnInit, OnDestroy {
         this.updatePagination();
 
         this.getProfiles();
+        this.getHeadquarters();
     }
 
     ngOnInit() {
@@ -105,6 +110,17 @@ export default class UsersComponent implements OnInit, OnDestroy {
         this.profileService.consultProfiles().subscribe({
             next: (response: any) => {
                 this.profiles = response;
+            },
+            error: (error: any) => {
+                console.error("Error: ", error);
+            }
+        });
+    }
+
+    private getHeadquarters(): void {
+        this.headquarterService.consultHeadquarters().subscribe({
+            next: (response: any) => {
+                this.headquarters = response;
             },
             error: (error: any) => {
                 console.error("Error: ", error);

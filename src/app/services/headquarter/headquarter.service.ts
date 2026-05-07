@@ -45,7 +45,7 @@ export class HeadquarterService {
         );
     }
 
-    public setHeadquarter(data: any): Observable<Headquarter> {
+    public setHeadquarter(data: Headquarter): Observable<Headquarter> {
         return this.http.post<Headquarter>(`${this.url}/headquarter`, data, { headers: this.httpHeaders }).pipe(
             catchError((e) => {
                 this.alertService.alert(e?.error?.detail, 'error');

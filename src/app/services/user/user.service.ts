@@ -70,6 +70,18 @@ export class UserService {
         );
     }
 
+    public changePassword(id: number, data: any): Observable<User> {    
+        return this.http.put<User>(`${this.url}/user/change-password/${id}`, data, { headers: this.httpHeaders }).pipe(
+            catchError((e) => {
+                this.alertService.alert(e?.error?.detail, 'error');
+
+                console.log('Error details:', e.error); 
+
+                return throwError(() => e);
+            })
+        );
+    }
+
     public updateUser(id: number, data: any): Observable<User> {         
         return this.http.put<User>(`${this.url}/user/${id}`, data, { headers: this.httpHeaders }).pipe(
             catchError((e) => {

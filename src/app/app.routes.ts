@@ -52,6 +52,12 @@ export const routes: Routes = [
     canActivate: [authGuard],
   },
   {
+    path: 'first-login',
+    title: 'Primer ingreso',
+    loadComponent: () => import('./admin/first-login/first-login.component'),
+    canActivate: [authGuard],
+  },
+  {
     path: ':restaurant/home',
     title: 'Inicio',
     loadComponent: () => import('./restaurant/inicio/inicio.component'),

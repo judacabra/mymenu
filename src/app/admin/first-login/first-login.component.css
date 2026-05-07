@@ -1,0 +1,96 @@
+/* 
+    HTML
+*/
+* {
+    color: var(--cl-1);
+    font-family: 'Century gothic', 'sans-serif';
+}
+
+h3 {
+    color: var(--white);
+}
+
+input, input:focus {
+    background: var(--bg-1);
+    border: none;
+    color: var(--cl-1);
+}
+
+input::placeholder {
+    color: var(--cl-2);
+
+}
+
+small {
+    font-size: 14px;
+    color: var(--cl-2);
+}
+
+span.input-group-text {
+    background: var(--bg-1);
+    color: var(--cl-2);
+}
+
+/* 
+    IDS
+*/
+#img-mm{
+    height: 30vh;
+    margin: auto;
+}
+
+#form {
+    background: var(--bg-2);
+    width: 55%;
+}
+
+/* 
+    CLASSES
+*/
+.btn-primary{
+    color: var(--white);
+}
+
+.contenedor {
+    height: 100vh !important;
+    background: var(--bg-1);
+}
+
+.dp-flex-L {
+    display: flex;
+    flex-direction: column;
+}
+
+.fa-eye, .fa-eye-slash {
+    cursor: pointer;
+}
+
+.input-error {
+    border: 1px solid red !important;
+    border-radius: 10px !important;
+}
+
+.input-valid {
+    border: 1px solid #21a55dba !important;
+}
+
+.icon-error {
+    color: red;
+}
+
+.shadow-radius {
+    box-shadow: 0 0 60px 0 var(--bg-2);
+    border-radius: 10px !important;
+}
+
+.shadow-radius-2 {
+    box-shadow: 0 0 7px -2px  var(--bg-2);
+    border-radius: 10px !important;
+}
+
+.view {
+    display: none;
+    width: 17px;
+    cursor: pointer;
+}
+  

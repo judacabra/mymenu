@@ -81,7 +81,7 @@ export default class ProductsComponent implements OnInit, OnDestroy {
 
     public columnsCount: number = 7;
     public currentPage: number = 1;
-    public rowsPerPage: number = 6;
+    public rowsPerPage: number = 7;
     public totalPages: number = 0;
     public pages: number[] = [];
 

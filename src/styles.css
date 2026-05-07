@@ -149,7 +149,7 @@ tr {
     color: var(--white);
 }
 
-.modal-content {
+.modal-content-form {
     background: var(--bg-1) !important;
 }
 
